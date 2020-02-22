@@ -26,7 +26,7 @@ static void Trig(benchmark::State& state)
 {
     double d = 0.01;
     while (state.KeepRunning()) {
-        sum += qstees(d);
+        sum += sin(d);
         d += 0.000001;
     }
 }

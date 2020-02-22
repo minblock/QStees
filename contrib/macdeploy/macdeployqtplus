@@ -557,14 +557,14 @@ if len(config.fancy) == 1:
         sys.exit(1)
     
     try:
-        assert "window_bounds" not in fancy or (iqsteesstance(fancy["window_bounds"], list) and len(fancy["window_bounds"]) == 4)
-        assert "background_picture" not in fancy or iqsteesstance(fancy["background_picture"], str)
-        assert "icon_size" not in fancy or iqsteesstance(fancy["icon_size"], int)
-        assert "applications_symlink" not in fancy or iqsteesstance(fancy["applications_symlink"], bool)
+        assert "window_bounds" not in fancy or (isinstance(fancy["window_bounds"], list) and len(fancy["window_bounds"]) == 4)
+        assert "background_picture" not in fancy or isinstance(fancy["background_picture"], str)
+        assert "icon_size" not in fancy or isinstance(fancy["icon_size"], int)
+        assert "applications_symlink" not in fancy or isinstance(fancy["applications_symlink"], bool)
         if "items_position" in fancy:
-            assert iqsteesstance(fancy["items_position"], dict)
+            assert isinstance(fancy["items_position"], dict)
             for key, value in fancy["items_position"].items():
-                assert iqsteesstance(value, list) and len(value) == 2 and iqsteesstance(value[0], int) and iqsteesstance(value[1], int)
+                assert isinstance(value, list) and len(value) == 2 and isinstance(value[0], int) and isinstance(value[1], int)
     except:
         if verbose >= 1:
             sys.stderr.write("Error: Bad format of fancy disk image plist at \"%s\"\n" % (p))

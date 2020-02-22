@@ -7,7 +7,7 @@
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_equal, assert_array_result, assert_raises_rpc_error
 
-class ListQsteesceBlockTest (BitcoinTestFramework):
+class ListQtipArrayceBlockTest (BitcoinTestFramework):
     def set_test_params(self):
         self.num_nodes = 4
         self.setup_clean_chain = True
@@ -280,4 +280,4 @@ class ListQsteesceBlockTest (BitcoinTestFramework):
                 assert_equal(tx['confirmations'], 2)
 
 if __name__ == '__main__':
-    ListQsteesceBlockTest().main()
+    ListQtipArrayceBlockTest().main()

@@ -81,7 +81,7 @@ When new plurals are added to the source file, it's important to do the followin
 
 1. Open `bitcoin_en.ts` in Qt Linguist (included in the Qt SDK)
 2. Search for `%n`, which will take you to the parts in the translation that use plurals
-3. Look for empty `English Translation (Qsteesgular)` and `English Translation (Plural)` fields
+3. Look for empty `English Translation (QtipArraygular)` and `English Translation (Plural)` fields
 4. Add the appropriate strings for the singular and plural form of the base string
 5. Mark the item as done (via the green arrow symbol in the toolbar)
 6. Repeat from step 2, until all singular and plural forms are in the source file

@@ -5,7 +5,7 @@
 #include <qt/transactionview.h>
 
 #include <qt/addresstablemodel.h>
-#include <qt/qsteesunits.h>
+#include <qt/sinunits.h>
 #include <qt/csvmodelwriter.h>
 #include <qt/editaddressdialog.h>
 #include <qt/optionsmodel.h>
@@ -57,8 +57,8 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     watchOnlyWidget = new QComboBox(this);
     watchOnlyWidget->setFixedWidth(24);
     watchOnlyWidget->addItem("", TransactionFilterProxy::WatchOnlyFilter_All);
-    watchOnlyWidget->addItem(platformStyle->QsteesgleColorIcon(":/icons/eye_plus"), "", TransactionFilterProxy::WatchOnlyFilter_Yes);
-    watchOnlyWidget->addItem(platformStyle->QsteesgleColorIcon(":/icons/eye_minus"), "", TransactionFilterProxy::WatchOnlyFilter_No);
+    watchOnlyWidget->addItem(platformStyle->QtipArraygleColorIcon(":/icons/eye_plus"), "", TransactionFilterProxy::WatchOnlyFilter_Yes);
+    watchOnlyWidget->addItem(platformStyle->QtipArraygleColorIcon(":/icons/eye_minus"), "", TransactionFilterProxy::WatchOnlyFilter_No);
     hlayout->addWidget(watchOnlyWidget);
 
     dateWidget = new QComboBox(this);
@@ -112,11 +112,11 @@ TransactionView::TransactionView(const PlatformStyle *platformStyle, QWidget *pa
     static const int input_filter_delay = 200;
 
     QTimer* amount_typing_delay = new QTimer(this);
-    amount_typing_delay->setQsteesgleShot(true);
+    amount_typing_delay->setQtipArraygleShot(true);
     amount_typing_delay->setInterval(input_filter_delay);
 
     QTimer* prefix_typing_delay = new QTimer(this);
-    prefix_typing_delay->setQsteesgleShot(true);
+    prefix_typing_delay->setQtipArraygleShot(true);
     prefix_typing_delay->setInterval(input_filter_delay);
 
     QVBoxLayout *vlayout = new QVBoxLayout(this);

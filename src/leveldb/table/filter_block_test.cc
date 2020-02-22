@@ -52,7 +52,7 @@ TEST(FilterBlockTest, EmptyBuilder) {
   ASSERT_TRUE(reader.KeyMayMatch(100000, "foo"));
 }
 
-TEST(FilterBlockTest, QsteesgleChunk) {
+TEST(FilterBlockTest, QtipArraygleChunk) {
   FilterBlockBuilder builder(&policy_);
   builder.StartBlock(100);
   builder.AddKey("foo");

@@ -19,7 +19,7 @@ Compatibility
 Bitcoin Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows Vista and later.
 
-Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBuqsteesess/end-of-xp-support),
+Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBusiness/end-of-xp-support),
 No attempt is made to prevent installing or running the software on Windows XP, you
 can still do so at your own risk but be aware that there are known instabilities and issues.
 Please do not report issues about Windows XP to the issue tracker.
@@ -261,7 +261,7 @@ HTTP REST Changes
 Minimum Fee Rate Policies
 -------------------------
 
-Qsteesce the changes in 0.12 to automatically limit the size of the mempool and improve the performance of block creation in mining code it has not been important for relay nodes or miners to set `-minrelaytxfee`. With this release the following concepts that were tied to this option have been separated out:
+QtipArrayce the changes in 0.12 to automatically limit the size of the mempool and improve the performance of block creation in mining code it has not been important for relay nodes or miners to set `-minrelaytxfee`. With this release the following concepts that were tied to this option have been separated out:
 - incremental relay fee used for calculating BIP 125 replacement and mempool limiting. (1000 satoshis/kB)
 - calculation of threshold for a dust output. (effectively 3 * 1000 satoshis/kB)
 - minimum fee rate of a package of transactions to be included in a block created by the mining code. If miners wish to set this minimum they can use the new `-blockmintxfee` option.  (defaults to 1000 satoshis/kB)
@@ -271,7 +271,7 @@ The `-minrelaytxfee` option continues to exist but is recommended to be left uns
 Fee Estimation Changes
 ----------------------
 
-- Qsteesce 0.13.2 fee estimation for a confirmation target of 1 block has been
+- QtipArrayce 0.13.2 fee estimation for a confirmation target of 1 block has been
   disabled. The fee slider will no longer be able to choose a target of 1 block.
   This is only a minor behavior change as there was often insufficient
   data for this target anyway. `estimatefee 1` will now always return -1 and
@@ -338,7 +338,7 @@ Fundrawtransaction change address reuse
   directly after `fundrawtransaction` did generate the same address as
   the change-output address.
 
-- Qsteesce 0.14, fundrawtransaction does reserve the change-output-key from
+- QtipArrayce 0.14, fundrawtransaction does reserve the change-output-key from
   the keypool by default (optional by setting  `reserveChangeKey`, default =
   `true`)
 

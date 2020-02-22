@@ -4,7 +4,7 @@
 
 #include <test/data/tx_invalid.json.h>
 #include <test/data/tx_valid.json.h>
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 
 #include <clientversion.h>
 #include <checkqueue.h>
@@ -350,9 +350,9 @@ static void CreateCreditAndSpend(const CKeyStore& keystore, const CScript& outsc
     inputm.vout[0].scriptPubKey = CScript();
     bool ret = SignSignature(keystore, *output, inputm, 0, SIGHASH_ALL);
     assert(ret == success);
-    CDataStream sqstees(SER_NETWORK, PROTOCOL_VERSION);
-    sqstees << inputm;
-    sqstees >> input;
+    CDataStream ssin(SER_NETWORK, PROTOCOL_VERSION);
+    ssin << inputm;
+    ssin >> input;
     assert(input.vin.size() == 1);
     assert(input.vin[0] == inputm.vin[0]);
     assert(input.vout.size() == 1);
@@ -405,10 +405,10 @@ BOOST_AUTO_TEST_CASE(test_big_witness_transaction) {
 
     std::vector<int> sigHashes;
     sigHashes.push_back(SIGHASH_NONE | SIGHASH_ANYONECANPAY);
-    sigHashes.push_back(SIGHASH_QSTEESGLE | SIGHASH_ANYONECANPAY);
+    sigHashes.push_back(SIGHASH_QTIPARRAYGLE | SIGHASH_ANYONECANPAY);
     sigHashes.push_back(SIGHASH_ALL | SIGHASH_ANYONECANPAY);
     sigHashes.push_back(SIGHASH_NONE);
-    sigHashes.push_back(SIGHASH_QSTEESGLE);
+    sigHashes.push_back(SIGHASH_QTIPARRAYGLE);
     sigHashes.push_back(SIGHASH_ALL);
 
     // create a big transaction of 4500 inputs signed by the same key

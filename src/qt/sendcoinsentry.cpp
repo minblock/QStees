@@ -23,11 +23,11 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *_platformStyle, QWidget *par
     isTermDeposit = false;
     ui->setupUi(this);
 
-    ui->addressBookButton->setIcon(platformStyle->QsteesgleColorIcon(":/icons/address-book"));
-    ui->pasteButton->setIcon(platformStyle->QsteesgleColorIcon(":/icons/editpaste"));
-    ui->deleteButton->setIcon(platformStyle->QsteesgleColorIcon(":/icons/remove"));
-    ui->deleteButton_is->setIcon(platformStyle->QsteesgleColorIcon(":/icons/remove"));
-    ui->deleteButton_s->setIcon(platformStyle->QsteesgleColorIcon(":/icons/remove"));
+    ui->addressBookButton->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/address-book"));
+    ui->pasteButton->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/editpaste"));
+    ui->deleteButton->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/remove"));
+    ui->deleteButton_is->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/remove"));
+    ui->deleteButton_s->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/remove"));
 
     setCurrentWidget(ui->SendCoins);
 
@@ -35,9 +35,9 @@ SendCoinsEntry::SendCoinsEntry(const PlatformStyle *_platformStyle, QWidget *par
         ui->payToLayout->setSpacing(4);
     ui->addAsLabel->setPlaceholderText(tr("Enter a label for this address to add it to your address book"));
 
-    // normal qstees address field
+    // normal sin address field
     GUIUtil::setupAddressWidget(ui->payTo, this);
-    // just a label for displaying qstees address(es)
+    // just a label for displaying sin address(es)
     ui->payTo_is->setFont(GUIUtil::fixedPitchFont());
 
     // Connect signals
@@ -115,7 +115,7 @@ void SendCoinsEntry::clear()
         ui->payToLabel->setText("Deposit Address:");
     }
 
-    // update the display unit, to not use the default ("QSTEES")
+    // update the display unit, to not use the default ("QTIPARRAY")
     updateDisplayUnit();
 }
 

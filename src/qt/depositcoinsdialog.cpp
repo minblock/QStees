@@ -6,7 +6,7 @@
 #include <qt/forms/ui_depositcoinsdialog.h>
 
 #include <qt/addresstablemodel.h>
-#include <qt/qsteesunits.h>
+#include <qt/sinunits.h>
 #include <qt/clientmodel.h>
 #include <qt/coincontroldialog.h>
 #include <qt/guiutil.h>
@@ -65,9 +65,9 @@ DepositCoinsDialog::DepositCoinsDialog(const PlatformStyle *_platformStyle, QWid
         ui->clearButton->setIcon(QIcon());
         ui->sendButton->setIcon(QIcon());
     } else {
-        ui->addButton->setIcon(_platformStyle->QsteesgleColorIcon(":/icons/add"));
-        ui->clearButton->setIcon(_platformStyle->QsteesgleColorIcon(":/icons/remove"));
-        ui->sendButton->setIcon(_platformStyle->QsteesgleColorIcon(":/icons/send"));
+        ui->addButton->setIcon(_platformStyle->QtipArraygleColorIcon(":/icons/add"));
+        ui->clearButton->setIcon(_platformStyle->QtipArraygleColorIcon(":/icons/remove"));
+        ui->sendButton->setIcon(_platformStyle->QtipArraygleColorIcon(":/icons/send"));
     }
 
     GUIUtil::setupAddressWidget(ui->lineEditCoinControlChange, this);
@@ -181,7 +181,7 @@ void DepositCoinsDialog::setModel(WalletModel *_model)
         connect(ui->checkBoxMinimumFee, SIGNAL(stateChanged(int)), this, SLOT(coinControlUpdateLabels()));
         connect(ui->optInRBF, SIGNAL(stateChanged(int)), this, SLOT(updateSmartFeeLabel()));
         connect(ui->optInRBF, SIGNAL(stateChanged(int)), this, SLOT(coinControlUpdateLabels()));
-        ui->customFee->setQsteesgleStep(model->wallet().getRequiredFee(1000));
+        ui->customFee->setQtipArraygleStep(model->wallet().getRequiredFee(1000));
         updateFeeSectionControls();
         updateMinFeeLabel();
         updateSmartFeeLabel();
@@ -845,7 +845,7 @@ void DepositCoinsDialog::coinControlChangeEdited(const QString& text)
         }
         else if (!IsValidDestination(dest)) // Invalid address
         {
-            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid QSTEES address"));
+            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid QTIPARRAY address"));
         }
         else // Valid address
         {

@@ -22,16 +22,16 @@ public:
     bool getUseExtraSpacing() const { return useExtraSpacing; }
 
     QColor TextColor() const { return textColor; }
-    QColor QsteesgleColor() const { return singleColor; }
+    QColor QtipArraygleColor() const { return singleColor; }
 
     /** Colorize an image (given filename) with the icon color */
-    QImage QsteesgleColorImage(const QString& filename) const;
+    QImage QtipArraygleColorImage(const QString& filename) const;
 
     /** Colorize an icon (given filename) with the icon color */
-    QIcon QsteesgleColorIcon(const QString& filename) const;
+    QIcon QtipArraygleColorIcon(const QString& filename) const;
 
     /** Colorize an icon (given object) with the icon color */
-    QIcon QsteesgleColorIcon(const QIcon& icon) const;
+    QIcon QtipArraygleColorIcon(const QIcon& icon) const;
 
     /** Colorize an icon (given filename) with the text color */
     QIcon TextColorIcon(const QString& filename) const;

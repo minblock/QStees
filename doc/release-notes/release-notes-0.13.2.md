@@ -16,7 +16,7 @@ To receive security and update notifications, please subscribe to:
 Compatibility
 ==============
 
-Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBuqsteesess/end-of-xp-support),
+Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBusiness/end-of-xp-support),
 an OS initially released in 2001. This means that not even critical security
 updates will be released anymore. Without security updates, using a bitcoin
 wallet on a XP machine is irresponsible at least.

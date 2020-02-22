@@ -29,7 +29,7 @@ class DisablePrivateKeysTest(BitcoinTestFramework):
         w2 = node.get_wallet_rpc('w2')
         assert_raises_rpc_error(-4,"Error: Private keys are disabled for this wallet", w1.getnewaddress)
         assert_raises_rpc_error(-4,"Error: Private keys are disabled for this wallet", w1.getrawchangeaddress)
-        w1.importpubkey(w2.getaddresqsteesfo(w2.getnewaddress())['pubkey'])
+        w1.importpubkey(w2.getaddressinfo(w2.getnewaddress())['pubkey'])
 
 if __name__ == '__main__':
     DisablePrivateKeysTest().main()

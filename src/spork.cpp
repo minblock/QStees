@@ -1,7 +1,7 @@
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018-2018 The PiVX developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -30,7 +30,7 @@ void CSporkManager::LoadSporksFromDB()
 {
 
     for (int i = SPORK_START; i <= SPORK_END; ++i) {
-        // Qsteesce not all spork IDs are in use, we have to exclude undefined IDs
+        // QtipArrayce not all spork IDs are in use, we have to exclude undefined IDs
         std::string strSpork = sporkManager.GetSporkNameByID(i);
         if (strSpork.substr(0,7) == "Unknown") continue;
 

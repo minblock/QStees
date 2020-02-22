@@ -324,7 +324,7 @@
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string notr="true">0.00 QSTEES</string>
+                  <string notr="true">0.00 QTIPARRAY</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -404,7 +404,7 @@
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string notr="true">0.00 QSTEES</string>
+                  <string notr="true">0.00 QTIPARRAY</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -455,7 +455,7 @@
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string notr="true">0.00 QSTEES</string>
+                  <string notr="true">0.00 QTIPARRAY</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -484,7 +484,7 @@
                   <enum>Qt::ActionsContextMenu</enum>
                  </property>
                  <property name="text">
-                  <string notr="true">0.00 QSTEES</string>
+                  <string notr="true">0.00 QTIPARRAY</string>
                  </property>
                  <property name="textInteractionFlags">
                   <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -850,7 +850,7 @@
                    <property name="toolTip">
                     <string>Specify a custom fee per kB (1,000 bytes) of the transaction's virtual size.
 
-Note:  Qsteesce the fee is calculated on a per-byte basis, a fee of &quot;100 satoshis per kB&quot; for a transaction size of 500 bytes (half of 1 kB) would ultimately yield a fee of only 50 satoshis.</string>
+Note:  QtipArrayce the fee is calculated on a per-byte basis, a fee of &quot;100 satoshis per kB&quot; for a transaction size of 500 bytes (half of 1 kB) would ultimately yield a fee of only 50 satoshis.</string>
                    </property>
                    <property name="text">
                     <string>per kilobyte</string>
@@ -858,7 +858,7 @@ Note:  Qsteesce the fee is calculated on a per-byte basis, a fee of &quot;100 sa
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSTEESAmountField" name="customFee"/>
+                  <widget class="QTIPARRAYAmountField" name="customFee"/>
                  </item>
                  <item>
                   <spacer name="horizontalSpacer_6">
@@ -883,7 +883,7 @@ Note:  Qsteesce the fee is calculated on a per-byte basis, a fee of &quot;100 sa
                     <bool>true</bool>
                    </property>
                    <property name="toolTip">
-                    <string>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks. But be aware that this can end up in a never confirming transaction once there is more demand for qstees transactions than the network can process.</string>
+                    <string>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks. But be aware that this can end up in a never confirming transaction once there is more demand for sin transactions than the network can process.</string>
                    </property>
                    <property name="text">
                     <string>(read the tooltip)</string>
@@ -1230,7 +1230,7 @@ Note:  Qsteesce the fee is calculated on a per-byte basis, a fee of &quot;100 sa
           <cursorShape>IBeamCursor</cursorShape>
          </property>
          <property name="text">
-          <string notr="true">123.456 QSTEES</string>
+          <string notr="true">123.456 QTIPARRAY</string>
          </property>
          <property name="textInteractionFlags">
           <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
@@ -1250,14 +1250,14 @@ Note:  Qsteesce the fee is calculated on a per-byte basis, a fee of &quot;100 sa
    <header>qt/qvalidatedlineedit.h</header>
   </customwidget>
   <customwidget>
-   <class>QSTEESAmountField</class>
+   <class>QTIPARRAYAmountField</class>
    <extends>QLineEdit</extends>
-   <header>qt/qsteesamountfield.h</header>
+   <header>qt/sinamountfield.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../qstees.qrc"/>
+  <include location="../sin.qrc"/>
  </resources>
  <connections/>
  <buttongroups>

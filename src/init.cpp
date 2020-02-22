@@ -2,12 +2,12 @@
 // Copyright (c) 2009-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/qstees-config.h>
+#include <config/sin-config.h>
 #endif
 
 #include <init.h>
@@ -70,7 +70,7 @@
 
 #include <spork.h>
 #include <sporkdb.h>
-//qsteesovate
+//sinovate
 #include <infinitynodeman.h>
 #include <infinitynodersv.h>
 //
@@ -168,7 +168,7 @@ static const char* FEE_ESTIMATES_FILENAME="fee_estimates.dat";
 /**
  * This is a minimally invasive approach to shutdown on LevelDB read errors from the
  * chainstate, while keeping user interface out of the common library, which is shared
- * between qsteesd, and qstees-qt and non-server tools.
+ * between sind, and sin-qt and non-server tools.
 */
 class CCoinsViewErrorCatcher final : public CCoinsViewBacked
 {
@@ -265,7 +265,7 @@ void Shutdown()
     CFlatDB<CNetFulfilledRequestManager> flatdb4("netfulfilled.dat", "magicFulfilledCache");
     flatdb4.Dump(netfulfilledman);
     //
-    // Qsteesovate
+    // QtipArrayovate
     CFlatDB<CInfinitynodeMan> flatdb5("infinitynode.dat", "magicInfinityNodeCache");
     flatdb5.Dump(infnodeman);
     CFlatDB<CInfinitynodersv> flatdb6("infinitynodersv.dat", "magicInfinityRSV");
@@ -584,14 +584,14 @@ void SetupServerArgs()
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/QSTEESOVATEblockchain/>";
-    const std::string URL_WEBSITE = "<https://qsteesovate.io>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/minblock/>";
+    const std::string URL_WEBSITE = "<https://sinovate.io>";
 
     return CopyrightHolders(strprintf(_("Copyright (C) %i-%i"), 2009, COPYRIGHT_YEAR) + " ") + "\n" +
            "\n" +
            strprintf(_("Please contribute if you find %s useful. "
                        "Visit %s for further information about the software."),
-               "QSTEES", URL_WEBSITE) +
+               "QTIPARRAY", URL_WEBSITE) +
            "\n" +
            strprintf(_("The source code is available from %s."),
                URL_SOURCE_CODE) +
@@ -647,7 +647,7 @@ struct CImportingNow
 
 
 // If we're using -prune with -reindex, then delete block files that will be ignored by the
-// reindex.  Qsteesce reindexing works by starting at block file 0 and looping until a blockfile
+// reindex.  QtipArrayce reindexing works by starting at block file 0 and looping until a blockfile
 // is missing, do the same here to delete any later block files after a gap.  Also delete all
 // rev files since they'll be rewritten by the reindex anyway.  This ensures that vinfoBlockFile
 // is in sync with what's actually on disk by the time we start downloading, so that pruning
@@ -763,7 +763,7 @@ static void ThreadImport(std::vector<fs::path> vImportFiles)
 }
 
 /** Sanity checks
- *  Ensure that QSTEES is running in a usable environment with all
+ *  Ensure that QTIPARRAY is running in a usable environment with all
  *  necessary library support.
  */
 static bool InitSanityCheck(void)
@@ -917,7 +917,7 @@ ServiceFlags nLocalServices = ServiceFlags(NODE_NETWORK | NODE_NETWORK_LIMITED);
 {
     // Rather than throwing std::bad-alloc if allocation fails, terminate
     // immediately to (try to) avoid chain corruption.
-    // Qsteesce LogPrintf may itself allocate memory, set the handler directly
+    // QtipArrayce LogPrintf may itself allocate memory, set the handler directly
     // to terminate first.
     std::set_new_handler(std::terminate);
     LogPrintf("Error: Out of memory. Terminating.\n");
@@ -1235,7 +1235,7 @@ bool AppInitParameterInteraction()
 
 static bool LockDataDirectory(bool probeOnly)
 {
-    // Make sure only a single QSTEES process is using the data directory.
+    // Make sure only a single QTIPARRAY process is using the data directory.
     fs::path datadir = GetDataDir();
     if (!DirIsWritable(datadir)) {
         return InitError(strprintf(_("Cannot write to data directory '%s'; check permissions."), datadir.string()));
@@ -1288,7 +1288,7 @@ void ThreadCheckInfinityNode(CConnman& connman)
     if(fOneThread) return;
     fOneThread = true;
 
-    RenameThread("qsteesovate-ps");
+    RenameThread("sinovate-ps");
 
     unsigned int nTick = 0;
 
@@ -1323,9 +1323,9 @@ void ThreadCheckInfinityNode(CConnman& connman)
             if(nTick % (60 * 5) == 0) {
                 infnodeman.CheckAndRemove(connman);
                 mnodeman.CheckAndRemoveBurnFundNotUniqueNode(connman);
-                mnodeman.CheckAndRemoveLimitNumberNode(connman, 1, Params().GetConsensus().nLimitQSTEESNODE_1);
-                mnodeman.CheckAndRemoveLimitNumberNode(connman, 5, Params().GetConsensus().nLimitQSTEESNODE_5);
-                mnodeman.CheckAndRemoveLimitNumberNode(connman, 10, Params().GetConsensus().nLimitQSTEESNODE_10);
+                mnodeman.CheckAndRemoveLimitNumberNode(connman, 1, Params().GetConsensus().nLimitQTIPARRAYNODE_1);
+                mnodeman.CheckAndRemoveLimitNumberNode(connman, 5, Params().GetConsensus().nLimitQTIPARRAYNODE_5);
+                mnodeman.CheckAndRemoveLimitNumberNode(connman, 10, Params().GetConsensus().nLimitQTIPARRAYNODE_10);
             }
         }
     }
@@ -1361,9 +1361,9 @@ bool AppInitMain()
     // Warn about relative -datadir path.
     if (gArgs.IsArgSet("-datadir") && !fs::path(gArgs.GetArg("-datadir", "")).is_absolute()) {
         LogPrintf("Warning: relative datadir option '%s' specified, which will be interpreted relative to the " /* Continued */
-                  "current working directory '%s'. This is fragile, because if qstees is started in the future "
+                  "current working directory '%s'. This is fragile, because if sin is started in the future "
                   "from a different location, it will be unable to locate the current data files. There could "
-                  "also be data loss if qstees is started while in a temporary directory.\n",
+                  "also be data loss if sin is started while in a temporary directory.\n",
             gArgs.GetArg("-datadir", ""), fs::current_path().string());
     }
 

@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -92,9 +92,9 @@ int CInfinitynodersv::getResult(std::string proposal, bool opinion, int mode)
                     for (auto& infpair : mapInfinitynodesCopy) {
                         if (infpair.second.getCollateralAddress() == EncodeDestination(voter)) {
                             infinitynode_info_t infnode = infpair.second.GetInfo();
-                            if(infnode.nQSTEESType == 1){value=2;}
-                            if(infnode.nQSTEESType == 5){value=10;}
-                            if(infnode.nQSTEESType == 10){value=20;}
+                            if(infnode.nQTIPARRAYType == 1){value=2;}
+                            if(infnode.nQTIPARRAYType == 5){value=10;}
+                            if(infnode.nQTIPARRAYType == 10){value=20;}
                         }
                     }
                 }

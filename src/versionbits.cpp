@@ -1,7 +1,7 @@
 // Copyright (c) 2016-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -145,7 +145,7 @@ BIP9Stats AbstractThresholdConditionChecker::GetStateStatisticsFor(const CBlockI
     return stats;
 }
 
-int AbstractThresholdConditionChecker::GetStateQsteesceHeightFor(const CBlockIndex* pindexPrev, const Consensus::Params& params, ThresholdConditionCache& cache) const
+int AbstractThresholdConditionChecker::GetStateQtipArrayceHeightFor(const CBlockIndex* pindexPrev, const Consensus::Params& params, ThresholdConditionCache& cache) const
 {
     int64_t start_time = BeginTime(params);
     if (start_time == Consensus::BIP9Deployment::ALWAYS_ACTIVE) {
@@ -217,9 +217,9 @@ BIP9Stats VersionBitsStatistics(const CBlockIndex* pindexPrev, const Consensus::
     return VersionBitsConditionChecker(pos).GetStateStatisticsFor(pindexPrev, params);
 }
 
-int VersionBitsStateQsteesceHeight(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::DeploymentPos pos, VersionBitsCache& cache)
+int VersionBitsStateQtipArrayceHeight(const CBlockIndex* pindexPrev, const Consensus::Params& params, Consensus::DeploymentPos pos, VersionBitsCache& cache)
 {
-    return VersionBitsConditionChecker(pos).GetStateQsteesceHeightFor(pindexPrev, params, cache.caches[pos]);
+    return VersionBitsConditionChecker(pos).GetStateQtipArrayceHeightFor(pindexPrev, params, cache.caches[pos]);
 }
 
 uint32_t VersionBitsMask(const Consensus::Params& params, Consensus::DeploymentPos pos)

@@ -14,7 +14,7 @@
                 -zmqpubhashblock=tcp://127.0.0.1:28332
 
     We use the asyncio library here.  `self.handle()` installs itself as a
-    future at the end of the function.  Qsteesce it never returns with the event
+    future at the end of the function.  QtipArrayce it never returns with the event
     loop having an empty stack of futures, this creates an infinite loop.  An
     alternative is to wrap the contents of `handle` inside `while True`.
 

@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -43,7 +43,7 @@
 //
 
 #if defined(NDEBUG)
-# error "QSTEES cannot be compiled without assertions."
+# error "QTIPARRAY cannot be compiled without assertions."
 #endif
 
 /** Expiration time for orphan transactions in seconds */
@@ -228,11 +228,11 @@ struct CNodeState {
     bool fSyncStarted;
     //! When to potentially disconnect peer for stalling headers download
     int64_t nHeadersSyncTimeout;
-    //! Qsteesce when we're stalling block download progress (in microseconds), or 0.
-    int64_t nStallingQsteesce;
+    //! QtipArrayce when we're stalling block download progress (in microseconds), or 0.
+    int64_t nStallingQtipArrayce;
     std::list<QueuedBlock> vBlocksInFlight;
     //! When the first entry in vBlocksInFlight started downloading. Don't care when vBlocksInFlight is empty.
-    int64_t nDownloadingQsteesce;
+    int64_t nDownloadingQtipArrayce;
     int nBlocksInFlight;
     int nBlocksInFlightValidHeaders;
     //! Whether we consider this a preferred download peer.
@@ -298,8 +298,8 @@ struct CNodeState {
         nUnconnectingHeaders = 0;
         fSyncStarted = false;
         nHeadersSyncTimeout = 0;
-        nStallingQsteesce = 0;
-        nDownloadingQsteesce = 0;
+        nStallingQtipArrayce = 0;
+        nDownloadingQtipArrayce = 0;
         nBlocksInFlight = 0;
         nBlocksInFlightValidHeaders = 0;
         fPreferredDownload = false;
@@ -369,11 +369,11 @@ static bool MarkBlockAsReceived(const uint256& hash) EXCLUSIVE_LOCKS_REQUIRED(cs
         }
         if (state->vBlocksInFlight.begin() == itInFlight->second.second) {
             // First block on the queue was received, update the start download time for the next one
-            state->nDownloadingQsteesce = std::max(state->nDownloadingQsteesce, GetTimeMicros());
+            state->nDownloadingQtipArrayce = std::max(state->nDownloadingQtipArrayce, GetTimeMicros());
         }
         state->vBlocksInFlight.erase(itInFlight->second.second);
         state->nBlocksInFlight--;
-        state->nStallingQsteesce = 0;
+        state->nStallingQtipArrayce = 0;
         mapBlocksInFlight.erase(itInFlight);
         return true;
     }
@@ -404,7 +404,7 @@ static bool MarkBlockAsInFlight(NodeId nodeid, const uint256& hash, const CBlock
     state->nBlocksInFlightValidHeaders += it->fValidatedHeaders;
     if (state->nBlocksInFlight == 1) {
         // We're starting a block download (batch) from this peer.
-        state->nDownloadingQsteesce = GetTimeMicros();
+        state->nDownloadingQtipArrayce = GetTimeMicros();
     }
     if (state->nBlocksInFlightValidHeaders == 1 && pindex != nullptr) {
         nPeersWithValidatedDownloads++;
@@ -2058,7 +2058,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         // Store the new addresses
         std::vector<CAddress> vAddrOk;
         int64_t nNow = GetAdjustedTime();
-        int64_t nQsteesce = nNow - 10 * 60;
+        int64_t nQtipArrayce = nNow - 10 * 60;
         for (CAddress& addr : vAddr)
         {
             if (interruptMsgProc)
@@ -2074,7 +2074,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
                 addr.nTime = nNow - 5 * 24 * 60 * 60;
             pfrom->AddAddressKnown(addr);
             bool fReachable = IsReachable(addr);
-            if (addr.nTime > nQsteesce && !pfrom->fGetAddr && vAddr.size() <= 10 && addr.IsRoutable())
+            if (addr.nTime > nQtipArrayce && !pfrom->fGetAddr && vAddr.size() <= 10 && addr.IsRoutable())
             {
                 // Relay to a limited number of other nodes
                 RelayAddress(addr, fReachable, connman);
@@ -2638,7 +2638,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         LOCK(cs_main);
 
         if (!LookupBlockIndex(cmpctblock.header.hashPrevBlock)) {
-            // Doesn't connect (or is genesis), instead of DoQsteesg in AcceptBlockHeader, request deeper headers
+            // Doesn't connect (or is genesis), instead of DoQtipArrayg in AcceptBlockHeader, request deeper headers
             if (!IsInitialBlockDownload())
                 connman->PushMessage(pfrom, msgMaker.Make(NetMsgType::GETHEADERS, chainActive.GetLocator(pindexBestHeader), uint256()));
             return true;
@@ -2906,7 +2906,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
         } // Don't hold cs_main when we call into ProcessNewBlock
         if (fBlockRead) {
             bool fNewBlock = false;
-            // Qsteesce we requested this block (it was in mapBlocksInFlight), force it to be processed,
+            // QtipArrayce we requested this block (it was in mapBlocksInFlight), force it to be processed,
             // even if it would not be a candidate for new tip (missing previous block, chain not long enough, etc)
             // This bypasses some anti-DoS logic in AcceptBlock (eg to prevent
             // disk-space attacks), but this should be safe due to the
@@ -3980,7 +3980,7 @@ bool PeerLogicValidation::SendMessages(CNode* pto)
 
         // Detect whether we're stalling
         nNow = GetTimeMicros();
-        if (state.nStallingQsteesce && state.nStallingQsteesce < nNow - 1000000 * BLOCK_STALLING_TIMEOUT) {
+        if (state.nStallingQtipArrayce && state.nStallingQtipArrayce < nNow - 1000000 * BLOCK_STALLING_TIMEOUT) {
             // Stalling only triggers when the block download window cannot move. During normal steady state,
             // the download window should be much larger than the to-be-downloaded set of blocks, so disconnection
             // should only happen during initial block download.
@@ -3996,7 +3996,7 @@ bool PeerLogicValidation::SendMessages(CNode* pto)
         if (state.vBlocksInFlight.size() > 0) {
             QueuedBlock &queuedBlock = state.vBlocksInFlight.front();
             int nOtherPeersWithValidatedDownloads = nPeersWithValidatedDownloads - (state.nBlocksInFlightValidHeaders > 0);
-            if (nNow > state.nDownloadingQsteesce + consensusParams.nPowTargetSpacing * (BLOCK_DOWNLOAD_TIMEOUT_BASE + BLOCK_DOWNLOAD_TIMEOUT_PER_PEER * nOtherPeersWithValidatedDownloads)) {
+            if (nNow > state.nDownloadingQtipArrayce + consensusParams.nPowTargetSpacing * (BLOCK_DOWNLOAD_TIMEOUT_BASE + BLOCK_DOWNLOAD_TIMEOUT_PER_PEER * nOtherPeersWithValidatedDownloads)) {
                 LogPrintf("Timeout downloading block %s from peer=%d, disconnecting\n", queuedBlock.hash.ToString(), pto->GetId());
                 pto->fDisconnect = true;
                 return true;
@@ -4055,8 +4055,8 @@ bool PeerLogicValidation::SendMessages(CNode* pto)
                     pindex->nHeight, pto->GetId());
             }
             if (state.nBlocksInFlight == 0 && staller != -1) {
-                if (State(staller)->nStallingQsteesce == 0) {
-                    State(staller)->nStallingQsteesce = nNow;
+                if (State(staller)->nStallingQtipArrayce == 0) {
+                    State(staller)->nStallingQtipArrayce = nNow;
                     LogPrint(BCLog::NET, "Stall started peer=%d\n", staller);
                 }
             }

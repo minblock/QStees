@@ -14,7 +14,7 @@
 #include <util.h>
 #include <validation.h>
 
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 
 #include <stdint.h>
 

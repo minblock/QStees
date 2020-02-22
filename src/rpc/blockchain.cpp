@@ -38,7 +38,7 @@
 
 #include <boost/algorithm/string.hpp>
 #include <boost/thread/thread.hpp> // boost::thread::interrupt
-/*QSTEES*/
+/*QTIPARRAY*/
 #include <instantx.h>
 
 #include <memory>
@@ -1066,9 +1066,9 @@ static void ApplyTimeLockedStats(CTermDepositStats &stats, 	std::set<uint160> &a
 			   )
 			{
 				if (
-                    ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 - 1) * COIN < output.second.out.nValue && output.second.out.nValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 * COIN) ||
-                    ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 - 1) * COIN < output.second.out.nValue && output.second.out.nValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 * COIN) ||
-                    ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_10 - 1) * COIN < output.second.out.nValue && output.second.out.nValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_10 * COIN)
+                    ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 - 1) * COIN < output.second.out.nValue && output.second.out.nValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 * COIN) ||
+                    ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 - 1) * COIN < output.second.out.nValue && output.second.out.nValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 * COIN) ||
+                    ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10 - 1) * COIN < output.second.out.nValue && output.second.out.nValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10 * COIN)
                 ) {
 					stats.nBurnNode += output.second.out.nValue;
 				} else {
@@ -1124,7 +1124,7 @@ if (request.fHelp || request.params.size() != 0)
             "[\n"
             "  \"nAddress\"  (Number) number of address\n"
             "  \"nTimeLockedTxs\"  (Number) the total number of TimeLocked Tx\n"
-            "  \"nTotalTimeLockedValue\"  (number) the total QSTEES locked on all wallets\n"
+            "  \"nTotalTimeLockedValue\"  (number) the total QTIPARRAY locked on all wallets\n"
             "]\n"
             "\nExamples:\n"
             + HelpExampleCli("gettermdepositstats", "")
@@ -1180,8 +1180,8 @@ UniValue gettxout(const JSONRPCRequest& request)
             "     \"hex\" : \"hex\",        (string) \n"
             "     \"reqSigs\" : n,          (numeric) Number of required signatures\n"
             "     \"type\" : \"pubkeyhash\", (string) The type, eg pubkeyhash\n"
-            "     \"addresses\" : [          (array of string) array of qstees addresses\n"
-            "        \"address\"     (string) qstees address\n"
+            "     \"addresses\" : [          (array of string) array of sin addresses\n"
+            "        \"address\"     (string) sin address\n"
             "        ,...\n"
             "     ]\n"
             "  },\n"
@@ -1313,7 +1313,7 @@ static UniValue BIP9SoftForkDesc(const Consensus::Params& consensusParams, Conse
     }
     rv.pushKV("startTime", consensusParams.vDeployments[id].nStartTime);
     rv.pushKV("timeout", consensusParams.vDeployments[id].nTimeout);
-    rv.pushKV("since", VersionBitsTipStateQsteesceHeight(consensusParams, id));
+    rv.pushKV("since", VersionBitsTipStateQtipArrayceHeight(consensusParams, id));
     if (ThresholdState::STARTED == thresholdState)
     {
         UniValue statsUV(UniValue::VOBJ);

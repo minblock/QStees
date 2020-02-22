@@ -56,7 +56,7 @@ TEST(FindFileTest, Empty) {
   ASSERT_TRUE(! Overlaps(NULL, NULL));
 }
 
-TEST(FindFileTest, Qsteesgle) {
+TEST(FindFileTest, QtipArraygle) {
   Add("p", "q");
   ASSERT_EQ(0, Find("a"));
   ASSERT_EQ(0, Find("p"));

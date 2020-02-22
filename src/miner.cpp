@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018 - 2019 QSTEES developers
+// Copyright (c) 2018 - 2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -81,7 +81,7 @@ int64_t UpdateTime(CBlock* pblock, const Consensus::Params& consensusParams, con
 
             // Update masternode reward to new value
             CScript cMasternodePayee;
-	     //qsteestype  LIL QSTEES : 1
+	     //sintype  LIL QTIPARRAY : 1
             if(mnpayments.GetBlockPayee(pindexPrev->nHeight + 1, 1, cMasternodePayee)) {
 		  nMasternodePayment = GetMasternodePayment(pindexPrev->nHeight + 1, 1);
                 for (auto output : coinbaseTx.vout) {
@@ -92,7 +92,7 @@ int64_t UpdateTime(CBlock* pblock, const Consensus::Params& consensusParams, con
                     }
                 }
             }
-	     //qsteestype  LIL QSTEES : 5
+	     //sintype  LIL QTIPARRAY : 5
             if(mnpayments.GetBlockPayee(pindexPrev->nHeight + 1, 5, cMasternodePayee)) {
 		  nMasternodePayment = GetMasternodePayment(pindexPrev->nHeight + 1, 5);
                 for (auto output : coinbaseTx.vout) {
@@ -103,7 +103,7 @@ int64_t UpdateTime(CBlock* pblock, const Consensus::Params& consensusParams, con
                     }
                 }
             }
-	     //qsteestype  LIL QSTEES : 10
+	     //sintype  LIL QTIPARRAY : 10
             if(mnpayments.GetBlockPayee(pindexPrev->nHeight + 1, 10, cMasternodePayee)) {
 		  nMasternodePayment = GetMasternodePayment(pindexPrev->nHeight + 1, 10);
                 for (auto output : coinbaseTx.vout) {
@@ -234,7 +234,7 @@ std::unique_ptr<CBlockTemplate> BlockAssembler::CreateNewBlock(const CScript& sc
     coinbaseTx.vin[0].scriptSig = CScript() << nHeight << OP_0;
     // Dev fee
     coinbaseTx.vout.push_back(CTxOut(GetDevCoin(nHeight, blockReward), devScript));
-	//qsteesnode reward
+	//sinnode reward
     FillBlockPayments(coinbaseTx, nHeight, coinbaseTx.vout[0].nValue, pblock->txoutMasternode, pblock->voutSuperblock);
 	// Burn Tx Fee
 	coinbaseTx.vout[0].nValue -= nFees;
@@ -378,7 +378,7 @@ void BlockAssembler::SortForBlock(const CTxMemPool::setEntries& package, std::ve
 
 // This transaction selection algorithm orders the mempool based
 // on feerate of a transaction including all unconfirmed ancestors.
-// Qsteesce we don't remove transactions from the mempool as we select them
+// QtipArrayce we don't remove transactions from the mempool as we select them
 // for block inclusion, we need an alternate method of updating the feerate
 // of a transaction with its not-yet-selected ancestors as we go.
 // This is accomplished by walking the in-mempool descendants of selected
@@ -462,7 +462,7 @@ void BlockAssembler::addPackageTxs(int &nPackagesSelected, int &nDescendantsUpda
 
         if (!TestPackage(packageSize, packageSigOpsCost)) {
             if (fUsingModified) {
-                // Qsteesce we always look at the best entry in mapModifiedTx,
+                // QtipArrayce we always look at the best entry in mapModifiedTx,
                 // we must erase failed entries so that we can consider the
                 // next best entry on the next loop iteration
                 mapModifiedTx.get<ancestor_score>().erase(modit);
@@ -535,10 +535,10 @@ static bool ProcessBlockFound(const std::shared_ptr<const CBlock> &pblock, const
     return true;
 }
 
-void static QSTEESMiner(const CChainParams& chainparams, CConnman& connman)
+void static QTIPARRAYMiner(const CChainParams& chainparams, CConnman& connman)
 {
-    LogPrintf("QSTEESminer -- started\n");
-    RenameThread("QSTEES-miner");
+    LogPrintf("QTIPARRAYminer -- started\n");
+    RenameThread("QTIPARRAY-miner");
 
     std::vector<std::shared_ptr<CWallet>> wallets = GetWallets();
     CWallet * const pwallet = (wallets.size() > 0) ? wallets[0].get() : nullptr;
@@ -577,14 +577,14 @@ void static QSTEESMiner(const CChainParams& chainparams, CConnman& connman)
             auto pblocktemplate = assembler.CreateNewBlock(coinbaseScript->reserveScript,  true);
             if (!pblocktemplate.get())
             {
-                LogPrintf("QSTEESMiner -- Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
+                LogPrintf("QTIPARRAYMiner -- Keypool ran out, please call keypoolrefill before restarting the mining thread\n");
                 MilliSleep(5000);
                 continue;
             }
             auto pblock = std::make_shared<CBlock>(pblocktemplate->block);
             IncrementExtraNonce(pblock.get(), pindexPrev, nExtraNonce);
 
-            LogPrintf("QSTEESMiner -- Running miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
+            LogPrintf("QTIPARRAYMiner -- Running miner with %u transactions in block (%u bytes)\n", pblock->vtx.size(),
                       ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
             //
@@ -603,7 +603,7 @@ void static QSTEESMiner(const CChainParams& chainparams, CConnman& connman)
                     if (UintToArith256(hash) <= hashTarget)
                     {
                         // Found a solution
-                        LogPrintf("QSTEESminer:\n  proof-of-work found\n  hash: %s\n  target: %s\n", hash.GetHex(), hashTarget.GetHex());
+                        LogPrintf("QTIPARRAYminer:\n  proof-of-work found\n  hash: %s\n  target: %s\n", hash.GetHex(), hashTarget.GetHex());
                         ProcessBlockFound(pblock, chainparams);
                         coinbaseScript->KeepScript();
 
@@ -639,18 +639,18 @@ void static QSTEESMiner(const CChainParams& chainparams, CConnman& connman)
         }
         catch (const boost::thread_interrupted&)
         {
-            LogPrintf("QSTEESMiner -- terminated\n");
+            LogPrintf("QTIPARRAYMiner -- terminated\n");
             throw;
         }
         catch (const std::runtime_error &e)
         {
-            LogPrintf("QSTEESMiner -- runtime error: %s\n", e.what());
+            LogPrintf("QTIPARRAYMiner -- runtime error: %s\n", e.what());
             return;
         }
     }
 }
 
-void GenerateQSTEESs(bool fGenerate, int nThreads, const CChainParams& chainparams, CConnman &connman)
+void GenerateQTIPARRAYs(bool fGenerate, int nThreads, const CChainParams& chainparams, CConnman &connman)
 {
     static boost::thread_group* minerThreads = NULL;
 
@@ -670,7 +670,7 @@ void GenerateQSTEESs(bool fGenerate, int nThreads, const CChainParams& chainpara
     std::string walletName = "*";
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
-        minerThreads->create_thread(boost::bind(&QSTEESMiner, boost::cref(chainparams), boost::ref(connman)));
+        minerThreads->create_thread(boost::bind(&QTIPARRAYMiner, boost::cref(chainparams), boost::ref(connman)));
 }
 
 void IncrementExtraNonce(CBlock* pblock, const CBlockIndex* pindexPrev, unsigned int& nExtraNonce)

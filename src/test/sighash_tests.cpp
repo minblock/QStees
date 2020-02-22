@@ -10,7 +10,7 @@
 #include <script/script.h>
 #include <serialize.h>
 #include <streams.h>
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 #include <util.h>
 #include <utilstrencodings.h>
 #include <version.h>
@@ -53,7 +53,7 @@ uint256 static SignatureHashOld(CScript scriptCode, const CTransaction& txTo, un
             if (i != nIn)
                 txTmp.vin[i].nSequence = 0;
     }
-    else if ((nHashType & 0x1f) == SIGHASH_QSTEESGLE)
+    else if ((nHashType & 0x1f) == SIGHASH_QTIPARRAYGLE)
     {
         // Only lock-in the txout payee at same index as txin
         unsigned int nOut = nIn;
@@ -92,13 +92,13 @@ void static RandomScript(CScript &script) {
         script << oplist[InsecureRandRange(sizeof(oplist)/sizeof(oplist[0]))];
 }
 
-void static RandomTransaction(CMutableTransaction &tx, bool fQsteesgle) {
+void static RandomTransaction(CMutableTransaction &tx, bool fQtipArraygle) {
     tx.nVersion = InsecureRand32();
     tx.vin.clear();
     tx.vout.clear();
     tx.nLockTime = (InsecureRandBool()) ? InsecureRand32() : 0;
     int ins = (InsecureRandBits(2)) + 1;
-    int outs = fQsteesgle ? ins : (InsecureRandBits(2)) + 1;
+    int outs = fQtipArraygle ? ins : (InsecureRandBits(2)) + 1;
     for (int in = 0; in < ins; in++) {
         tx.vin.push_back(CTxIn());
         CTxIn &txin = tx.vin.back();
@@ -131,7 +131,7 @@ BOOST_AUTO_TEST_CASE(sighash_test)
     for (int i=0; i<nRandomTests; i++) {
         int nHashType = InsecureRand32();
         CMutableTransaction txTo;
-        RandomTransaction(txTo, (nHashType & 0x1f) == SIGHASH_QSTEESGLE);
+        RandomTransaction(txTo, (nHashType & 0x1f) == SIGHASH_QTIPARRAYGLE);
         CScript scriptCode;
         RandomScript(scriptCode);
         int nIn = InsecureRandRange(txTo.vin.size());

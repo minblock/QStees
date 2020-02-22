@@ -76,9 +76,9 @@ class PSBTTest(BitcoinTestFramework):
         self.nodes[0].sendrawtransaction(final_tx)
 
         # Create p2sh, p2wpkh, and p2wsh addresses
-        pubkey0 = self.nodes[0].getaddresqsteesfo(self.nodes[0].getnewaddress())['pubkey']
-        pubkey1 = self.nodes[1].getaddresqsteesfo(self.nodes[1].getnewaddress())['pubkey']
-        pubkey2 = self.nodes[2].getaddresqsteesfo(self.nodes[2].getnewaddress())['pubkey']
+        pubkey0 = self.nodes[0].getaddressinfo(self.nodes[0].getnewaddress())['pubkey']
+        pubkey1 = self.nodes[1].getaddressinfo(self.nodes[1].getnewaddress())['pubkey']
+        pubkey2 = self.nodes[2].getaddressinfo(self.nodes[2].getnewaddress())['pubkey']
         p2sh = self.nodes[1].addmultisigaddress(2, [pubkey0, pubkey1, pubkey2], "", "legacy")['address']
         p2wsh = self.nodes[1].addmultisigaddress(2, [pubkey0, pubkey1, pubkey2], "", "bech32")['address']
         p2sh_p2wsh = self.nodes[1].addmultisigaddress(2, [pubkey0, pubkey1, pubkey2], "", "p2sh-segwit")['address']

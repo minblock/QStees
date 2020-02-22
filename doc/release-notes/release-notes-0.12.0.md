@@ -305,7 +305,7 @@ Wallet: Merkle branches removed
 
 Previously, every wallet transaction stored a Merkle branch to prove its
 presence in blocks. This wasn't being used for more than an expensive
-sanity check. Qsteesce 0.12, these are no longer stored. When loading a
+sanity check. QtipArrayce 0.12, these are no longer stored. When loading a
 0.12 wallet into an older version, it will automatically rescan to avoid
 failed checks.
 
@@ -595,7 +595,7 @@ git merge commit are mentioned.
 - #6498 `219b916` Keep track of recently rejected transactions with a rolling bloom filter (cont'd) (Peter Todd)
 - #6556 `70ec975` Fix masking of irrelevant bits in address groups. (Alex Morcos)
 - #6530 `ea19c2b` Improve addrman Select() performance when buckets are nearly empty (Pieter Wuille)
-- #6583 `af9305a` add support for miniupnpc api version 14 (Pavel Vaqstees)
+- #6583 `af9305a` add support for miniupnpc api version 14 (Pavel Vasin)
 - #6374 `69dc5b5` Connection slot exhaustion DoS mitigation (Patrick Strateman)
 - #6636 `536207f` net: correctly initialize nMinPingUsecTime (Wladimir J. van der Laan)
 - #6579 `0c27795` Add NODE_BLOOM service bit and bump protocol version (Matt Corallo)
@@ -685,7 +685,7 @@ git merge commit are mentioned.
 
 - #6217 `c57e12a` disconnect peers from peers tab via context menu (Diapolo)
 - #6209 `ab0ec67` extend rpc console peers tab (Diapolo)
-- #6484 `1369d69` use CHashWriter also in SignVerifyMessageDialog (Pavel Vaqstees)
+- #6484 `1369d69` use CHashWriter also in SignVerifyMessageDialog (Pavel Vasin)
 - #6487 `9848d42` Introduce PlatformStyle (Wladimir J. van der Laan)
 - #6505 `100c9d3` cleanup icons (MarcoFalke)
 - #4587 `0c465f5` allow users to set -onion via GUI (Diapolo)
@@ -865,7 +865,7 @@ Thanks to everyone who directly contributed to this release:
 - Paul Georgiou
 - Paul Rabahy
 - Pavel Janík / paveljanik
-- Pavel Vaqstees
+- Pavel Vasin
 - Pavol Rusnak
 - Peter Josling
 - Peter Todd

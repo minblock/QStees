@@ -4,8 +4,8 @@
 
 #include <qt/guiutil.h>
 
-#include <qt/qsteesaddressvalidator.h>
-#include <qt/qsteesunits.h>
+#include <qt/sinaddressvalidator.h>
+#include <qt/sinunits.h>
 #include <qt/qvalidatedlineedit.h>
 #include <qt/walletmodel.h>
 
@@ -121,7 +121,7 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
     widget->setFont(fixedPitchFont());
     // We don't want translators to use own addresses in translations
     // and this is the only place, where this address is supplied.
-    widget->setPlaceholderText(QObject::tr("Enter a QSTEES address (e.g. %1)").arg(
+    widget->setPlaceholderText(QObject::tr("Enter a QTIPARRAY address (e.g. %1)").arg(
         QString::fromStdString(DummyAddress(Params()))));
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
     widget->setCheckValidator(new BitcoinAddressCheckValidator(parent));
@@ -129,8 +129,8 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no qstees: URI
-    if(!uri.isValid() || uri.scheme() != QString("qstees"))
+    // return if URI is not valid or is no sin: URI
+    if(!uri.isValid() || uri.scheme() != QString("sin"))
         return false;
 
     SendCoinsRecipient rv;
@@ -175,7 +175,7 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!BitcoinUnits::parse(BitcoinUnits::QSTEES, i->second, &rv.amount))
+                if(!BitcoinUnits::parse(BitcoinUnits::QTIPARRAY, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -201,12 +201,12 @@ bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 
 QString formatBitcoinURI(const SendCoinsRecipient &info)
 {
-    QString ret = QString("qstees:%1").arg(info.address);
+    QString ret = QString("sin:%1").arg(info.address);
     int paramCount = 0;
 
     if (info.amount)
     {
-        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::QSTEES, info.amount, false, BitcoinUnits::separatorNever));
+        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::QTIPARRAY, info.amount, false, BitcoinUnits::separatorNever));
         paramCount++;
     }
 
@@ -423,9 +423,42 @@ bool openBitcoinConf()
 
     configFile.close();
 
-    /* Open qstees.conf with the associated application */
+    /* Open sin.conf with the associated application */
     return QDesktopServices::openUrl(QUrl::fromLocalFile(boostPathToQString(pathConfig)));
 }
+
+//start exchanges and web links
+void hyperlinks_slot1(){QString link1 = "https://sinovate.io/"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks_slot2(){QString link1 = "https://sinovate.io/links/discord"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks_slot3(){QString link1 = "https://sinovate.io/links/twitter"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks_slot4(){QString link1 = "https://sinovate.io/links/btctalk"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks_slot5(){QString link1 = "https://sinovate.io/links/reddit"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks_slot6(){QString link1 = "https://sinovate.io/links/facebook"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks_slot7(){QString link1 = "https://sinovate.io/links/youtube"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks_slot8(){QString link1 = "https://github.com/minblock"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks_slot9(){QString link1 = "https://sinovate.io/links/telegram"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+//Exchanges
+void hyperlinks2_slot1(){QString link1 = "https://coinmarketcap.com/currencies/sinovate/"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks2_slot2(){QString link1 = "https://tradeogre.com/exchange/BTC-QTIPARRAY"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks2_slot3(){QString link1 = "https://www.catex.io/trading/QTIPARRAY/BTC"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks2_slot4(){QString link1 = "https://coinsbit.io/trade/QTIPARRAY_BTC"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks2_slot5(){QString link1 = "https://crex24.com/exchange/QTIPARRAY-BTC"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks2_slot6(){QString link1 = "https://www.qbtc.com/trade?symbol=QTIPARRAY_USDT"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks2_slot7(){QString link1 = "https://txbit.io/Trade/QTIPARRAY/BTC"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks2_slot8(){QString link1 = "https://www.catex.io/trading/QTIPARRAY/ETH"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks2_slot9(){QString link1 = "https://crex24.com/exchange/QTIPARRAY-ETH"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks2_slot10(){QString link1 = "https://app.stex.com/en/basic-trade/pair/BTC/QTIPARRAY/1D"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks2_slot11(){QString link1 = "https://trade.citex.co.kr/trade/QTIPARRAY_BTC"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks2_slot12(){QString link1 = "https://instaswap.io"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+
+void hyperlinks3_slot1(){QString link1 = "https://sinovate.io/whitepaper/"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks3_slot2(){QString link1 = "https://sinovate.io/roadmap/"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks3_slot3(){QString link1 = "https://sinovate.gitbook.io/docs/"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks3_slot4(){QString link1 = "https://github.com/minblock/QStees/releases/latest/download/sin.conf"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks3_slot5(){QString link1 = "https://github.com/minblock/QStees/releases"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks3_slot6(){QString link1 = "https://sinovate.io/links/explorer"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+void hyperlinks3_slot7(){QString link1 = "https://sinovate.io/webtool"; QDesktopServices::openUrl(QUrl(link1, QUrl::TolerantMode));}
+//end exchanges and web links
 
 // Dash
 void openMNConfigfile()
@@ -697,8 +730,8 @@ fs::path static GetAutostartFilePath()
 {
     std::string chain = gArgs.GetChainName();
     if (chain == CBaseChainParams::MAIN)
-        return GetAutostartDir() / "qstees.desktop";
-    return GetAutostartDir() / strprintf("qstees-%s.lnk", chain);
+        return GetAutostartDir() / "sin.desktop";
+    return GetAutostartDir() / strprintf("sin-%s.lnk", chain);
 }
 
 bool GetStartOnSystemStartup()
@@ -738,7 +771,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         if (!optionFile.good())
             return false;
         std::string chain = gArgs.GetChainName();
-        // Write a qstees.desktop file to the autostart directory:
+        // Write a sin.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
         if (chain == CBaseChainParams::MAIN)
@@ -770,7 +803,7 @@ LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef
         return nullptr;
     }
 
-    // loop through the list of startup items and try to find the qstees app
+    // loop through the list of startup items and try to find the sin app
     for(int i = 0; i < CFArrayGetCount(listSnapshot); i++) {
         LSSharedFileListItemRef item = (LSSharedFileListItemRef)CFArrayGetValueAtIndex(listSnapshot, i);
         UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
@@ -804,38 +837,38 @@ LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef
 
 bool GetStartOnSystemStartup()
 {
-    CFURLRef qsteesAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    if (qsteesAppUrl == nullptr) {
+    CFURLRef sinAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    if (sinAppUrl == nullptr) {
         return false;
     }
 
     LSSharedFileListRef loginItems = LSSharedFileListCreate(nullptr, kLSSharedFileListSessionLoginItems, nullptr);
-    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, qsteesAppUrl);
+    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, sinAppUrl);
 
-    CFRelease(qsteesAppUrl);
+    CFRelease(sinAppUrl);
     return !!foundItem; // return boolified object
 }
 
 bool SetStartOnSystemStartup(bool fAutoStart)
 {
-    CFURLRef qsteesAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
-    if (qsteesAppUrl == nullptr) {
+    CFURLRef sinAppUrl = CFBundleCopyBundleURL(CFBundleGetMainBundle());
+    if (sinAppUrl == nullptr) {
         return false;
     }
 
     LSSharedFileListRef loginItems = LSSharedFileListCreate(nullptr, kLSSharedFileListSessionLoginItems, nullptr);
-    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, qsteesAppUrl);
+    LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, sinAppUrl);
 
     if(fAutoStart && !foundItem) {
-        // add qstees app to startup item list
-        LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, nullptr, nullptr, qsteesAppUrl, nullptr, nullptr);
+        // add sin app to startup item list
+        LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, nullptr, nullptr, sinAppUrl, nullptr, nullptr);
     }
     else if(!fAutoStart && foundItem) {
         // remove item
         LSSharedFileListItemRemove(loginItems, foundItem);
     }
 
-    CFRelease(qsteesAppUrl);
+    CFRelease(sinAppUrl);
     return true;
 }
 #pragma GCC diagnostic pop

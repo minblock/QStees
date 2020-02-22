@@ -19,7 +19,7 @@ Compatibility
 Bitcoin Core is extensively tested on multiple operating systems using
 the Linux kernel, macOS 10.8+, and Windows Vista and later.
 
-Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBuqsteesess/end-of-xp-support),
+Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBusiness/end-of-xp-support),
 No attempt is made to prevent installing or running the software on Windows XP, you
 can still do so at your own risk but be aware that there are known instabilities and issues.
 Please do not report issues about Windows XP to the issue tracker.
@@ -52,7 +52,7 @@ transactions from the returned block template. This allows non-segwit miners to
 continue functioning correctly even after segwit has activated.
 
 Due to the limitations in previous versions, getblocktemplate also recommended
-non-segwit clients to not signal for the segwit version-bit. Qsteesce this is no
+non-segwit clients to not signal for the segwit version-bit. QtipArrayce this is no
 longer an issue, getblocktemplate now always recommends signalling segwit for
 all miners. This is safe because ability to enforce the rule is the only
 required criteria for safe activation, not actually producing segwit-enabled

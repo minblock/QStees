@@ -10,9 +10,9 @@
 #include <serialize.h>
 #include <uint256.h>
 
-extern const int nQsteesHeightFinalnet;
-extern const int nQsteesHeightTestnet;
-extern const int nQsteesHeightMainnet;
+extern const int nQtipArrayHeightFinalnet;
+extern const int nQtipArrayHeightTestnet;
+extern const int nQtipArrayHeightMainnet;
 
 /** Nodes collect new transactions into a block, hash them into a hash tree,
  * and scan through nonce values to make the block's hash satisfy proof-of-work

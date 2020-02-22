@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/qstees-config.h>
+#include <config/sin-config.h>
 #endif
 
 #include <qt/utilitydialog.h>
@@ -58,7 +58,7 @@ HelpMessageDialog::HelpMessageDialog(interfaces::Node& node, QWidget *parent, He
         // Make URLs clickable
         QRegExp uri("<(.*)>", Qt::CaseSensitive, QRegExp::RegExp2);
         uri.setMinimal(true); // use non-greedy matching
-        licenseInfoHTML.replace(uri, "<a style=\"color:#FF8204;\" href=\"\\1\">\\1</a>");
+        licenseInfoHTML.replace(uri, "<a style=\"color:#00419A;\" href=\"\\1\">\\1</a>");
         // Replace newlines with HTML breaks
         licenseInfoHTML.replace("\n", "<br>");
 
@@ -70,7 +70,7 @@ HelpMessageDialog::HelpMessageDialog(interfaces::Node& node, QWidget *parent, He
         ui->helpMessage->setVisible(false);
     } else if (helpMode == cmdline) {
         setWindowTitle(tr("Command-line options"));
-        QString header = "Usage:  qstees-qt [command-line options]                     \n";
+        QString header = "Usage:  sin-qt [command-line options]                     \n";
         QTextCursor cursor(ui->helpMessage->document());
         cursor.insertText(version);
         cursor.insertBlock();
@@ -113,6 +113,53 @@ HelpMessageDialog::HelpMessageDialog(interfaces::Node& node, QWidget *parent, He
         }
         ui->helpMessage->moveCursor(QTextCursor::Start);
         ui->scrollArea->setVisible(false);
+        ui->aboutLogo->setVisible(false);
+ } else if (helpMode == pshelp) {
+        setWindowTitle(tr("Specifications"));
+
+        ui->aboutMessage->setTextFormat(Qt::RichText);
+        ui->scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+        ui->aboutMessage->setStyleSheet("background-color:transparent; color:#000000;");
+        ui->aboutMessage->setText(tr("\
+<h3>Specifications</h3> \
+<ol type=\"1\"> \
+<br>\
+<b>Name:</b> QSTEES\
+<br>\
+<b>Ticker:</b> QTIPARRAY\
+<br>\
+<b>Algorithm:</b> X25X\
+<br>\
+<b>Block Rewards:</b> PoW-25 QTIPARRAY & Infinity Nodes-2750 QTIPARRAY\
+<br>\
+<b>Block Time:</b> 2 minutes (FlashSend-2 seconds)\
+<br>\
+<b>Current Blockchain Size:</b> 1.5 gb\
+<br>\
+<b>Difficulty Retargeting Algo:</b> LWMA\
+<br>\
+<b>51% Attack Solution:</b> LWMA & Reorg 55 (fork rejection)\
+<br>\
+<b>Infinity Nodes Collateral:</b> 100K-500K-1000K (three-tiers)\
+<br>\
+Max Block Size:</b> 16 mb\
+<br>\
+<b>Max Supply:</b> Always less than 800 million infinitely\
+<br>\
+<b>Pre-Mine:</b> No\
+<br>\
+<b>P2P Port:</b> 20970\
+<br>\
+<b>RPC Port:</b> 20971\
+<br>\
+<b>Transactions per second:</b> Up to 533 tx/s\
+<br>\
+<b>Treasury:</b> 10%\
+<ol type=\"1\"> \
+"
+        ));
+        ui->aboutMessage->setWordWrap(true);
+        ui->helpMessage->setVisible(false);
         ui->aboutLogo->setVisible(false);
     }
 }

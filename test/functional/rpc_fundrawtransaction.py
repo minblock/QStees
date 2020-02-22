@@ -66,7 +66,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         assert_equal(rawmatch["changepos"], -1)
 
         watchonly_address = self.nodes[0].getnewaddress()
-        watchonly_pubkey = self.nodes[0].getaddresqsteesfo(watchonly_address)["pubkey"]
+        watchonly_pubkey = self.nodes[0].getaddressinfo(watchonly_address)["pubkey"]
         watchonly_amount = Decimal(200)
         self.nodes[3].importpubkey(watchonly_pubkey, "", True)
         watchonly_txid = self.nodes[0].sendtoaddress(watchonly_address, watchonly_amount)
@@ -389,8 +389,8 @@ class RawTransactionsTest(BitcoinTestFramework):
         addr1 = self.nodes[1].getnewaddress()
         addr2 = self.nodes[1].getnewaddress()
 
-        addr1Obj = self.nodes[1].getaddresqsteesfo(addr1)
-        addr2Obj = self.nodes[1].getaddresqsteesfo(addr2)
+        addr1Obj = self.nodes[1].getaddressinfo(addr1)
+        addr2Obj = self.nodes[1].getaddressinfo(addr2)
 
         mSigObj = self.nodes[1].addmultisigaddress(2, [addr1Obj['pubkey'], addr2Obj['pubkey']])['address']
 
@@ -419,11 +419,11 @@ class RawTransactionsTest(BitcoinTestFramework):
         addr4 = self.nodes[1].getnewaddress()
         addr5 = self.nodes[1].getnewaddress()
 
-        addr1Obj = self.nodes[1].getaddresqsteesfo(addr1)
-        addr2Obj = self.nodes[1].getaddresqsteesfo(addr2)
-        addr3Obj = self.nodes[1].getaddresqsteesfo(addr3)
-        addr4Obj = self.nodes[1].getaddresqsteesfo(addr4)
-        addr5Obj = self.nodes[1].getaddresqsteesfo(addr5)
+        addr1Obj = self.nodes[1].getaddressinfo(addr1)
+        addr2Obj = self.nodes[1].getaddressinfo(addr2)
+        addr3Obj = self.nodes[1].getaddressinfo(addr3)
+        addr4Obj = self.nodes[1].getaddressinfo(addr4)
+        addr5Obj = self.nodes[1].getaddressinfo(addr5)
 
         mSigObj = self.nodes[1].addmultisigaddress(4, [addr1Obj['pubkey'], addr2Obj['pubkey'], addr3Obj['pubkey'], addr4Obj['pubkey'], addr5Obj['pubkey']])['address']
 
@@ -449,8 +449,8 @@ class RawTransactionsTest(BitcoinTestFramework):
         addr1 = self.nodes[2].getnewaddress()
         addr2 = self.nodes[2].getnewaddress()
 
-        addr1Obj = self.nodes[2].getaddresqsteesfo(addr1)
-        addr2Obj = self.nodes[2].getaddresqsteesfo(addr2)
+        addr1Obj = self.nodes[2].getaddressinfo(addr1)
+        addr2Obj = self.nodes[2].getaddressinfo(addr2)
 
         mSigObj = self.nodes[2].addmultisigaddress(2, [addr1Obj['pubkey'], addr2Obj['pubkey']])['address']
 

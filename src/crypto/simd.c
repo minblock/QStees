@@ -22,7 +22,7 @@
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
  * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
  * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARIQSTEESG FROM, OUT OF OR IN CONNECTION WITH THE
+ * TORT OR OTHERWISE, ARIQTIPARRAYG FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * ===========================(LICENSE END)=============================
@@ -97,7 +97,7 @@ static const s32 alpha_tab[] = {
  * If, upon entry, the values of q[] are all in the -N..N range (where
  * N >= 98302) then the new values of q[] are in the -2N..2N range.
  *
- * Qsteesce alpha_tab[v] <= 256, maximum allowed range is for N = 8388608.
+ * QtipArrayce alpha_tab[v] <= 256, maximum allowed range is for N = 8388608.
  */
 #define FFT_LOOP(rb, hk, as, id)   do { \
 		size_t u, v; \

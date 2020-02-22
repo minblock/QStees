@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -133,8 +133,8 @@ void CMasternode::updateInfinityNodeInfo(bool fAllowFull)
     nBurnAmount = coinBurnFund.out.nValue / COIN + 1; //automaticaly round
     nCollateralAmount = coinCollateral.out.nValue / COIN;
     collateralAddress = EncodeDestination(addressCollateral);
-    if (nBurnAmount >=100000) {nQsteesType = nBurnAmount / 100000;}
-    else { nQsteesType = nBurnAmount;}
+    if (nBurnAmount >=100000) {nQtipArrayType = nBurnAmount / 100000;}
+    else { nQtipArrayType = nBurnAmount;}
     nodeBurntoAddress = EncodeDestination(addressBurnNode);
 
     if (fAllowFull) {
@@ -187,31 +187,31 @@ CAmount CMasternode::CheckOutPointValue(const COutPoint& outpoint)
     return coin.out.nValue;
 }
 
-CMasternode::QsteesType CMasternode::GetQsteesType()
+CMasternode::QtipArrayType CMasternode::GetQtipArrayType()
 {
-    if (Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 == nBurnAmount) {
-        return QSTEESNODE_1;
+    if (Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 == nBurnAmount) {
+        return QTIPARRAYNODE_1;
     }
     
-    if (Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 == nBurnAmount) {
-        return QSTEESNODE_5;
+    if (Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 == nBurnAmount) {
+        return QTIPARRAYNODE_5;
     }
     
-    if (Params().GetConsensus().nMasternodeBurnQSTEESNODE_10 == nBurnAmount) {
-        return QSTEESNODE_10;
+    if (Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10 == nBurnAmount) {
+        return QTIPARRAYNODE_10;
     }
     
-    return QSTEESNODE_UNKNOWN;
+    return QTIPARRAYNODE_UNKNOWN;
 }
 
-int CMasternode::GetQsteesTypeInt()
+int CMasternode::GetQtipArrayTypeInt()
 {
-    return nQsteesType;
+    return nQtipArrayType;
 }
 
 bool CMasternode::CanVoteForReward() {
-    for(std::vector<QsteesType>::iterator it = vQsteesTypeCanVote.begin(); it != vQsteesTypeCanVote.end(); ++it) {
-        if ( GetQsteesType() == *it ){
+    for(std::vector<QtipArrayType>::iterator it = vQtipArrayTypeCanVote.begin(); it != vQtipArrayTypeCanVote.end(); ++it) {
+        if ( GetQtipArrayType() == *it ){
             return true;
         }
     }
@@ -258,9 +258,9 @@ CMasternode::BurnFundStatus CMasternode::CheckBurnFund(const COutPoint& outpoint
         return BURNFUND_EXPIRED;
     }
 
-    if( nBurnAmount != Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 && 
-        nBurnAmount != Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 && 
-        nBurnAmount != Params().GetConsensus().nMasternodeBurnQSTEESNODE_10
+    if( nBurnAmount != Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 && 
+        nBurnAmount != Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 && 
+        nBurnAmount != Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10
        ) {
         LogPrintf("CMasternode::BurnFundStatus -- BurnFund  is %d\n", nBurnAmount);
         return BURNFUND_INVALID_AMOUNT;
@@ -324,7 +324,7 @@ void CMasternode::Check(bool fForce)
         BurnFundStatus errBurnFund = CheckBurnFund(vinBurnFund.prevout, nExpireHeight, nBurnAmount);
         if (errBurnFund != BURNFUND_OK) {
             nActiveState = MASTERNODE_OUTPOINT_SPENT;
-            LogPrint(BCLog::MASTERNODE, "CMasternode::Check -- Failed to check QSTEES Node BurnFund tx, masternode=%s\n", vin.prevout.ToStringShort());
+            LogPrint(BCLog::MASTERNODE, "CMasternode::Check -- Failed to check QTIPARRAY Node BurnFund tx, masternode=%s\n", vin.prevout.ToStringShort());
             return;
         }
 
@@ -515,13 +515,13 @@ void CMasternode::UpdateLastPaid(const CBlockIndex *pindex, int nMaxBlocksToScan
             if(!ReadBlockFromDisk(block, BlockReading, Params().GetConsensus())) // shouldn't really happen
                 continue;
 
-	    CAmount nNodePaymentQSTEESNODE_1 = GetMasternodePayment(BlockReading->nHeight, 1);
-	    CAmount nNodePaymentQSTEESNODE_5 = GetMasternodePayment(BlockReading->nHeight, 5);
-	    CAmount nNodePaymentQSTEESNODE_10 = GetMasternodePayment(BlockReading->nHeight, 10);
+	    CAmount nNodePaymentQTIPARRAYNODE_1 = GetMasternodePayment(BlockReading->nHeight, 1);
+	    CAmount nNodePaymentQTIPARRAYNODE_5 = GetMasternodePayment(BlockReading->nHeight, 5);
+	    CAmount nNodePaymentQTIPARRAYNODE_10 = GetMasternodePayment(BlockReading->nHeight, 10);
 
             for (auto txout : block.vtx[0]->vout)
-                if(mnpayee == txout.scriptPubKey && (nNodePaymentQSTEESNODE_1 == txout.nValue || 
-		   nNodePaymentQSTEESNODE_5 == txout.nValue || nNodePaymentQSTEESNODE_10 == txout.nValue)) {
+                if(mnpayee == txout.scriptPubKey && (nNodePaymentQTIPARRAYNODE_1 == txout.nValue || 
+		   nNodePaymentQTIPARRAYNODE_5 == txout.nValue || nNodePaymentQTIPARRAYNODE_10 == txout.nValue)) {
                    nBlockLastPaid = BlockReading->nHeight;
                    nTimeLastPaid = BlockReading->nTime;
                    LogPrint(BCLog::MASTERNODE, "CMasternode::UpdateLastPaidBlock -- searching for block with payment to %s -- found new %d\n", vin.prevout.ToStringShort(), nBlockLastPaid);
@@ -574,10 +574,10 @@ bool CMasternodeBroadcast::Create(std::string strService, std::string strKeyMast
     if (!Lookup(strService.c_str(), service, 0, false))
         return Log(strprintf("Invalid address %s for masternode.", strService));
 
-    if (Params().NetworkIDString() == CBaseChainParams::MAIN) { //only work on port 3337 on mainnet
+    if (Params().NetworkIDString() == CBaseChainParams::MAIN) { //only work on port 20970 on mainnet
         if (service.GetPort() != Params().GetDefaultPort())
             return Log(strprintf("Invalid port %u for masternode %s, only %d is supported on mainnet.", service.GetPort(), strService, Params().GetDefaultPort()));
-    } else if (service.GetPort() == Params().GetMainnetPort()) { //dont accept 3337 for other network
+    } else if (service.GetPort() == Params().GetMainnetPort()) { //dont accept 20970 for other network
             return Log(strprintf("Invalid port %u for masternode %s, only %d is supported on the current network.", service.GetPort(), strService, Params().GetDefaultPort()));
     }
 

@@ -23,11 +23,11 @@ class ScantxoutsetTest(BitcoinTestFramework):
         self.nodes[0].generate(110)
 
         addr_P2SH_SEGWIT = self.nodes[0].getnewaddress("", "p2sh-segwit")
-        pubk1 = self.nodes[0].getaddresqsteesfo(addr_P2SH_SEGWIT)['pubkey']
+        pubk1 = self.nodes[0].getaddressinfo(addr_P2SH_SEGWIT)['pubkey']
         addr_LEGACY = self.nodes[0].getnewaddress("", "legacy")
-        pubk2 = self.nodes[0].getaddresqsteesfo(addr_LEGACY)['pubkey']
+        pubk2 = self.nodes[0].getaddressinfo(addr_LEGACY)['pubkey']
         addr_BECH32 = self.nodes[0].getnewaddress("", "bech32")
-        pubk3 = self.nodes[0].getaddresqsteesfo(addr_BECH32)['pubkey']
+        pubk3 = self.nodes[0].getaddressinfo(addr_BECH32)['pubkey']
         self.nodes[0].sendtoaddress(addr_P2SH_SEGWIT, 0.001)
         self.nodes[0].sendtoaddress(addr_LEGACY, 0.002)
         self.nodes[0].sendtoaddress(addr_BECH32, 0.004)

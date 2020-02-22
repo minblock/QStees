@@ -66,8 +66,8 @@ const std::map<unsigned char, std::string> mapSigHashTypes = {
     {static_cast<unsigned char>(SIGHASH_ALL|SIGHASH_ANYONECANPAY), std::string("ALL|ANYONECANPAY")},
     {static_cast<unsigned char>(SIGHASH_NONE), std::string("NONE")},
     {static_cast<unsigned char>(SIGHASH_NONE|SIGHASH_ANYONECANPAY), std::string("NONE|ANYONECANPAY")},
-    {static_cast<unsigned char>(SIGHASH_QSTEESGLE), std::string("QSTEESGLE")},
-    {static_cast<unsigned char>(SIGHASH_QSTEESGLE|SIGHASH_ANYONECANPAY), std::string("QSTEESGLE|ANYONECANPAY")},
+    {static_cast<unsigned char>(SIGHASH_QTIPARRAYGLE), std::string("QTIPARRAYGLE")},
+    {static_cast<unsigned char>(SIGHASH_QTIPARRAYGLE|SIGHASH_ANYONECANPAY), std::string("QTIPARRAYGLE|ANYONECANPAY")},
 };
 
 std::string SighashToStr(unsigned char sighash_type)

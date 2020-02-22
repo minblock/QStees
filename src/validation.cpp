@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -44,7 +44,7 @@
 #include <utilstrencodings.h>
 #include <validationinterface.h>
 #include <warnings.h>
-/*QSTEES*/
+/*QTIPARRAY*/
 #include <instantx.h>
 #include <masternodeman.h>
 #include <masternode-payments.h>
@@ -56,7 +56,7 @@
 #include <boost/thread.hpp>
 
 #if defined(NDEBUG)
-# error "QSTEES cannot be compiled without assertions."
+# error "QTIPARRAY cannot be compiled without assertions."
 #endif
 
 #define MICRO 0.000001
@@ -144,7 +144,7 @@ private:
       * While this is more complicated than marking everything which descends
       * from an invalid block as invalid at the time we discover it to be
       * invalid, doing so would require walking all of mapBlockIndex to find all
-      * descendants. Qsteesce this case should be very rare, keeping track of all
+      * descendants. QtipArrayce this case should be very rare, keeping track of all
       * BLOCK_FAILED_VALID blocks in a set should be just fine and work just as
       * well.
       *
@@ -266,7 +266,7 @@ map<uint256, int64_t> mapRejectedBlocks GUARDED_BY(cs_main);
 /** Constant stuff for coinbase transactions we create: */
 CScript COINBASE_FLAGS;
 
-const std::string strMessageMagic = "QSTEES Signed Message:\n";
+const std::string strMessageMagic = "QTIPARRAY Signed Message:\n";
 
 // Internal stuff
 namespace {
@@ -433,7 +433,7 @@ bool CheckSequenceLocks(const CTransaction &tx, int flags, LockPoints* lp, bool 
             // Note: It is impossible to correctly calculate a maxInputBlock
             // if any of the sequence locked inputs depend on unconfirmed txs,
             // except in the special case where the relative lock time/height
-            // is 0, which is equivalent to no sequence lock. Qsteesce we assume
+            // is 0, which is equivalent to no sequence lock. QtipArrayce we assume
             // input height of tip+1 for mempool txs and test the resulting
             // lockPair from CalculateSequenceLocks against tip+1.  We know
             // EvaluateSequenceLocks will fail if there was a non-zero sequence
@@ -649,7 +649,7 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
         return state.DoS(10, false, REJECT_INVALID, "bad-txlockrequest");
     }
 
-    /*QSTEES*/
+    /*QTIPARRAY*/
     // Check for conflicts with a completed Transaction Lock
     for (const CTxIn &txin : tx.vin)
     {
@@ -670,7 +670,7 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
             const CTransaction *ptxConflicting = itConflicting->second;
             if (!setConflicts.count(ptxConflicting->GetHash()))
             {
-                /*QSTEES*/
+                /*QTIPARRAY*/
                 // InstantSend txes are not replacable
                 if(instantsend.HasTxLockRequest(ptxConflicting->GetHash())) {
                     // this tx conflicts with a Transaction Lock Request candidate
@@ -790,7 +790,7 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
         unsigned int nSize = entry.GetTxSize();
 
         // Check that the transaction doesn't have an excessive number of
-        // sigops, making it impossible to mine. Qsteesce the coinbase transaction
+        // sigops, making it impossible to mine. QtipArrayce the coinbase transaction
         // itself can contain sigops MAX_STANDARD_TX_SIGOPS is less than
         // MAX_BLOCK_SIGOPS; we still consider this an invalid rather than
         // merely non-standard transaction.
@@ -1012,7 +1012,7 @@ static bool AcceptToMemoryPoolWorker(const CChainParams& chainparams, CTxMemPool
         // Remove conflicting transactions from the mempool
         for (CTxMemPool::txiter it : allConflicting)
         {
-            LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s QSTEES additional fees, %d delta bytes\n",
+            LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s QTIPARRAY additional fees, %d delta bytes\n",
                     it->GetTx().GetHash().ToString(),
                     hash.ToString(),
                     FormatMoney(nModifiedFees - nConflictingFees),
@@ -1272,15 +1272,15 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
   return reward;
 }
 
-CAmount GetMasternodePayment(int nHeight, int qsteestype)
+CAmount GetMasternodePayment(int nHeight, int sintype)
 {
     CAmount ret = 0.00;
 
-	if (qsteestype == 0) {
+	if (sintype == 0) {
 		return 0;
 	}
 
-	if (qsteestype == 1) {
+	if (sintype == 1) {
 		if (Params().NetworkIDString() == CBaseChainParams::FINALNET && nHeight >=105 && nHeight <  150000) return 8 * COIN;
 		if (Params().NetworkIDString() == CBaseChainParams::TESTNET && nHeight >=105 && nHeight <  150000) return 8 * COIN;
 
@@ -1289,7 +1289,7 @@ CAmount GetMasternodePayment(int nHeight, int qsteestype)
 		if (nHeight < 5000000) return  160 * COIN;
 	}
 
-	if (qsteestype == 5) {
+	if (sintype == 5) {
 		if (Params().NetworkIDString() == CBaseChainParams::FINALNET && nHeight >=105 && nHeight <  150000) return 41 * COIN;
 		if (Params().NetworkIDString() == CBaseChainParams::TESTNET && nHeight >=105 && nHeight <  150000) return 41 * COIN;
 
@@ -1298,7 +1298,7 @@ CAmount GetMasternodePayment(int nHeight, int qsteestype)
 		if (nHeight < 5000000) return  838 * COIN;
 	}
 
-	if (qsteestype == 10) {
+	if (sintype == 10) {
 		if (Params().NetworkIDString() == CBaseChainParams::FINALNET && nHeight >=105 && nHeight <  150000) return 85 * COIN;
 		if (Params().NetworkIDString() == CBaseChainParams::TESTNET && nHeight >=105 && nHeight <  150000) return 85 * COIN;
 
@@ -1828,7 +1828,7 @@ static bool WriteUndoDataForBlock(const CBlockUndo& blockundo, CValidationState&
 static CCheckQueue<CScriptCheck> scriptcheckqueue(128);
 
 void ThreadScriptCheck() {
-    RenameThread("qstees-scriptch");
+    RenameThread("sin-scriptch");
     scriptcheckqueue.Thread();
 }
 
@@ -2058,7 +2058,7 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     // Once BIP34 activated it was not possible to create new duplicate coinbases and thus other than starting
     // with the 2 existing duplicate coinbase pairs, not possible to create overwriting txs.  But by the
     // time BIP34 activated, in each of the existing pairs the duplicate coinbase had overwritten the first
-    // before the first had been spent.  Qsteesce those coinbases are sufficiently buried it's no longer possible to create further
+    // before the first had been spent.  QtipArrayce those coinbases are sufficiently buried it's no longer possible to create further
     // duplicate transactions descending from the known pairs either.
     // If we're on the known chain at height greater than where BIP34 activated, we can save the db accesses needed for the BIP30 check.
 
@@ -2228,7 +2228,7 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     if (block.vtx[0]->vout[1].nValue < GetDevCoin(pindex->nHeight, blockReward))
         return state.DoS(100, error("ConnectBlock(): coinbase does not pay enough to the dev fund address."), REJECT_INVALID, "bad-cb-dev-fee");
 
-    // Basic testing to ensure pays go to correct qsteesnode tiers
+    // Basic testing to ensure pays go to correct sinnode tiers
 	int forkInfinityNode = 170000;
     int enforceHeight = 178000;
     if (pindex->nHeight > forkInfinityNode)
@@ -3377,7 +3377,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, const Consensus::P
     for (unsigned int i = 1; i < block.vtx.size(); i++)
         if (block.vtx[i]->IsCoinBase())
             return state.DoS(100, false, REJECT_INVALID, "bad-cb-multiple", false, "more than one coinbase");
-    /*QSTEES*/
+    /*QTIPARRAY*/
     // DASH : CHECK TRANSACTIONS FOR INSTANTSEND
 
     if(sporkManager.IsSporkActive(SPORK_3_INSTANTSEND_BLOCK_FILTERING)) {
@@ -4013,7 +4013,7 @@ static void FindFilesToPrune(std::set<int>& setFilesToPrune, uint64_t nPruneAfte
         // values, we should not prune too rapidly.
         // So when pruning in IBD, increase the buffer a bit to avoid a re-prune too soon.
         if (IsInitialBlockDownload()) {
-            // Qsteesce this is only relevant during IBD, we use a fixed 10%
+            // QtipArrayce this is only relevant during IBD, we use a fixed 10%
             nBuffer += nPruneTarget / 10;
         }
 
@@ -4974,10 +4974,10 @@ BIP9Stats VersionBitsTipStatistics(const Consensus::Params& params, Consensus::D
     return VersionBitsStatistics(chainActive.Tip(), params, pos);
 }
 
-int VersionBitsTipStateQsteesceHeight(const Consensus::Params& params, Consensus::DeploymentPos pos)
+int VersionBitsTipStateQtipArrayceHeight(const Consensus::Params& params, Consensus::DeploymentPos pos)
 {
     LOCK(cs_main);
-    return VersionBitsStateQsteesceHeight(chainActive.Tip(), params, pos, versionbitscache);
+    return VersionBitsStateQtipArrayceHeight(chainActive.Tip(), params, pos, versionbitscache);
 }
 
 static const uint64_t MEMPOOL_DUMP_VERSION = 1;

@@ -5,7 +5,7 @@
 #include <util.h>
 
 #include <support/allocators/secure.h>
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 
 #include <memory>
 

@@ -4,7 +4,7 @@
 
 #include <chain.h>
 #include <versionbits.h>
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 #include <chainparams.h>
 #include <validation.h>
 #include <consensus/params.h>
@@ -29,7 +29,7 @@ public:
     bool Condition(const CBlockIndex* pindex, const Consensus::Params& params) const override { return (pindex->nVersion & 0x100); }
 
     ThresholdState GetStateFor(const CBlockIndex* pindexPrev) const { return AbstractThresholdConditionChecker::GetStateFor(pindexPrev, paramsDummy, cache); }
-    int GetStateQsteesceHeightFor(const CBlockIndex* pindexPrev) const { return AbstractThresholdConditionChecker::GetStateQsteesceHeightFor(pindexPrev, paramsDummy, cache); }
+    int GetStateQtipArrayceHeightFor(const CBlockIndex* pindexPrev) const { return AbstractThresholdConditionChecker::GetStateQtipArrayceHeightFor(pindexPrev, paramsDummy, cache); }
 };
 
 class TestAlwaysActiveConditionChecker : public TestConditionChecker
@@ -87,11 +87,11 @@ public:
         return *this;
     }
 
-    VersionBitsTester& TestStateQsteesceHeight(int height) {
+    VersionBitsTester& TestStateQtipArrayceHeight(int height) {
         for (int i = 0; i < CHECKERS; i++) {
             if (InsecureRandBits(i) == 0) {
-                BOOST_CHECK_MESSAGE(checker[i].GetStateQsteesceHeightFor(vpblock.empty() ? nullptr : vpblock.back()) == height, strprintf("Test %i for StateQsteesceHeight", num));
-                BOOST_CHECK_MESSAGE(checker_always[i].GetStateQsteesceHeightFor(vpblock.empty() ? nullptr : vpblock.back()) == 0, strprintf("Test %i for StateQsteesceHeight (always active)", num));
+                BOOST_CHECK_MESSAGE(checker[i].GetStateQtipArrayceHeightFor(vpblock.empty() ? nullptr : vpblock.back()) == height, strprintf("Test %i for StateQtipArrayceHeight", num));
+                BOOST_CHECK_MESSAGE(checker_always[i].GetStateQtipArrayceHeightFor(vpblock.empty() ? nullptr : vpblock.back()) == 0, strprintf("Test %i for StateQtipArrayceHeight (always active)", num));
             }
         }
         num++;
@@ -162,64 +162,64 @@ BOOST_AUTO_TEST_CASE(versionbits_test)
 {
     for (int i = 0; i < 64; i++) {
         // DEFINED -> FAILED
-        VersionBitsTester().TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(1, TestTime(1), 0x100).TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(11, TestTime(11), 0x100).TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(989, TestTime(989), 0x100).TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(999, TestTime(20000), 0x100).TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(1000, TestTime(20000), 0x100).TestFailed().TestStateQsteesceHeight(1000)
-                           .Mine(1999, TestTime(30001), 0x100).TestFailed().TestStateQsteesceHeight(1000)
-                           .Mine(2000, TestTime(30002), 0x100).TestFailed().TestStateQsteesceHeight(1000)
-                           .Mine(2001, TestTime(30003), 0x100).TestFailed().TestStateQsteesceHeight(1000)
-                           .Mine(2999, TestTime(30004), 0x100).TestFailed().TestStateQsteesceHeight(1000)
-                           .Mine(3000, TestTime(30005), 0x100).TestFailed().TestStateQsteesceHeight(1000)
+        VersionBitsTester().TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(1, TestTime(1), 0x100).TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(11, TestTime(11), 0x100).TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(989, TestTime(989), 0x100).TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(999, TestTime(20000), 0x100).TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(1000, TestTime(20000), 0x100).TestFailed().TestStateQtipArrayceHeight(1000)
+                           .Mine(1999, TestTime(30001), 0x100).TestFailed().TestStateQtipArrayceHeight(1000)
+                           .Mine(2000, TestTime(30002), 0x100).TestFailed().TestStateQtipArrayceHeight(1000)
+                           .Mine(2001, TestTime(30003), 0x100).TestFailed().TestStateQtipArrayceHeight(1000)
+                           .Mine(2999, TestTime(30004), 0x100).TestFailed().TestStateQtipArrayceHeight(1000)
+                           .Mine(3000, TestTime(30005), 0x100).TestFailed().TestStateQtipArrayceHeight(1000)
 
         // DEFINED -> STARTED -> FAILED
-                           .Reset().TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(1, TestTime(1), 0).TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(1000, TestTime(10000) - 1, 0x100).TestDefined().TestStateQsteesceHeight(0) // One second more and it would be defined
-                           .Mine(2000, TestTime(10000), 0x100).TestStarted().TestStateQsteesceHeight(2000) // So that's what happens the next period
-                           .Mine(2051, TestTime(10010), 0).TestStarted().TestStateQsteesceHeight(2000) // 51 old blocks
-                           .Mine(2950, TestTime(10020), 0x100).TestStarted().TestStateQsteesceHeight(2000) // 899 new blocks
-                           .Mine(3000, TestTime(20000), 0).TestFailed().TestStateQsteesceHeight(3000) // 50 old blocks (so 899 out of the past 1000)
-                           .Mine(4000, TestTime(20010), 0x100).TestFailed().TestStateQsteesceHeight(3000)
+                           .Reset().TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(1, TestTime(1), 0).TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(1000, TestTime(10000) - 1, 0x100).TestDefined().TestStateQtipArrayceHeight(0) // One second more and it would be defined
+                           .Mine(2000, TestTime(10000), 0x100).TestStarted().TestStateQtipArrayceHeight(2000) // So that's what happens the next period
+                           .Mine(2051, TestTime(10010), 0).TestStarted().TestStateQtipArrayceHeight(2000) // 51 old blocks
+                           .Mine(2950, TestTime(10020), 0x100).TestStarted().TestStateQtipArrayceHeight(2000) // 899 new blocks
+                           .Mine(3000, TestTime(20000), 0).TestFailed().TestStateQtipArrayceHeight(3000) // 50 old blocks (so 899 out of the past 1000)
+                           .Mine(4000, TestTime(20010), 0x100).TestFailed().TestStateQtipArrayceHeight(3000)
 
         // DEFINED -> STARTED -> FAILED while threshold reached
-                           .Reset().TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(1, TestTime(1), 0).TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(1000, TestTime(10000) - 1, 0x101).TestDefined().TestStateQsteesceHeight(0) // One second more and it would be defined
-                           .Mine(2000, TestTime(10000), 0x101).TestStarted().TestStateQsteesceHeight(2000) // So that's what happens the next period
-                           .Mine(2999, TestTime(30000), 0x100).TestStarted().TestStateQsteesceHeight(2000) // 999 new blocks
-                           .Mine(3000, TestTime(30000), 0x100).TestFailed().TestStateQsteesceHeight(3000) // 1 new block (so 1000 out of the past 1000 are new)
-                           .Mine(3999, TestTime(30001), 0).TestFailed().TestStateQsteesceHeight(3000)
-                           .Mine(4000, TestTime(30002), 0).TestFailed().TestStateQsteesceHeight(3000)
-                           .Mine(14333, TestTime(30003), 0).TestFailed().TestStateQsteesceHeight(3000)
-                           .Mine(24000, TestTime(40000), 0).TestFailed().TestStateQsteesceHeight(3000)
+                           .Reset().TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(1, TestTime(1), 0).TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(1000, TestTime(10000) - 1, 0x101).TestDefined().TestStateQtipArrayceHeight(0) // One second more and it would be defined
+                           .Mine(2000, TestTime(10000), 0x101).TestStarted().TestStateQtipArrayceHeight(2000) // So that's what happens the next period
+                           .Mine(2999, TestTime(30000), 0x100).TestStarted().TestStateQtipArrayceHeight(2000) // 999 new blocks
+                           .Mine(3000, TestTime(30000), 0x100).TestFailed().TestStateQtipArrayceHeight(3000) // 1 new block (so 1000 out of the past 1000 are new)
+                           .Mine(3999, TestTime(30001), 0).TestFailed().TestStateQtipArrayceHeight(3000)
+                           .Mine(4000, TestTime(30002), 0).TestFailed().TestStateQtipArrayceHeight(3000)
+                           .Mine(14333, TestTime(30003), 0).TestFailed().TestStateQtipArrayceHeight(3000)
+                           .Mine(24000, TestTime(40000), 0).TestFailed().TestStateQtipArrayceHeight(3000)
 
         // DEFINED -> STARTED -> LOCKEDIN at the last minute -> ACTIVE
                            .Reset().TestDefined()
-                           .Mine(1, TestTime(1), 0).TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(1000, TestTime(10000) - 1, 0x101).TestDefined().TestStateQsteesceHeight(0) // One second more and it would be defined
-                           .Mine(2000, TestTime(10000), 0x101).TestStarted().TestStateQsteesceHeight(2000) // So that's what happens the next period
-                           .Mine(2050, TestTime(10010), 0x200).TestStarted().TestStateQsteesceHeight(2000) // 50 old blocks
-                           .Mine(2950, TestTime(10020), 0x100).TestStarted().TestStateQsteesceHeight(2000) // 900 new blocks
-                           .Mine(2999, TestTime(19999), 0x200).TestStarted().TestStateQsteesceHeight(2000) // 49 old blocks
-                           .Mine(3000, TestTime(29999), 0x200).TestLockedIn().TestStateQsteesceHeight(3000) // 1 old block (so 900 out of the past 1000)
-                           .Mine(3999, TestTime(30001), 0).TestLockedIn().TestStateQsteesceHeight(3000)
-                           .Mine(4000, TestTime(30002), 0).TestActive().TestStateQsteesceHeight(4000)
-                           .Mine(14333, TestTime(30003), 0).TestActive().TestStateQsteesceHeight(4000)
-                           .Mine(24000, TestTime(40000), 0).TestActive().TestStateQsteesceHeight(4000)
+                           .Mine(1, TestTime(1), 0).TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(1000, TestTime(10000) - 1, 0x101).TestDefined().TestStateQtipArrayceHeight(0) // One second more and it would be defined
+                           .Mine(2000, TestTime(10000), 0x101).TestStarted().TestStateQtipArrayceHeight(2000) // So that's what happens the next period
+                           .Mine(2050, TestTime(10010), 0x200).TestStarted().TestStateQtipArrayceHeight(2000) // 50 old blocks
+                           .Mine(2950, TestTime(10020), 0x100).TestStarted().TestStateQtipArrayceHeight(2000) // 900 new blocks
+                           .Mine(2999, TestTime(19999), 0x200).TestStarted().TestStateQtipArrayceHeight(2000) // 49 old blocks
+                           .Mine(3000, TestTime(29999), 0x200).TestLockedIn().TestStateQtipArrayceHeight(3000) // 1 old block (so 900 out of the past 1000)
+                           .Mine(3999, TestTime(30001), 0).TestLockedIn().TestStateQtipArrayceHeight(3000)
+                           .Mine(4000, TestTime(30002), 0).TestActive().TestStateQtipArrayceHeight(4000)
+                           .Mine(14333, TestTime(30003), 0).TestActive().TestStateQtipArrayceHeight(4000)
+                           .Mine(24000, TestTime(40000), 0).TestActive().TestStateQtipArrayceHeight(4000)
 
         // DEFINED multiple periods -> STARTED multiple periods -> FAILED
-                           .Reset().TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(999, TestTime(999), 0).TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(1000, TestTime(1000), 0).TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(2000, TestTime(2000), 0).TestDefined().TestStateQsteesceHeight(0)
-                           .Mine(3000, TestTime(10000), 0).TestStarted().TestStateQsteesceHeight(3000)
-                           .Mine(4000, TestTime(10000), 0).TestStarted().TestStateQsteesceHeight(3000)
-                           .Mine(5000, TestTime(10000), 0).TestStarted().TestStateQsteesceHeight(3000)
-                           .Mine(6000, TestTime(20000), 0).TestFailed().TestStateQsteesceHeight(6000)
-                           .Mine(7000, TestTime(20000), 0x100).TestFailed().TestStateQsteesceHeight(6000);
+                           .Reset().TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(999, TestTime(999), 0).TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(1000, TestTime(1000), 0).TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(2000, TestTime(2000), 0).TestDefined().TestStateQtipArrayceHeight(0)
+                           .Mine(3000, TestTime(10000), 0).TestStarted().TestStateQtipArrayceHeight(3000)
+                           .Mine(4000, TestTime(10000), 0).TestStarted().TestStateQtipArrayceHeight(3000)
+                           .Mine(5000, TestTime(10000), 0).TestStarted().TestStateQtipArrayceHeight(3000)
+                           .Mine(6000, TestTime(20000), 0).TestFailed().TestStateQtipArrayceHeight(6000)
+                           .Mine(7000, TestTime(20000), 0x100).TestFailed().TestStateQtipArrayceHeight(6000);
     }
 
     // Sanity checks of version bit deployments

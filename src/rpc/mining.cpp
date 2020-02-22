@@ -164,7 +164,7 @@ static UniValue generatetoaddress(const JSONRPCRequest& request)
             "\nMine blocks immediately to a specified address (before the RPC call returns)\n"
             "\nArguments:\n"
             "1. nblocks      (numeric, required) How many blocks are generated immediately.\n"
-            "2. address      (string, required) The address to send the newly generated qstees to.\n"
+            "2. address      (string, required) The address to send the newly generated sin to.\n"
             "3. maxtries     (numeric, optional) How many iterations to try (default = 1000000).\n"
             "\nResult:\n"
             "[ blockhashes ]     (array) hashes of blocks generated\n"
@@ -228,7 +228,7 @@ static UniValue getmininginfo(const JSONRPCRequest& request)
 }
 
 
-// NOTE: Unlike wallet RPC (which use QSTEES values), mining RPCs follow GBT (BIP 22) in using satoshi amounts
+// NOTE: Unlike wallet RPC (which use QTIPARRAY values), mining RPCs follow GBT (BIP 22) in using satoshi amounts
 static UniValue prioritisetransaction(const JSONRPCRequest& request)
 {
     if (request.fHelp || request.params.size() != 3)
@@ -300,10 +300,10 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
             "\nIf the request parameters include a 'mode' key, that is used to explicitly select between the default 'template' request or a 'proposal'.\n"
             "It returns data needed to construct a block to work on.\n"
             "For full specification, see BIPs 22, 23, 9, and 145:\n"
-            "    https://github.com/qstees/bips/blob/master/bip-0022.mediawiki\n"
-            "    https://github.com/qstees/bips/blob/master/bip-0023.mediawiki\n"
-            "    https://github.com/qstees/bips/blob/master/bip-0009.mediawiki#getblocktemplate_changes\n"
-            "    https://github.com/qstees/bips/blob/master/bip-0145.mediawiki\n"
+            "    https://github.com/sin/bips/blob/master/bip-0022.mediawiki\n"
+            "    https://github.com/sin/bips/blob/master/bip-0023.mediawiki\n"
+            "    https://github.com/sin/bips/blob/master/bip-0009.mediawiki#getblocktemplate_changes\n"
+            "    https://github.com/sin/bips/blob/master/bip-0145.mediawiki\n"
 
             "\nArguments:\n"
             "1. template_request         (json object, optional) A json object in the following spec\n"
@@ -463,14 +463,14 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
         throw JSONRPCError(RPC_CLIENT_P2P_DISABLED, "Error: Peer-to-peer functionality missing or disabled");
 
     if (g_connman->GetNodeCount(CConnman::CONNECTIONS_ALL) == 0)
-        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "QSTEES is not connected!");
+        throw JSONRPCError(RPC_CLIENT_NOT_CONNECTED, "QTIPARRAY is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "QSTEES is downloading blocks...");
+        throw JSONRPCError(RPC_CLIENT_IN_INITIAL_DOWNLOAD, "QTIPARRAY is downloading blocks...");
 
     // Dash
     // when enforcement is on we need information about a masternode payee or otherwise our block is going to be orphaned by the network
-    //qsteestype
+    //sintype
     CScript payee;
     if (sporkManager.IsSporkActive(SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT)
         && !masternodeSync.IsWinnersListSynced()
@@ -780,7 +780,7 @@ static UniValue submitblock(const JSONRPCRequest& request)
         throw std::runtime_error(
             "submitblock \"hexdata\"  ( \"dummy\" )\n"
             "\nAttempts to submit new block to network.\n"
-            "See https://en.qstees.it/wiki/BIP_0022 for full specification.\n"
+            "See https://en.sin.it/wiki/BIP_0022 for full specification.\n"
 
             "\nArguments\n"
             "1. \"hexdata\"        (string, required) the hex-encoded block data to submit\n"
@@ -1049,7 +1049,7 @@ static UniValue setgenerate(const JSONRPCRequest& request)
             fGenerate = false;
     }
 
-    GenerateQSTEESs(fGenerate, nGenProcLimit, Params(), *g_connman);
+    GenerateQTIPARRAYs(fGenerate, nGenProcLimit, Params(), *g_connman);
 
     return fGenerate ? std::string("Mining started") : std::string("Mining stopped");
 }

@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -240,7 +240,7 @@ void CMasternodeMan::CheckAndRemoveBurnFundNotUniqueNode(CConnman& connman)
                     CAddress add = CAddress(pmn.addr, NODE_NETWORK);
                     for (auto* pnode : vNodesCopy) {
                         if (pnode->addr == add) {
-                                //Misbehaving(pnode->GetId(), 100, "invalid qsteesnode");
+                                //Misbehaving(pnode->GetId(), 100, "invalid sinnode");
                                 int64_t banTime = 86400 * 7; //7 days
                                 bool absolute = false;
                                 connman.Ban(pnode->addr, BanReasonManuallyAdded, banTime, absolute);
@@ -255,7 +255,7 @@ void CMasternodeMan::CheckAndRemoveBurnFundNotUniqueNode(CConnman& connman)
     }
 }
 
-void CMasternodeMan::CheckAndRemoveLimitNumberNode(CConnman& connman, int nQsteesType, int nLimit)
+void CMasternodeMan::CheckAndRemoveLimitNumberNode(CConnman& connman, int nQtipArrayType, int nLimit)
 {
     if(!masternodeSync.IsMasternodeListSynced()) return;
 
@@ -263,7 +263,7 @@ void CMasternodeMan::CheckAndRemoveLimitNumberNode(CConnman& connman, int nQstee
     std::vector<CMasternode> vpMasternodesToBan; //list node will be banned
 
     for (auto& mnpair : mapMasternodes) {
-        if (mnpair.second.GetQsteesTypeInt() == nQsteesType) {
+        if (mnpair.second.GetQtipArrayTypeInt() == nQtipArrayType) {
             vecSigTimeType.push_back(std::make_pair(mnpair.second.sigTime, &mnpair.second));
         }
     }
@@ -530,13 +530,13 @@ int CMasternodeMan::CountEnabled(int nProtocolVersion)
     return nCount;
 }
 
-int CMasternodeMan::CountQsteesType(int nQsteesType)
+int CMasternodeMan::CountQtipArrayType(int nQtipArrayType)
 {
     LOCK(cs);
     int nCount = 0;
 
     for (auto& mnpair : mapMasternodes) {
-        if(mnpair.second.GetQsteesTypeInt() != nQsteesType) continue;
+        if(mnpair.second.GetQtipArrayTypeInt() != nQtipArrayType) continue;
         nCount++;
     }
 
@@ -643,29 +643,29 @@ bool CMasternodeMan::Has(const COutPoint& outpoint)
     return mapMasternodes.find(outpoint) != mapMasternodes.end();
 }
 
-void CMasternodeMan::LocalDiagnostic(int nBlockHeight, int& nQSTEESNODE_1Ret, int& nQSTEESNODE_5Ret, int& nQSTEESNODE_10Ret)
+void CMasternodeMan::LocalDiagnostic(int nBlockHeight, int& nQTIPARRAYNODE_1Ret, int& nQTIPARRAYNODE_5Ret, int& nQTIPARRAYNODE_10Ret)
 {
     // Need LOCK2 here to ensure consistent locking order because the GetBlockHash call below locks cs_main
     LOCK2(cs_main,cs);
 
     // int nMnCount = CountMasternodes();
     std::vector<std::pair<int, CMasternode*> > vecMasternodeLastPaid;
-    nQSTEESNODE_1Ret = 0; nQSTEESNODE_5Ret = 0; nQSTEESNODE_10Ret = 0;
+    nQTIPARRAYNODE_1Ret = 0; nQTIPARRAYNODE_5Ret = 0; nQTIPARRAYNODE_10Ret = 0;
     
     for (auto& mnpair : mapMasternodes) {
-        //found QSTEESNODE_1 in network
-        if (mnpair.second.GetQsteesType() == CMasternode::QsteesType::QSTEESNODE_1) {
-            nQSTEESNODE_1Ret = 1;
+        //found QTIPARRAYNODE_1 in network
+        if (mnpair.second.GetQtipArrayType() == CMasternode::QtipArrayType::QTIPARRAYNODE_1) {
+            nQTIPARRAYNODE_1Ret = 1;
         }
         
-        //found QSTEESNODE_5 in network
-        if (mnpair.second.GetQsteesType() == CMasternode::QsteesType::QSTEESNODE_5) {
-            nQSTEESNODE_5Ret = 1;
+        //found QTIPARRAYNODE_5 in network
+        if (mnpair.second.GetQtipArrayType() == CMasternode::QtipArrayType::QTIPARRAYNODE_5) {
+            nQTIPARRAYNODE_5Ret = 1;
         }
         
-        //found QSTEESNODE_10 in network
-        if (mnpair.second.GetQsteesType() == CMasternode::QsteesType::QSTEESNODE_10) {
-            nQSTEESNODE_10Ret = 1;
+        //found QTIPARRAYNODE_10 in network
+        if (mnpair.second.GetQtipArrayType() == CMasternode::QtipArrayType::QTIPARRAYNODE_10) {
+            nQTIPARRAYNODE_10Ret = 1;
         }
     }
 }
@@ -678,7 +678,7 @@ bool CMasternodeMan::GetNextMasternodeInQueueForPayment(bool fFilterSigTime, int
     return GetNextMasternodeInQueueForPayment(nCachedBlockHeight, fFilterSigTime, nCountRet, mnInfoRet);
 }
 
-bool CMasternodeMan::GetNextMasternodeInQueueForPayment(int nBlockHeight, bool fFilterSigTime, int& nCountRet, masternode_info_t& mnInfoRet, CMasternode::QsteesType vQsteesType)
+bool CMasternodeMan::GetNextMasternodeInQueueForPayment(int nBlockHeight, bool fFilterSigTime, int& nCountRet, masternode_info_t& mnInfoRet, CMasternode::QtipArrayType vQtipArrayType)
 {
     mnInfoRet = masternode_info_t();
     nCountRet = 0;
@@ -688,7 +688,7 @@ bool CMasternodeMan::GetNextMasternodeInQueueForPayment(int nBlockHeight, bool f
         return false;
     }
 
-    if ( vQsteesType == CMasternode::QsteesType::QSTEESNODE_UNKNOWN ) { return false; }
+    if ( vQtipArrayType == CMasternode::QtipArrayType::QTIPARRAYNODE_UNKNOWN ) { return false; }
 
     // Need LOCK2 here to ensure consistent locking order because the GetBlockHash call below locks cs_main
     LOCK2(cs_main,cs);
@@ -724,7 +724,7 @@ bool CMasternodeMan::GetNextMasternodeInQueueForPayment(int nBlockHeight, bool f
     //when the network is in the process of upgrading, don't penalize nodes that recently restarted
     if(fFilterSigTime && nCountRet < nMnCount/3) {
         LogPrintf("CMasternode::GetNextMasternodeInQueueForPayment -- change parameter\n");
-        return GetNextMasternodeInQueueForPayment(nBlockHeight, false, nCountRet, mnInfoRet, vQsteesType);
+        return GetNextMasternodeInQueueForPayment(nBlockHeight, false, nCountRet, mnInfoRet, vQtipArrayType);
     }
 
     // Sort them low to high
@@ -743,7 +743,7 @@ bool CMasternodeMan::GetNextMasternodeInQueueForPayment(int nBlockHeight, bool f
     CMasternode *pBestMasternode = NULL;
     for (std::pair<int, CMasternode*>& s : vecMasternodeLastPaid){
         arith_uint256 nScore = s.second->CalculateScore(blockHash);
-        if(nScore > nHighest && s.second->GetQsteesType() == vQsteesType){
+        if(nScore > nHighest && s.second->GetQtipArrayType() == vQtipArrayType){
             nHighest = nScore;
             pBestMasternode = s.second;
         }

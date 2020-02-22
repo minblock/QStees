@@ -525,7 +525,7 @@ Strings and formatting
     `ispunct`, `isspace`, `isupper`, `iswalnum`, `iswalpha`, `iswblank`,
     `iswcntrl`, `iswctype`, `iswdigit`, `iswgraph`, `iswlower`, `iswprint`,
     `iswpunct`, `iswspace`, `iswupper`, `iswxdigit`, `isxdigit`, `mblen`,
-    `mbrlen`, `mbrtowc`, `mbqsteesit`, `mbsnrtowcs`, `mbsrtowcs`, `mbstowcs`,
+    `mbrlen`, `mbrtowc`, `mbsinit`, `mbsnrtowcs`, `mbsrtowcs`, `mbstowcs`,
     `mbtowc`, `mktime`, `putwc`, `putwchar`, `scanf`, `snprintf`, `sprintf`,
     `sscanf`, `stoi`, `stol`, `stoll`, `strcasecmp`, `strcasestr`, `strcoll`,
     `strfmon`, `strftime`, `strncasecmp`, `strptime`, `strtod`, `strtof`,

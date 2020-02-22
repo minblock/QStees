@@ -11,9 +11,9 @@
 #include <utilstrencodings.h>
 #include <crypto/common.h>
 
-const int nQsteesHeightFinalnet = 5;
-const int nQsteesHeightTestnet  = 5;
-const int nQsteesHeightMainnet  = 170000;
+const int nQtipArrayHeightFinalnet = 5;
+const int nQtipArrayHeightTestnet  = 5;
+const int nQtipArrayHeightMainnet  = 170000;
 
 uint256 CBlockHeader::GetHash() const
 {
@@ -22,14 +22,14 @@ uint256 CBlockHeader::GetHash() const
 
 uint256 CBlockHeader::GetPoWHash(int nHeight) const
 {
-    bool fQsteesMode = false;
+    bool fQtipArrayMode = false;
 
-    if ((Params().NetworkIDString() == CBaseChainParams::MAIN && nHeight >= nQsteesHeightMainnet) ||
-        (Params().NetworkIDString() == CBaseChainParams::TESTNET && nHeight >= nQsteesHeightTestnet) ||
-        (Params().NetworkIDString() == CBaseChainParams::FINALNET && nHeight >= nQsteesHeightFinalnet))
-        fQsteesMode = true;
+    if ((Params().NetworkIDString() == CBaseChainParams::MAIN && nHeight >= nQtipArrayHeightMainnet) ||
+        (Params().NetworkIDString() == CBaseChainParams::TESTNET && nHeight >= nQtipArrayHeightTestnet) ||
+        (Params().NetworkIDString() == CBaseChainParams::FINALNET && nHeight >= nQtipArrayHeightFinalnet))
+        fQtipArrayMode = true;
 
-    if (!fQsteesMode)
+    if (!fQtipArrayMode)
         return HashX22I(BEGIN(nVersion), END(nNonce));
     else
         return HashX25X(BEGIN(nVersion), END(nNonce));

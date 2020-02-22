@@ -5,7 +5,7 @@
 #include <qt/overviewpage.h>
 #include <qt/forms/ui_overviewpage.h>
 
-#include <qt/qsteesunits.h>
+#include <qt/sinunits.h>
 #include <qt/clientmodel.h>
 #include <qt/guiconstants.h>
 #include <qt/guiutil.h>
@@ -32,6 +32,9 @@
 #include <QTimer>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
+
 
 #define ICON_OFFSET 16
 #define DECORATION_SIZE 54
@@ -45,7 +48,7 @@ class TxViewDelegate : public QAbstractItemDelegate
     Q_OBJECT
 public:
     explicit TxViewDelegate(const PlatformStyle *_platformStyle, QObject *parent=nullptr):
-        QAbstractItemDelegate(parent), unit(BitcoinUnits::QSTEES),
+        QAbstractItemDelegate(parent), unit(BitcoinUnits::QTIPARRAY),
         platformStyle(_platformStyle)
     {
 
@@ -65,7 +68,7 @@ public:
         int halfheight = (mainRect.height() - 2*ypad)/2;
         QRect amountRect(mainRect.left() + xspace, mainRect.top()+ypad, mainRect.width() - xspace - ICON_OFFSET, halfheight);
         QRect addressRect(mainRect.left() + xspace, mainRect.top()+ypad+halfheight, mainRect.width() - xspace, halfheight);
-        icon = platformStyle->QsteesgleColorIcon(icon);
+        icon = platformStyle->QtipArraygleColorIcon(icon);
         icon.paint(painter, decorationRect);
 
         QDateTime date = index.data(TransactionTableModel::DateRole).toDateTime();
@@ -137,22 +140,153 @@ OverviewPage::OverviewPage(const PlatformStyle *platformStyle, QWidget *parent) 
     walletModel(0),
     txdelegate(new TxViewDelegate(platformStyle, this))
 {
+    pricingTimer = new QTimer();
+    networkManager = new QNetworkAccessManager();
+    request = new QNetworkRequest();
+    pricingTimerBTC = new QTimer();
+    networkManagerBTC = new QNetworkAccessManager();
+    requestBTC = new QNetworkRequest();
     ui->setupUi(this);
-    //ui->pushButton_Website->setIcon(QIcon(GUIUtil::getThemeImage(":/icons/website")));
-    ui->pushButton_Website->setStatusTip(tr("QSTEESOVATE Website"));
-    ui->pushButton_Discord->setStatusTip(tr("QSTEESOVATE Discord Channel"));
-    ui->pushButton_Telegram->setStatusTip(tr("QSTEESOVATE Telegram Channel"));
-    ui->pushButton_Twitter->setStatusTip(tr("QSTEESOVATE Twitter Channel"));
-    ui->pushButton_Explorer->setStatusTip(tr("QSTEESOVATE Block Explorer"));
-    ui->pushButton_Reddit->setStatusTip(tr("QSTEESOVATE Reddit"));
-    ui->pushButton_Facebook->setStatusTip(tr("QSTEESOVATE Facebook"));
-    ui->pushButton_Youtube->setStatusTip(tr("QSTEESOVATE Youtube Channel"));
+           
+   
+
+    // Set the USD pricing information
+       
+
+        // Network request code for the header widget
+        QObject::connect(networkManager, &QNetworkAccessManager::finished,
+                         this, [=](QNetworkReply *reply) {  
+                         
+                    if (reply->error()) {
+                        ui->labelCurrentPrice->setText("");
+                        qDebug() << reply->errorString();
+                        return;
+                    }
+                    // Get the data from the network request
+                    QString answer = reply->readAll();
+
+                    // Create regex expression to find the value with 8 decimals
+                    QRegExp rx("\\d*.\\d\\d\\d\\d\\d\\d\\d\\d");
+                    rx.indexIn(answer);
+
+                    // List the found values
+                    QStringList list = rx.capturedTexts();
+
+                    QString currentPriceStyleSheet = ".QLabel{color: %1;}";
+                    // Evaluate the current and next numbers and assign a color (green for positive, red for negative)
+                    bool ok;
+                    if (!list.isEmpty()) {
+                        double next = list.first().toDouble(&ok);
+                        if (!ok) {
+                            ui->labelCurrentPrice->setStyleSheet(currentPriceStyleSheet.arg("#4960ad"));
+                            ui->labelCurrentPrice->setText("");
+                        } else {
+                            double current = ui->labelCurrentPrice->text().toDouble(&ok);
+                            if (!ok) {
+                                current = 0.00000000;
+                            } else {
+                                if (next < current)
+                                    ui->labelCurrentPrice->setStyleSheet(currentPriceStyleSheet.arg("red"));
+                                else if (next > current)
+                                    ui->labelCurrentPrice->setStyleSheet(currentPriceStyleSheet.arg("green"));
+                                else
+                                    ui->labelCurrentPrice->setStyleSheet(currentPriceStyleSheet.arg("black"));
+                                    
+                            }
+                            ui->labelCurrentPrice->setText(QString("%1").arg(QString().setNum(next, 'f', 8)));
+                            //ui->labelCurrentPrice->setToolTip(tr("Brought to you by coinmarketcap.com"));
+
+                            QString total;
+    						double current2 = (current * totalBalance / 100000000);
+  							total = QString::number(current2, 'f', 2);
+  							ui->labelUSDTotal->setText("$" + total + " USD");
+
+                            
+                        }
+                    }
+                }
+        );
+
+        
+    
+        // Create the timer
+        connect(pricingTimer, SIGNAL(timeout()), this, SLOT(getPriceInfo()));
+        pricingTimer->start(300000);
+        getPriceInfo();
+        /** pricing USD END */
+
+// Set the BTC pricing information
+       
+
+        // Network request code for the header widget
+        QObject::connect(networkManagerBTC, &QNetworkAccessManager::finished,
+                         this, [=](QNetworkReply *replyBTC) {  
+                         
+                    if (replyBTC->error()) {
+                        ui->labelCurrentPriceBTC->setText("");
+                        qDebug() << replyBTC->errorString();
+                        return;
+                    }
+                    // Get the data from the network request
+                    QString answerBTC = replyBTC->readAll();
+
+                    // Create regex expression to find the value with 8 decimals
+                    QRegExp rx("\\d*.\\d\\d\\d\\d\\d\\d\\d\\d");
+                    rx.indexIn(answerBTC);
+
+                    // List the found values
+                    QStringList listBTC = rx.capturedTexts();
+
+                    QString currentPriceStyleSheet = ".QLabel{color: %1;}";
+                    // Evaluate the current and next numbers and assign a color (green for positive, red for negative)
+                    bool ok;
+                    if (!listBTC.isEmpty()) {
+                        double next = listBTC.first().toDouble(&ok);
+                        if (!ok) {
+                            ui->labelCurrentPriceBTC->setStyleSheet(currentPriceStyleSheet.arg("#4960ad"));
+                            ui->labelCurrentPriceBTC->setText("");
+                        } else {
+                            double currentBTC = ui->labelCurrentPriceBTC->text().toDouble(&ok);
+                            if (!ok) {
+                                currentBTC = 0.00000000;
+                            } else {
+                                if (next < currentBTC)
+                                    ui->labelCurrentPriceBTC->setStyleSheet(currentPriceStyleSheet.arg("red"));
+                                else if (next > currentBTC)
+                                    ui->labelCurrentPriceBTC->setStyleSheet(currentPriceStyleSheet.arg("green"));
+                                else
+                                    ui->labelCurrentPriceBTC->setStyleSheet(currentPriceStyleSheet.arg("black"));
+                                    
+                            }
+                            ui->labelCurrentPriceBTC->setText(QString("%1").arg(QString().setNum(next, 'f', 8)));
+                            //ui->labelCurrentPriceBTC->setToolTip(tr("Brought to you by coinmarketcap.com"));
+
+                            //QString total;
+    						//double current2 = (current * totalBalance / 100000000);
+  							//total = QString::number(current2, 'f', 2);
+  							//ui->labelUSDTotal->setText("$" + total + " USD");
+
+                            
+                        }
+                    }
+                }
+        );
+
+        
+    
+        // Create the timer
+        connect(pricingTimerBTC, SIGNAL(timeout()), this, SLOT(getPriceInfo()));
+        pricingTimerBTC->start(300000);
+        getPriceInfoBTC();
+        /** pricing BTC END */
+
+
 
 
     m_balances.balance = -1;
 
-    // use a QsteesgleColorIcon for the "out of sync warning" icon
-    QIcon icon = platformStyle->QsteesgleColorIcon(":/icons/warning");
+    // use a QtipArraygleColorIcon for the "out of sync warning" icon
+    QIcon icon = platformStyle->QtipArraygleColorIcon(":/icons/warning");
     icon.addPixmap(icon.pixmap(QSize(64,64), QIcon::Normal), QIcon::Disabled); // also set the disabled icon because we are using a disabled QPushButton to work around missing HiDPI support of QLabel (https://bugreports.qt.io/browse/QTBUG-42503)
     ui->labelTransactionsStatus->setIcon(icon);
     ui->labelWalletStatus->setIcon(icon);
@@ -166,8 +300,9 @@ OverviewPage::OverviewPage(const PlatformStyle *platformStyle, QWidget *parent) 
     connect(ui->listTransactions, SIGNAL(clicked(QModelIndex)), this, SLOT(handleTransactionClicked(QModelIndex)));
 
     // init "out of sync" warning labels
-    ui->labelWalletStatus->setText("(" + tr("out of sync") + ")");
-    ui->labelTransactionsStatus->setText("(" + tr("out of sync") + ")");
+    ui->labelWalletStatus->setText( tr("Out of Sync!"));
+    ui->labelTransactionsStatus->setText(tr("Out of Sync!"));
+
 
     // start with displaying the "out of sync" warnings
     showOutOfSyncWarning(true);
@@ -204,32 +339,36 @@ void OverviewPage::infinityNodeStat()
     for (auto& infpair : mapInfinitynodes) {
         ++total;
         CInfinitynode inf = infpair.second;
-        int qsteestype = inf.getQSTEESType();
-        if (qsteestype == 10) ++totalBIG;
-        else if (qsteestype == 5) ++totalMID;
-        else if (qsteestype == 1) ++totalLIL;
+        int sintype = inf.getQTIPARRAYType();
+        if (sintype == 10) ++totalBIG;
+        else if (sintype == 5) ++totalMID;
+        else if (sintype == 1) ++totalLIL;
     }
 
     int totalNonMatured = 0, totalBIGNonMatured = 0, totalMIDNonMatured = 0, totalLILNonMatured = 0, totalUnknownNonMatured = 0;
     for (auto& infpair : mapInfinitynodesNonMatured) {
         ++totalNonMatured;
         CInfinitynode inf = infpair.second;
-        int qsteestype = inf.getQSTEESType();
-        if (qsteestype == 10) ++totalBIGNonMatured;
-        else if (qsteestype == 5) ++totalMIDNonMatured;
-        else if (qsteestype == 1) ++totalLILNonMatured;
+        int sintype = inf.getQTIPARRAYType();
+        if (sintype == 10) ++totalBIGNonMatured;
+        else if (sintype == 5) ++totalMIDNonMatured;
+        else if (sintype == 1) ++totalLILNonMatured;
     }
 
-    QString strTotalNodeText(tr("Total: %1 nodes (Last Scan: %2)").arg(total + totalNonMatured).arg(infnodeman.getLastScanWithLimit()));
+    
+    //QString strTotalNodeText(tr("Total: %1 nodes (Last Scan: %2)").arg(total + totalNonMatured).arg(infnodeman.getLastScanWithLimit()));
+    QString strTotalNodeText(tr("%1").arg(total + totalNonMatured));
+    QString strLastScanText(tr("%1").arg(infnodeman.getLastScanWithLimit()));
     QString strBIGNodeText(tr("%1").arg(totalBIG));
     QString strMIDNodeText(tr("%1").arg(totalMID));
     QString strLILNodeText(tr("%1").arg(totalLIL));
 
-    QString strBIGNodeQueuedText(tr("Queued %1").arg(totalBIGNonMatured));
-    QString strMIDNodeQueuedText(tr("Queued %1").arg(totalMIDNonMatured));
-    QString strLILNodeQueuedText(tr("Queued %1").arg(totalLILNonMatured));
+    QString strBIGNodeQueuedText(tr("Starting %1").arg(totalBIGNonMatured));
+    QString strMIDNodeQueuedText(tr("Starting %1").arg(totalMIDNonMatured));
+    QString strLILNodeQueuedText(tr("Starting %1").arg(totalLILNonMatured));
 
     ui->labelStatisticTotalNode->setText(strTotalNodeText);
+    ui->labelStatisticLastScan->setText(strLastScanText);
     ui->labelBIGNode->setText(strBIGNodeText);
     ui->labelMIDNode->setText(strMIDNodeText);
     ui->labelLILNode->setText(strLILNodeText);
@@ -246,13 +385,14 @@ void OverviewPage::infinityNodeStat()
     ui->labelMIDNodeRoi->setText(strMIDNodeROIText);
     ui->labelLILNodeRoi->setText(strLILNodeROIText);
 
-    QString strBIGNodeSTMText(tr("Statement %1").arg(infnodeman.getLastStatement(10)));
-    QString strMIDNodeSTMText(tr("Statement %1").arg(infnodeman.getLastStatement(5)));
-    QString strLILNodeSTMText(tr("Statement %1").arg(infnodeman.getLastStatement(1)));
+    QString strBIGNodeSTMText(tr("Payment Round\n%1").arg(infnodeman.getLastStatement(10)));
+    QString strMIDNodeSTMText(tr("Payment Round\n%1").arg(infnodeman.getLastStatement(5)));
+    QString strLILNodeSTMText(tr("Payment Round\n%1").arg(infnodeman.getLastStatement(1)));
 
     ui->labelBIGNodeSTM->setText(strBIGNodeSTMText);
     ui->labelMIDNodeSTM->setText(strMIDNodeSTMText);
     ui->labelLILNodeSTM->setText(strLILNodeSTMText);
+
 
 }
 
@@ -260,6 +400,7 @@ void OverviewPage::setBalance(const interfaces::WalletBalances& balances)
 {
     int unit = walletModel->getOptionsModel()->getDisplayUnit();
     m_balances = balances;
+    totalBalance = balances.balance + balances.unconfirmed_balance + balances.immature_balance;
     ui->labelBalance->setText(BitcoinUnits::floorHtmlWithUnit(unit, balances.balance, false, BitcoinUnits::separatorAlways));
     ui->labelUnconfirmed->setText(BitcoinUnits::floorHtmlWithUnit(unit, balances.unconfirmed_balance, false, BitcoinUnits::separatorAlways));
     ui->labelImmature->setText(BitcoinUnits::floorHtmlWithUnit(unit, balances.immature_balance, false, BitcoinUnits::separatorAlways));
@@ -349,7 +490,7 @@ void OverviewPage::setWalletModel(WalletModel *model)
         // that's it for litemode
         if(fLiteMode) return;
     }
-    // update the display unit, to not use the default ("QSTEES")
+    // update the display unit, to not use the default ("QTIPARRAY")
     updateDisplayUnit();
 }
 
@@ -398,30 +539,16 @@ void OverviewPage::SetupTransactionList(int nNumItems) {
     }
 }
 
-void OverviewPage::on_pushButton_Website_clicked() {
-    QDesktopServices::openUrl(QUrl("https://qsteesovate.io/", QUrl::TolerantMode));
+void OverviewPage::getPriceInfo()
+{
+        request->setUrl(QUrl("https://sinovate.io/priceUSD.php"));
+    
+    networkManager->get(*request);
 }
-void OverviewPage::on_pushButton_Discord_clicked() {
-    QDesktopServices::openUrl(QUrl("https://qsteesovate.io/links/discord", QUrl::TolerantMode));
-}
-void OverviewPage::on_pushButton_Telegram_clicked() {
-    QDesktopServices::openUrl(QUrl("https://qsteesovate.io/links/telegram", QUrl::TolerantMode));
-}
-void OverviewPage::on_pushButton_Twitter_clicked() {
-    QDesktopServices::openUrl(QUrl("https://qsteesovate.io/links/twitter", QUrl::TolerantMode));
-}
-void OverviewPage::on_pushButton_Explorer_clicked() {
-    QDesktopServices::openUrl(QUrl("http://qsteesovate.io/links/explorer", QUrl::TolerantMode));
-}
-void OverviewPage::on_pushButton_Btctalk_clicked() {
-    QDesktopServices::openUrl(QUrl("https://qsteesovate.io/links/btctalk", QUrl::TolerantMode));
-}
-void OverviewPage::on_pushButton_Reddit_clicked() {
-    QDesktopServices::openUrl(QUrl("https://qsteesovate.io/links/reddit", QUrl::TolerantMode));
-}
-void OverviewPage::on_pushButton_Youtube_clicked() {
-    QDesktopServices::openUrl(QUrl("https://qsteesovate.io/links/youtube", QUrl::TolerantMode));
-}
-void OverviewPage::on_pushButton_Facebook_clicked() {
-    QDesktopServices::openUrl(QUrl("https://qsteesovate.io/links/facebook", QUrl::TolerantMode));
+
+void OverviewPage::getPriceInfoBTC()
+{
+        requestBTC->setUrl(QUrl("https://sinovate.io/priceBTC.php"));
+    
+    networkManagerBTC->get(*requestBTC);
 }

@@ -475,7 +475,7 @@ Thanks to everyone who directly contributed to this release:
 - Nicolas Benoit
 - paveljanik
 - Pavel Janík
-- Pavel Vaqstees
+- Pavel Vasin
 - Peter Todd
 - Philip Kaufmann
 - Pieter Wuille
@@ -488,7 +488,7 @@ Thanks to everyone who directly contributed to this release:
 - sandakersmann
 - Shaul Kfir
 - Shawn Wilkinson
-- qsteesetek
+- sinetek
 - Suhas Daftuar
 - svost
 - Thomas Zander

@@ -85,7 +85,7 @@ class HandleTable {
     if (old == NULL) {
       ++elems_;
       if (elems_ > length_) {
-        // Qsteesce each cache entry is fairly large, we aim for a small
+        // QtipArrayce each cache entry is fairly large, we aim for a small
         // average linked list length (<= 1).
         Resize();
       }

@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2018 The Bitcoin Core developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -35,7 +35,7 @@ struct BIP9Deployment {
     /** Timeout/expiry MedianTime for the deployment attempt. */
     int64_t nTimeout;
 
-    // QSTEES
+    // QTIPARRAY
     /** The number of past blocks (including the block under consideration) to be taken into account for locking in a fork. */
     int64_t nWindowSize;
     /** A number of blocks, in the range of 1..nWindowSize, which must signal for a fork in order to lock it in. */
@@ -61,12 +61,12 @@ struct Params {
     int nMasternodeMinimumConfirmations;
     int nMasternodePaymentsStartBlock;
     int nMasternodeCollateralMinimum; // in coins
-    int nMasternodeBurnQSTEESNODE_1; // in coins
-    int nMasternodeBurnQSTEESNODE_5; // in coins
-    int nMasternodeBurnQSTEESNODE_10; // in coins
-    int nLimitQSTEESNODE_1;// integer
-    int nLimitQSTEESNODE_5;// integer
-    int nLimitQSTEESNODE_10;// integer
+    int nMasternodeBurnQTIPARRAYNODE_1; // in coins
+    int nMasternodeBurnQTIPARRAYNODE_5; // in coins
+    int nMasternodeBurnQTIPARRAYNODE_10; // in coins
+    int nLimitQTIPARRAYNODE_1;// integer
+    int nLimitQTIPARRAYNODE_5;// integer
+    int nLimitQTIPARRAYNODE_10;// integer
     int nInfinityNodeBeginHeight;// integer
     int nInfinityNodeGenesisStatement;// integer
     int nInfinityNodeUpdateMeta;// integer

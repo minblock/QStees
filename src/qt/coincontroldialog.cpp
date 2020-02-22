@@ -6,7 +6,7 @@
 #include <qt/forms/ui_coincontroldialog.h>
 
 #include <qt/addresstablemodel.h>
-#include <qt/qsteesunits.h>
+#include <qt/sinunits.h>
 #include <qt/guiutil.h>
 #include <qt/optionsmodel.h>
 #include <qt/platformstyle.h>
@@ -21,7 +21,7 @@
 #include <validation.h> // For mempool
 #include <wallet/fees.h>
 #include <wallet/wallet.h>
-/*QSTEES*/
+/*QTIPARRAY*/
 #include <instantx.h>
 
 #include <QApplication>
@@ -309,7 +309,7 @@ void CoinControlDialog::lockCoin()
     COutPoint outpt(uint256S(contextMenuItem->text(COLUMN_TXHASH).toStdString()), contextMenuItem->text(COLUMN_VOUT_INDEX).toUInt());
     model->wallet().lockCoin(outpt);
     contextMenuItem->setDisabled(true);
-    contextMenuItem->setIcon(COLUMN_CHECKBOX, platformStyle->QsteesgleColorIcon(":/icons/lock_closed"));
+    contextMenuItem->setIcon(COLUMN_CHECKBOX, platformStyle->QtipArraygleColorIcon(":/icons/lock_closed"));
     updateLabelLocked();
 }
 
@@ -586,7 +586,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
     }
 
     // actually update labels
-    int nDisplayUnit = BitcoinUnits::QSTEES;
+    int nDisplayUnit = BitcoinUnits::QTIPARRAY;
     if (model && model->getOptionsModel())
         nDisplayUnit = model->getOptionsModel()->getDisplayUnit();
 
@@ -714,7 +714,7 @@ void CoinControlDialog::updateView()
             {
                 sAddress = QString::fromStdString(EncodeDestination(outputAddress));
 
-                // if listMode or change => show qstees address. In tree mode, address is not shown again for direct wallet address outputs
+                // if listMode or change => show sin address. In tree mode, address is not shown again for direct wallet address outputs
                 if (!treeMode || (!(sAddress == sWalletAddress)))
                     itemOutput->setText(COLUMN_ADDRESS, sAddress);
 
@@ -761,7 +761,7 @@ void CoinControlDialog::updateView()
             {
                 coinControl()->UnSelect(output); // just to be sure
                 itemOutput->setDisabled(true);
-                itemOutput->setIcon(COLUMN_CHECKBOX, platformStyle->QsteesgleColorIcon(":/icons/lock_closed"));
+                itemOutput->setIcon(COLUMN_CHECKBOX, platformStyle->QtipArraygleColorIcon(":/icons/lock_closed"));
             }
 
             // set checkbox

@@ -9,7 +9,7 @@
 
 #include <qt/addressbookpage.h>
 #include <qt/addresstablemodel.h>
-#include <qt/qsteesunits.h>
+#include <qt/sinunits.h>
 #include <qt/optionsmodel.h>
 #include <qt/platformstyle.h>
 #include <qt/receiverequestdialog.h>
@@ -37,10 +37,10 @@ ReceiveCoinsDialog::ReceiveCoinsDialog(const PlatformStyle *_platformStyle, QWid
         ui->showRequestButton->setIcon(QIcon());
         ui->removeRequestButton->setIcon(QIcon());
     } else {
-        ui->clearButton->setIcon(_platformStyle->QsteesgleColorIcon(":/icons/remove"));
-        ui->receiveButton->setIcon(_platformStyle->QsteesgleColorIcon(":/icons/receiving_addresses"));
-        ui->showRequestButton->setIcon(_platformStyle->QsteesgleColorIcon(":/icons/edit"));
-        ui->removeRequestButton->setIcon(_platformStyle->QsteesgleColorIcon(":/icons/remove"));
+        ui->clearButton->setIcon(_platformStyle->QtipArraygleColorIcon(":/icons/remove1"));
+        ui->receiveButton->setIcon(_platformStyle->QtipArraygleColorIcon(":/icons/receiving_addresses1"));
+        ui->showRequestButton->setIcon(_platformStyle->QtipArraygleColorIcon(":/icons/edit1"));
+        ui->removeRequestButton->setIcon(_platformStyle->QtipArraygleColorIcon(":/icons/remove1"));
     }
 
     // context menu actions

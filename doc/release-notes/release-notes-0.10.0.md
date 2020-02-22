@@ -727,7 +727,7 @@ Thanks to everyone who contributed to this release:
 - ntrgn
 - Otto Allmendinger
 - paveljanik
-- Pavel Vaqstees
+- Pavel Vasin
 - Peter Todd
 - phantomcircuit
 - Philip Kaufmann
@@ -745,7 +745,7 @@ Thanks to everyone who contributed to this release:
 - sandakersmann
 - SergioDemianLerner
 - shshshsh
-- qsteesetek
+- sinetek
 - Stuart Cardall
 - Suhas Daftuar
 - Tawanda Kembo

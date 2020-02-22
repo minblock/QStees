@@ -15,7 +15,7 @@ OpenURIDialog::OpenURIDialog(QWidget *parent) :
     ui(new Ui::OpenURIDialog)
 {
     ui->setupUi(this);
-    ui->uriEdit->setPlaceholderText("qstees:");
+    ui->uriEdit->setPlaceholderText("sin:");
 }
 
 OpenURIDialog::~OpenURIDialog()
@@ -46,5 +46,5 @@ void OpenURIDialog::on_selectFileButton_clicked()
     if(filename.isEmpty())
         return;
     QUrl fileUri = QUrl::fromLocalFile(filename);
-    ui->uriEdit->setText("qstees:?r=" + QUrl::toPercentEncoding(fileUri.toString()));
+    ui->uriEdit->setText("sin:?r=" + QUrl::toPercentEncoding(fileUri.toString()));
 }

@@ -139,7 +139,7 @@ class FaultInjectionTestEnv : public EnvWrapper {
   Status DropUnsyncedFileData();
   Status DeleteFilesCreatedAfterLastDirSync();
   void DirWasSynced();
-  bool IsFileCreatedQsteesceLastDirSync(const std::string& filename);
+  bool IsFileCreatedQtipArrayceLastDirSync(const std::string& filename);
   void ResetState();
   void UntrackFile(const std::string& f);
   // Setting the filesystem to inactive is the test equivalent to simulating a
@@ -215,7 +215,7 @@ Status TestWritableFile::Sync() {
   if (s.ok()) {
     state_.pos_at_last_sync_ = state_.pos_;
   }
-  if (env_->IsFileCreatedQsteesceLastDirSync(state_.filename_)) {
+  if (env_->IsFileCreatedQtipArrayceLastDirSync(state_.filename_)) {
     Status ps = SyncParent();
     if (s.ok() && !ps.ok()) {
       s = ps;
@@ -281,7 +281,7 @@ void FaultInjectionTestEnv::DirWasSynced() {
   new_files_since_last_dir_sync_.clear();
 }
 
-bool FaultInjectionTestEnv::IsFileCreatedQsteesceLastDirSync(
+bool FaultInjectionTestEnv::IsFileCreatedQtipArrayceLastDirSync(
     const std::string& filename) {
   MutexLock l(&mutex_);
   return new_files_since_last_dir_sync_.find(filename) !=
@@ -325,7 +325,7 @@ Status FaultInjectionTestEnv::RenameFile(const std::string& s,
 }
 
 void FaultInjectionTestEnv::ResetState() {
-  // Qsteesce we are not destroying the database, the existing files
+  // QtipArrayce we are not destroying the database, the existing files
   // should keep their recorded synced/flushed state. Therefore
   // we do not reset db_file_state_ and new_files_since_last_dir_sync_.
   MutexLock l(&mutex_);

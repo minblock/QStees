@@ -95,11 +95,11 @@ int Swifftx::Update(const BitSequence *data, DataLength databitlen)
 	// The input block to compression function of SWIFFTX:
 	BitSequence currInputBlock[SWIFFTX_INPUT_BLOCK_SIZE] = {0};
 	// Whether we handled a single block.
-	bool wasQsteesgleBlockHandled = false;
+	bool wasQtipArraygleBlockHandled = false;
 
 	swifftxState.wasUpdated = true;
 
-	// Handle an empty message as required by NIST. Qsteesce 'Final()' is oblivious to the input
+	// Handle an empty message as required by NIST. QtipArrayce 'Final()' is oblivious to the input
 	// (but of course uses the output of the compression function from the previous round, 
 	// which is called h_{i-1} in HAIFA article), we have to do nothing here.
 	if (databitlen == 0)
@@ -142,11 +142,11 @@ int Swifftx::Update(const BitSequence *data, DataLength databitlen)
 			 + sizeOfInputAfterRemaining + SWIF_HAIFA_NUM_OF_BITS_SIZE,
 			   swifftxState.salt, SWIF_HAIFA_SALT_SIZE);
 
-		ComputeQsteesgleSWIFFTX(currInputBlock, swifftxState.currOutputBlock, false);
+		ComputeQtipArraygleSWIFFTX(currInputBlock, swifftxState.currOutputBlock, false);
 
 		// Update the #bits field with SWIF_HAIFA_INPUT_BLOCK_SIZE.
 		AddToCurrInBase256(swifftxState.numOfBitsChar, SWIF_HAIFA_INPUT_BLOCK_SIZE * 8);
-		wasQsteesgleBlockHandled = true;
+		wasQtipArraygleBlockHandled = true;
 		data += sizeOfInputAfterRemaining;
 		databitlen -= (sizeOfInputAfterRemaining * 8);
    		swifftxState.remainingSize = 0;
@@ -154,7 +154,7 @@ int Swifftx::Update(const BitSequence *data, DataLength databitlen)
 
 	// Update the swifftxState.remaining and swifftxState.remainingSize.
     // remainingSize will be in bits after exiting 'Update()'.
-	if (wasQsteesgleBlockHandled)
+	if (wasQtipArraygleBlockHandled)
 	{		
 		swifftxState.remainingSize = (unsigned int) databitlen; // now remaining size is in bits.
         if (swifftxState.remainingSize)
@@ -262,7 +262,7 @@ int Swifftx::Final(BitSequence *hashval)
            swifftxState.salt, 
 		   SWIF_HAIFA_SALT_SIZE);
 
-    ComputeQsteesgleSWIFFTX(currInputBlock, swifftxState.currOutputBlock, !toAddFinalBlock); 
+    ComputeQtipArraygleSWIFFTX(currInputBlock, swifftxState.currOutputBlock, !toAddFinalBlock); 
 
 	// If we have to add one more block, it is now:
 	if (toAddFinalBlock)
@@ -291,7 +291,7 @@ int Swifftx::Final(BitSequence *hashval)
                swifftxState.salt, 
 			   SWIF_HAIFA_SALT_SIZE);
 
-        ComputeQsteesgleSWIFFTX(currInputBlock, swifftxState.currOutputBlock, true); 
+        ComputeQtipArraygleSWIFFTX(currInputBlock, swifftxState.currOutputBlock, true); 
 	}
 
 	// Finally, copy the result into 'hashval'. In case the digest size is not 512bit, copy the

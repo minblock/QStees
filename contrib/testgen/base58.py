@@ -28,7 +28,7 @@ def b58encode(v):
     """
     long_value = 0
     for (i, c) in enumerate(v[::-1]):
-        if iqsteesstance(c, str):
+        if isinstance(c, str):
             c = ord(c)
         long_value += (256**i) * c
 

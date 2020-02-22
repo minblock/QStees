@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/qstees-config.h>
+#include <config/sin-config.h>
 #endif
 
 #include <qt/addressbookpage.h>
@@ -71,10 +71,10 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode _mode,
         ui->deleteAddress->setIcon(QIcon());
         ui->exportButton->setIcon(QIcon());
     } else {
-        ui->newAddress->setIcon(platformStyle->QsteesgleColorIcon(":/icons/add"));
-        ui->copyAddress->setIcon(platformStyle->QsteesgleColorIcon(":/icons/editcopy"));
-        ui->deleteAddress->setIcon(platformStyle->QsteesgleColorIcon(":/icons/remove"));
-        ui->exportButton->setIcon(platformStyle->QsteesgleColorIcon(":/icons/export"));
+        ui->newAddress->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/add1"));
+        ui->copyAddress->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/editcopy"));
+        ui->deleteAddress->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/remove1"));
+        ui->exportButton->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/export"));
     }
 
     switch(mode)
@@ -102,11 +102,11 @@ AddressBookPage::AddressBookPage(const PlatformStyle *platformStyle, Mode _mode,
     switch(tab)
     {
     case SendingTab:
-        ui->labelExplanation->setText(tr("These are your QSTEES addresses for sending payments. Always check the amount and the receiving address before sending coins."));
+        ui->labelExplanation->setText(tr("These are your QTIPARRAY addresses for sending payments. Always check the amount and the receiving address before sending coins."));
         ui->deleteAddress->setVisible(true);
         break;
     case ReceivingTab:
-        ui->labelExplanation->setText(tr("These are your QSTEES addresses for receiving payments. It is recommended to use a new receiving address for each transaction."));
+        ui->labelExplanation->setText(tr("These are your QTIPARRAY addresses for receiving payments. It is recommended to use a new receiving address for each transaction."));
         ui->deleteAddress->setVisible(false);
         break;
     }

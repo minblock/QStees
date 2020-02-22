@@ -10,7 +10,7 @@
 #include <vector>
 
 /**
- * CBaseChainParams defines the base parameters (shared between qstees-cli and qsteesd)
+ * CBaseChainParams defines the base parameters (shared between sin-cli and sind)
  * of a given instance of the Bitcoin system.
  */
 class CBaseChainParams

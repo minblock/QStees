@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -282,7 +282,7 @@ UniValue masternode(const JSONRPCRequest& request)
             CMasternode mn;
             bool fFound = mnodeman.Get(outpoint, mn);
 
-            std::string strStatus = fFound ? mn.GetStatus() : "MISQSTEESG";
+            std::string strStatus = fFound ? mn.GetStatus() : "MISQTIPARRAYG";
 
             UniValue mnObj(UniValue::VOBJ);
             mnObj.push_back(Pair("alias", mne.getAlias()));
@@ -446,12 +446,12 @@ UniValue masternodelist(const JSONRPCRequest& request)
                 obj.push_back(Pair(strOutpoint, strAddress));
             } else if (strMode == "full") {
                 std::ostringstream streamFull;
-                int infinityType = mn.GetQsteesTypeInt();
+                int infinityType = mn.GetQtipArrayTypeInt();
                 int rewardAtHeight = GetMasternodePayment(chainActive.Height(), infinityType) / COIN;
                 int burnAmountByType = 0;
-                if (infinityType == 1) burnAmountByType = Params().GetConsensus().nMasternodeBurnQSTEESNODE_1;
-                if (infinityType == 5) burnAmountByType = Params().GetConsensus().nMasternodeBurnQSTEESNODE_5;
-                if (infinityType == 10) burnAmountByType = Params().GetConsensus().nMasternodeBurnQSTEESNODE_10;
+                if (infinityType == 1) burnAmountByType = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1;
+                if (infinityType == 5) burnAmountByType = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5;
+                if (infinityType == 10) burnAmountByType = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10;
                 streamFull << std::setw(18) <<
                                mn.GetStatus() << " " <<
                                mn.nProtocolVersion << " " <<
@@ -467,12 +467,12 @@ UniValue masternodelist(const JSONRPCRequest& request)
                 obj.push_back(Pair(strOutpoint, strFull));
             } else if (strMode == "info") {
                 std::ostringstream streamInfo;
-                int infinityType = mn.GetQsteesTypeInt();
+                int infinityType = mn.GetQtipArrayTypeInt();
                 int rewardAtHeight = GetMasternodePayment(chainActive.Height(), infinityType) / COIN;
                 int burnAmountByType = 0;
-                if (infinityType == 1) burnAmountByType = Params().GetConsensus().nMasternodeBurnQSTEESNODE_1;
-                if (infinityType == 5) burnAmountByType = Params().GetConsensus().nMasternodeBurnQSTEESNODE_5;
-                if (infinityType == 10) burnAmountByType = Params().GetConsensus().nMasternodeBurnQSTEESNODE_10;
+                if (infinityType == 1) burnAmountByType = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1;
+                if (infinityType == 5) burnAmountByType = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5;
+                if (infinityType == 10) burnAmountByType = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10;
                 streamInfo << std::setw(18) <<
                                mn.GetStatus() << " " <<
                                mn.nProtocolVersion << " " <<
@@ -831,8 +831,8 @@ UniValue infinitynode(const JSONRPCRequest& request)
                 "  show-lastscan               - Last nHeight when list is updated\n"
                 "  show-lastpaid               - Last paid of all nodes\n"
                 "  build-stm                   - Build statement list from genesis parameter\n"
-                "  show-stm                    - Last statement of each QsteesType\n"
-                "  show-candidate nHeight      - Last statement of each QsteesType\n"
+                "  show-stm                    - Last statement of each QtipArrayType\n"
+                "  show-candidate nHeight      - Last statement of each QtipArrayType\n"
                 );
 
     UniValue obj(UniValue::VOBJ);
@@ -915,7 +915,7 @@ UniValue infinitynode(const JSONRPCRequest& request)
                                inf.getHeight() << " " <<
                                inf.getExpireHeight() << " " <<
                                inf.getRoundBurnValue() << " " <<
-                               inf.getQSTEESType() << " " <<
+                               inf.getQTIPARRAYType() << " " <<
                                inf.getBackupAddress() << " " <<
                                inf.getLastRewardHeight() << " " <<
                                inf.getRank();
@@ -1012,16 +1012,16 @@ static UniValue infinitynodeburnfund(const JSONRPCRequest& request)
 
     if (request.fHelp || request.params.size() != 2)
        throw std::runtime_error(
-            "infinitynodeburnfund amount QSTEESBackupAddress"
+            "infinitynodeburnfund amount QTIPARRAYBackupAddress"
             "\nSend an amount to BurnAddress.\n"
             "\nArguments:\n"
             "1. \"amount\"             (numeric or string, required) The amount in " + CURRENCY_UNIT + " to send. eg 0.1\n"
-            "2. \"NodeOwnerBackupAddress\"  (string, required) The QSTEES address to send to when you make a notification(new feature soon).\n"
+            "2. \"NodeOwnerBackupAddress\"  (string, required) The QTIPARRAY address to send to when you make a notification(new feature soon).\n"
             "\nResult:\n"
             "\"BURNtxid\"                  (string) The Burn transaction id. Need to run infinity node\n"
             "\"CollateralAddress\"         (string) Address of Collateral. Please send 10000 to this address.\n"
             "\nExamples:\n"
-            + HelpExampleCli("infinitynodeburnfund", "1000000 QSTEESBackupAddress")
+            + HelpExampleCli("infinitynodeburnfund", "1000000 QTIPARRAYBackupAddress")
         );
 
     if(!masternodeSync.IsMasternodeListSynced())
@@ -1042,26 +1042,26 @@ static UniValue infinitynodeburnfund(const JSONRPCRequest& request)
     UniValue results(UniValue::VARR);
     // Amount
     CAmount nAmount = AmountFromValue(request.params[0]);
-    if (nAmount != Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 * COIN &&
-        nAmount != Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 * COIN &&
-        nAmount != Params().GetConsensus().nMasternodeBurnQSTEESNODE_10 * COIN)
+    if (nAmount != Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 * COIN &&
+        nAmount != Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 * COIN &&
+        nAmount != Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10 * COIN)
     {
         throw JSONRPCError(RPC_TYPE_ERROR, "Invalid amount to burn and run Infinitynode");
     }
 
     CTxDestination BKaddress = DecodeDestination(request.params[1].get_str());
     if (!IsValidDestination(BKaddress))
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid QSTEES address for Backup");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid QTIPARRAY address for Backup");
 
     std::map<COutPoint, CInfinitynode> mapInfinitynodes = infnodeman.GetFullInfinitynodeMap();
     int totalNode = 0, totalBIG = 0, totalMID = 0, totalLIL = 0, totalUnknown = 0;
     for (auto& infpair : mapInfinitynodes) {
         ++totalNode;
         CInfinitynode inf = infpair.second;
-        int qsteestype = inf.getQSTEESType();
-        if (qsteestype == 10) ++totalBIG;
-        else if (qsteestype == 5) ++totalMID;
-        else if (qsteestype == 1) ++totalLIL;
+        int sintype = inf.getQTIPARRAYType();
+        if (sintype == 10) ++totalBIG;
+        else if (sintype == 5) ++totalMID;
+        else if (sintype == 1) ++totalLIL;
         else ++totalUnknown;
     }
 
@@ -1191,13 +1191,13 @@ static UniValue infinitynodeupdatemeta(const JSONRPCRequest& request)
     std::string strOwnerAddress = request.params[0].get_str();
     CTxDestination INFAddress = DecodeDestination(strOwnerAddress);
     if (!IsValidDestination(INFAddress)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid QSTEES address: OwnerAddress");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid QTIPARRAY address: OwnerAddress");
     }
 
     std::string strNodeAddress = request.params[1].get_str();
     CTxDestination NodeAddress = DecodeDestination(strNodeAddress);
     if (!IsValidDestination(NodeAddress)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid QSTEES address: NodeAddress");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid QTIPARRAY address: NodeAddress");
     }
 
     std::string strService = request.params[2].get_str();
@@ -1308,7 +1308,7 @@ static UniValue infinitynodevote(const JSONRPCRequest& request)
     std::string strOwnerAddress = request.params[0].get_str();
     CTxDestination INFAddress = DecodeDestination(strOwnerAddress);
     if (!IsValidDestination(INFAddress)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid QSTEES address: OwnerAddress");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid QTIPARRAY address: OwnerAddress");
     }
 
     std::string ProposalId = request.params[1].get_str();
@@ -1354,7 +1354,7 @@ static UniValue infinitynodevote(const JSONRPCRequest& request)
 
         if (!fValidAddress) continue;
         if (EncodeDestination(INFAddress) != EncodeDestination(address)) continue;
-        //use coin with limit value 10k QSTEES
+        //use coin with limit value 10k QTIPARRAY
         if (out.tx->tx->vout[out.i].nValue / COIN >= Params().GetConsensus().nInfinityNodeVoteValue
             && out.tx->tx->vout[out.i].nValue / COIN < Params().GetConsensus().nInfinityNodeVoteValue*1000
             && out.nDepth >= 2) {
@@ -1450,9 +1450,9 @@ UniValue mnsetup(const JSONRPCRequest& request)
       const CWalletTx* pcoin = &(*it).second;
       for (unsigned int i = 0; i < pcoin->tx->vout.size(); i++) {
         if ((strstr(pcoin->tx->vout[i].scriptPubKey.ToString().c_str(),Params().GetConsensus().cBurnAddressPubKey)!=NULL) &&
-          (pcoin->tx->vout[i].nValue == Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 * COIN ||
-           pcoin->tx->vout[i].nValue == Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 * COIN ||
-           pcoin->tx->vout[i].nValue == Params().GetConsensus().nMasternodeBurnQSTEESNODE_10 * COIN)) {
+          (pcoin->tx->vout[i].nValue == Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 * COIN ||
+           pcoin->tx->vout[i].nValue == Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 * COIN ||
+           pcoin->tx->vout[i].nValue == Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10 * COIN)) {
            if (!foundBurn) {
              strcpy(burnTxid, txid->ToString().c_str());
              burnVout = i;
@@ -1489,14 +1489,14 @@ UniValue mnsetup(const JSONRPCRequest& request)
 static const CRPCCommand commands[] =
 { //  category              name                      actor (function)         argNames
   //  --------------------- ------------------------  -----------------------  ----------
-    { "QSTEES",                "masternode",             &masternode,             {"command"}  },
+    { "QTIPARRAY",                "masternode",             &masternode,             {"command"}  },
     { "dash",               "masternodelist",         &masternodelist,         {"mode", "filter"}  },
     { "dash",               "masternodebroadcast",    &masternodebroadcast,    {"command"}  },
-    { "QSTEES",                "mnsetup",                &mnsetup,                {}  },
-    { "QSTEES",                "infinitynodeburnfund",   &infinitynodeburnfund,   {"amount"} },
-    { "QSTEES",                "infinitynodeupdatemeta", &infinitynodeupdatemeta, {"owner_address","node_address","IP"} },
-    { "QSTEES",                "infinitynode",           &infinitynode,           {"command"}  },
-    { "QSTEES",                "infinitynodevote",       &infinitynodevote,       {"owner_address","proposalid","opinion"} }
+    { "QTIPARRAY",                "mnsetup",                &mnsetup,                {}  },
+    { "QTIPARRAY",                "infinitynodeburnfund",   &infinitynodeburnfund,   {"amount"} },
+    { "QTIPARRAY",                "infinitynodeupdatemeta", &infinitynodeupdatemeta, {"owner_address","node_address","IP"} },
+    { "QTIPARRAY",                "infinitynode",           &infinitynode,           {"command"}  },
+    { "QTIPARRAY",                "infinitynodevote",       &infinitynodevote,       {"owner_address","proposalid","opinion"} }
 };
 
 void RegisterDashMasternodeRPCCommands(CRPCTable &t)

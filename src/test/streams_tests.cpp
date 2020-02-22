@@ -4,7 +4,7 @@
 
 #include <streams.h>
 #include <support/allocators/zeroafterfree.h>
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 
 #include <boost/test/unit_test.hpp>
 
@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE(streams_serializedata_xor)
     expected_xor.push_back('\xf0');
     expected_xor.push_back('\x0f');
 
-    // Qsteesgle character key
+    // QtipArraygle character key
 
     ds.clear();
     ds.insert(ds.begin(), in.begin(), in.end());

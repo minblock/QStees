@@ -8,7 +8,7 @@
 #include <consensus/validation.h>
 #include <primitives/transaction.h>
 #include <script/script.h>
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 
 #include <boost/test/unit_test.hpp>
 

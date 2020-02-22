@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include <config/qstees-config.h>
+#include <config/sin-config.h>
 #endif
 
 #include <qt/rpcconsole.h>
@@ -104,7 +104,7 @@ public:
     QtRPCTimerBase(std::function<void(void)>& _func, int64_t millis):
         func(_func)
     {
-        timer.setQsteesgleShot(true);
+        timer.setQtipArraygleShot(true);
         connect(&timer, SIGNAL(timeout()), this, SLOT(timeout()));
         timer.start(millis);
     }
@@ -161,7 +161,7 @@ bool RPCConsole::RPCParseCommandLine(interfaces::Node* node, std::string &strRes
         STATE_EATING_SPACES_IN_ARG,
         STATE_EATING_SPACES_IN_BRACKETS,
         STATE_ARGUMENT,
-        STATE_QSTEESGLEQUOTED,
+        STATE_QTIPARRAYGLEQUOTED,
         STATE_DOUBLEQUOTED,
         STATE_ESCAPE_OUTER,
         STATE_ESCAPE_DOUBLEQUOTED,
@@ -276,7 +276,7 @@ bool RPCConsole::RPCParseCommandLine(interfaces::Node* node, std::string &strRes
                 switch(ch)
             {
                 case '"': state = STATE_DOUBLEQUOTED; break;
-                case '\'': state = STATE_QSTEESGLEQUOTED; break;
+                case '\'': state = STATE_QTIPARRAYGLEQUOTED; break;
                 case '\\': state = STATE_ESCAPE_OUTER; break;
                 case '(': case ')': case '\n':
                     if (state == STATE_EATING_SPACES_IN_ARG)
@@ -340,7 +340,7 @@ bool RPCConsole::RPCParseCommandLine(interfaces::Node* node, std::string &strRes
                 default: curarg += ch; state = STATE_ARGUMENT;
             }
                 break;
-            case STATE_QSTEESGLEQUOTED: // Qsteesgle-quoted string
+            case STATE_QTIPARRAYGLEQUOTED: // QtipArraygle-quoted string
                 switch(ch)
             {
                 case '\'': state = STATE_ARGUMENT; break;
@@ -464,11 +464,11 @@ RPCConsole::RPCConsole(interfaces::Node& node, const PlatformStyle *_platformSty
     ui->openDebugLogfileButton->setToolTip(ui->openDebugLogfileButton->toolTip().arg(tr(PACKAGE_NAME)));
 
     if (platformStyle->getImagesOnButtons()) {
-        ui->openDebugLogfileButton->setIcon(platformStyle->QsteesgleColorIcon(":/icons/export"));
+        ui->openDebugLogfileButton->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/export"));
     }
-    ui->clearButton->setIcon(platformStyle->QsteesgleColorIcon(":/icons/remove"));
-    ui->fontBiggerButton->setIcon(platformStyle->QsteesgleColorIcon(":/icons/fontbigger"));
-    ui->fontSmallerButton->setIcon(platformStyle->QsteesgleColorIcon(":/icons/fontsmaller"));
+    ui->clearButton->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/remove"));
+    ui->fontBiggerButton->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/fontbigger"));
+    ui->fontSmallerButton->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/fontsmaller"));
 
     // Install event filter for up and down arrow
     ui->lineEdit->installEventFilter(this);
@@ -642,7 +642,7 @@ void RPCConsole::setClientModel(ClientModel *model)
         ui->banlistWidget->verticalHeader()->hide();
         ui->banlistWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
         ui->banlistWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-        ui->banlistWidget->setSelectionMode(QAbstractItemView::QsteesgleSelection);
+        ui->banlistWidget->setSelectionMode(QAbstractItemView::QtipArraygleSelection);
         ui->banlistWidget->setContextMenuPolicy(Qt::CustomContextMenu);
         ui->banlistWidget->setColumnWidth(BanTableModel::Address, BANSUBNET_COLUMN_WIDTH);
         ui->banlistWidget->setColumnWidth(BanTableModel::Bantime, BANTIME_COLUMN_WIDTH);
@@ -790,7 +790,7 @@ void RPCConsole::clear(bool clearHistory)
         ui->messagesWidget->document()->addResource(
                     QTextDocument::ImageResource,
                     QUrl(ICON_MAPPING[i].url),
-                    platformStyle->QsteesgleColorImage(ICON_MAPPING[i].source).scaled(QSize(consoleFontSize*2, consoleFontSize*2), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                    platformStyle->QtipArraygleColorImage(ICON_MAPPING[i].source).scaled(QSize(consoleFontSize*2, consoleFontSize*2), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
     }
 
     // Set default style sheet
@@ -1036,6 +1036,40 @@ void RPCConsole::updateTrafficStats(quint64 totalBytesIn, quint64 totalBytesOut)
     ui->lblBytesIn->setText(GUIUtil::formatBytes(totalBytesIn));
     ui->lblBytesOut->setText(GUIUtil::formatBytes(totalBytesOut));
 }
+
+/// start Exchanges and Web Links
+void RPCConsole::hyperlinks_slot1(){ GUIUtil::hyperlinks_slot1();}
+void RPCConsole::hyperlinks_slot2(){ GUIUtil::hyperlinks_slot2();}
+void RPCConsole::hyperlinks_slot3(){ GUIUtil::hyperlinks_slot3();}
+void RPCConsole::hyperlinks_slot4(){ GUIUtil::hyperlinks_slot4();}
+void RPCConsole::hyperlinks_slot5(){ GUIUtil::hyperlinks_slot5();}
+void RPCConsole::hyperlinks_slot6(){ GUIUtil::hyperlinks_slot6();}
+void RPCConsole::hyperlinks_slot7(){ GUIUtil::hyperlinks_slot7();}
+void RPCConsole::hyperlinks_slot8(){ GUIUtil::hyperlinks_slot8();}
+void RPCConsole::hyperlinks_slot9(){ GUIUtil::hyperlinks_slot9();}
+
+void RPCConsole::hyperlinks2_slot1(){ GUIUtil::hyperlinks2_slot1();}
+void RPCConsole::hyperlinks2_slot2(){ GUIUtil::hyperlinks2_slot2();}
+void RPCConsole::hyperlinks2_slot3(){ GUIUtil::hyperlinks2_slot3();}
+void RPCConsole::hyperlinks2_slot4(){ GUIUtil::hyperlinks2_slot4();}
+void RPCConsole::hyperlinks2_slot5(){ GUIUtil::hyperlinks2_slot5();}
+void RPCConsole::hyperlinks2_slot6(){ GUIUtil::hyperlinks2_slot6();}
+void RPCConsole::hyperlinks2_slot7(){ GUIUtil::hyperlinks2_slot7();}
+void RPCConsole::hyperlinks2_slot8(){ GUIUtil::hyperlinks2_slot8();}
+void RPCConsole::hyperlinks2_slot9(){ GUIUtil::hyperlinks2_slot9();}
+void RPCConsole::hyperlinks2_slot10(){ GUIUtil::hyperlinks2_slot10();}
+void RPCConsole::hyperlinks2_slot11(){ GUIUtil::hyperlinks2_slot11();}
+void RPCConsole::hyperlinks2_slot12(){ GUIUtil::hyperlinks2_slot12();}
+
+
+void RPCConsole::hyperlinks3_slot1(){ GUIUtil::hyperlinks3_slot1();}
+void RPCConsole::hyperlinks3_slot2(){ GUIUtil::hyperlinks3_slot2();}
+void RPCConsole::hyperlinks3_slot3(){ GUIUtil::hyperlinks3_slot3();}
+void RPCConsole::hyperlinks3_slot4(){ GUIUtil::hyperlinks3_slot4();}
+void RPCConsole::hyperlinks3_slot5(){ GUIUtil::hyperlinks3_slot5();}
+void RPCConsole::hyperlinks3_slot6(){ GUIUtil::hyperlinks3_slot6();}
+void RPCConsole::hyperlinks3_slot7(){ GUIUtil::hyperlinks3_slot7();}
+/// end Exchanges and Web Links
 
 void RPCConsole::peerSelected(const QItemSelection &selected, const QItemSelection &deselected)
 {

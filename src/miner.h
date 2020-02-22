@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018 - 2019 QSTEES developers
+// Copyright (c) 2018 - 2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -201,7 +201,7 @@ private:
 };
 
 /** Run the miner threads */
-void GenerateQSTEESs(bool fGenerate, int nThreads, const CChainParams& chainparams, CConnman &connman);
+void GenerateQTIPARRAYs(bool fGenerate, int nThreads, const CChainParams& chainparams, CConnman &connman);
 
 /** Modify the extranonce in a block */
 void IncrementExtraNonce(CBlock* pblock, const CBlockIndex* pindexPrev, unsigned int& nExtraNonce);

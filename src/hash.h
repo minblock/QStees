@@ -346,7 +346,7 @@ inline uint256 HashX22I(const T1 pbegin, const T1 pend)
 
     unsigned char temp[SWIFFTX_OUTPUT_BLOCK_SIZE] = {0};
     InitializeSWIFFTX();
-    ComputeQsteesgleSWIFFTX((unsigned char*)&hash[12], temp, false);
+    ComputeQtipArraygleSWIFFTX((unsigned char*)&hash[12], temp, false);
 
     memcpy((unsigned char*)&hash[16], temp, 64);
     sph_haval256_5_init(&ctx_haval);
@@ -467,7 +467,7 @@ inline uint256 HashX25X(const T1 pbegin, const T1 pend)
     // Temporary var used by swifftx to manage 65 bytes output,
     unsigned char temp[SWIFFTX_OUTPUT_BLOCK_SIZE] = {0};
     InitializeSWIFFTX();
-    ComputeQsteesgleSWIFFTX((unsigned char*)&hash[12], temp, false);
+    ComputeQtipArraygleSWIFFTX((unsigned char*)&hash[12], temp, false);
     memcpy((unsigned char*)&hash[16], temp, 64);
 
     sph_haval256_5_init(&ctx_haval);

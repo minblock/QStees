@@ -17,7 +17,7 @@ To receive security and update notifications, please subscribe to:
 Compatibility
 ==============
 
-Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBuqsteesess/end-of-xp-support),
+Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBusiness/end-of-xp-support),
 an OS initially released in 2001. This means that not even critical security
 updates will be released anymore. Without security updates, using a bitcoin
 wallet on a XP machine is irresponsible at least.
@@ -183,7 +183,7 @@ a third-party to insert data into other people's transactions, changing
 the transaction's txid (called transaction malleability) and possibly
 causing other problems.
 
-Qsteesce Bitcoin Core 0.10.0, nodes have defaulted to only relaying and
+QtipArrayce Bitcoin Core 0.10.0, nodes have defaulted to only relaying and
 mining transactions whose dummy element was a null value (0x00, also
 called OP_0).  The null dummy soft fork turns this relay rule into a
 consensus rule both for non-segwit transactions and segwit transactions,
@@ -314,7 +314,7 @@ git merge commit are mentioned.
 - #8442 `8bb1efd` Rework hd wallet dump test (MarcoFalke)
 - #8528 `3606b6b` Update p2p-segwit.py to reflect correct behavior (instagibbs)
 - #8531 `a27cdd8` abandonconflict: Use assert_equal (MarcoFalke)
-- #8667 `6b07362` Fix SIGHASH_QSTEESGLE bug in test_framework SignatureHash (jl2012)
+- #8667 `6b07362` Fix SIGHASH_QTIPARRAYGLE bug in test_framework SignatureHash (jl2012)
 - #8673 `03b0196` Fix obvious assignment/equality error in test (JeremyRubin)
 - #8739 `cef633c` Fix broken sendcmpct test in p2p-compactblocks.py (sdaftuar)
 - #8418 `ff893aa` Add tests for compact blocks (sdaftuar)

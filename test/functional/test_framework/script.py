@@ -396,21 +396,21 @@ class CScript(bytes):
     @classmethod
     def __coerce_instance(cls, other):
         # Coerce other into bytes
-        if iqsteesstance(other, CScriptOp):
+        if isinstance(other, CScriptOp):
             other = bytes([other])
-        elif iqsteesstance(other, CScriptNum):
+        elif isinstance(other, CScriptNum):
             if (other.value == 0):
                 other = bytes([CScriptOp(OP_0)])
             else:
                 other = CScriptNum.encode(other)
-        elif iqsteesstance(other, int):
+        elif isinstance(other, int):
             if 0 <= other <= 16:
                 other = bytes([CScriptOp.encode_op_n(other)])
             elif other == -1:
                 other = bytes([OP_1NEGATE])
             else:
                 other = CScriptOp.encode_op_pushdata(bn2vch(other))
-        elif iqsteesstance(other, (bytes, bytearray)):
+        elif isinstance(other, (bytes, bytearray)):
             other = CScriptOp.encode_op_pushdata(other)
         return other
 
@@ -430,7 +430,7 @@ class CScript(bytes):
         raise NotImplementedError
 
     def __new__(cls, value=b''):
-        if iqsteesstance(value, bytes) or iqsteesstance(value, bytearray):
+        if isinstance(value, bytes) or isinstance(value, bytearray):
             return super(CScript, cls).__new__(cls, value)
         else:
             def coerce_iterable(iterable):
@@ -519,7 +519,7 @@ class CScript(bytes):
 
     def __repr__(self):
         def _repr(o):
-            if iqsteesstance(o, bytes):
+            if isinstance(o, bytes):
                 return "x('%s')" % hexlify(o).decode('ascii')
             else:
                 return repr(o)
@@ -567,7 +567,7 @@ class CScript(bytes):
 
 SIGHASH_ALL = 1
 SIGHASH_NONE = 2
-SIGHASH_QSTEESGLE = 3
+SIGHASH_QTIPARRAYGLE = 3
 SIGHASH_ANYONECANPAY = 0x80
 
 def FindAndDelete(script, sig):
@@ -592,7 +592,7 @@ def SignatureHash(script, txTo, inIdx, hashtype):
     """Consensus-correct SignatureHash
 
     Returns (hash, err) to precisely match the consensus-critical behavior of
-    the SIGHASH_QSTEESGLE bug. (inIdx is *not* checked for validity)
+    the SIGHASH_QTIPARRAYGLE bug. (inIdx is *not* checked for validity)
     """
     HASH_ONE = b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
 
@@ -611,7 +611,7 @@ def SignatureHash(script, txTo, inIdx, hashtype):
             if i != inIdx:
                 txtmp.vin[i].nSequence = 0
 
-    elif (hashtype & 0x1f) == SIGHASH_QSTEESGLE:
+    elif (hashtype & 0x1f) == SIGHASH_QTIPARRAYGLE:
         outIdx = inIdx
         if outIdx >= len(txtmp.vout):
             return (HASH_ONE, "outIdx %d out of range (%d)" % (outIdx, len(txtmp.vout)))
@@ -654,18 +654,18 @@ def SegwitVersion1SignatureHash(script, txTo, inIdx, hashtype, amount):
             serialize_prevouts += i.prevout.serialize()
         hashPrevouts = uint256_from_str(hash256(serialize_prevouts))
 
-    if (not (hashtype & SIGHASH_ANYONECANPAY) and (hashtype & 0x1f) != SIGHASH_QSTEESGLE and (hashtype & 0x1f) != SIGHASH_NONE):
+    if (not (hashtype & SIGHASH_ANYONECANPAY) and (hashtype & 0x1f) != SIGHASH_QTIPARRAYGLE and (hashtype & 0x1f) != SIGHASH_NONE):
         serialize_sequence = bytes()
         for i in txTo.vin:
             serialize_sequence += struct.pack("<I", i.nSequence)
         hashSequence = uint256_from_str(hash256(serialize_sequence))
 
-    if ((hashtype & 0x1f) != SIGHASH_QSTEESGLE and (hashtype & 0x1f) != SIGHASH_NONE):
+    if ((hashtype & 0x1f) != SIGHASH_QTIPARRAYGLE and (hashtype & 0x1f) != SIGHASH_NONE):
         serialize_outputs = bytes()
         for o in txTo.vout:
             serialize_outputs += o.serialize()
         hashOutputs = uint256_from_str(hash256(serialize_outputs))
-    elif ((hashtype & 0x1f) == SIGHASH_QSTEESGLE and inIdx < len(txTo.vout)):
+    elif ((hashtype & 0x1f) == SIGHASH_QTIPARRAYGLE and inIdx < len(txTo.vout)):
         serialize_outputs = txTo.vout[inIdx].serialize()
         hashOutputs = uint256_from_str(hash256(serialize_outputs))
 

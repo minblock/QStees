@@ -147,7 +147,7 @@ class CECKey():
 
     def sign(self, hash, low_s = True):
         # FIXME: need unit tests for below cases
-        if not iqsteesstance(hash, bytes):
+        if not isinstance(hash, bytes):
             raise TypeError('Hash must be bytes instance; got %r' % hash.__class__)
         if len(hash) != 32:
             raise ValueError('Hash must be exactly 32 bytes long')

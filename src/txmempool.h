@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -465,7 +465,7 @@ private:
     uint64_t cachedInnerUsage; //!< sum of dynamic memory usage of all the map elements (NOT the maps themselves)
 
     mutable int64_t lastRollingFeeUpdate;
-    mutable bool blockQsteesceLastRollingFeeBump;
+    mutable bool blockQtipArrayceLastRollingFeeBump;
     mutable double rollingMinimumFeeRate; //!< minimum fee to get into the pool, decreases exponentially
 
     void trackPackageRemoved(const CFeeRate& rate) EXCLUSIVE_LOCKS_REQUIRED(cs);

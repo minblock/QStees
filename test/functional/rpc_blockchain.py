@@ -222,12 +222,12 @@ class BlockchainTest(BitcoinTestFramework):
         assert_is_hash_string(header['previousblockhash'])
         assert_is_hash_string(header['merkleroot'])
         assert_is_hash_string(header['bits'], length=None)
-        assert iqsteesstance(header['time'], int)
-        assert iqsteesstance(header['mediantime'], int)
-        assert iqsteesstance(header['nonce'], int)
-        assert iqsteesstance(header['version'], int)
-        assert iqsteesstance(int(header['versionHex'], 16), int)
-        assert iqsteesstance(header['difficulty'], Decimal)
+        assert isinstance(header['time'], int)
+        assert isinstance(header['mediantime'], int)
+        assert isinstance(header['nonce'], int)
+        assert isinstance(header['version'], int)
+        assert isinstance(int(header['versionHex'], 16), int)
+        assert isinstance(header['difficulty'], Decimal)
 
     def _test_getdifficulty(self):
         difficulty = self.nodes[0].getdifficulty()

@@ -70,7 +70,7 @@ CScript ParseScript(const std::string& s)
         }
         else if (w->size() >= 2 && w->front() == '\'' && w->back() == '\'')
         {
-            // Qsteesgle-quoted string, pushed as data. NOTE: this is poor-man's
+            // QtipArraygle-quoted string, pushed as data. NOTE: this is poor-man's
             // parsing, spaces/tabs/newlines in single-quoted strings won't work.
             std::vector<unsigned char> value(w->begin()+1, w->end()-1);
             result << value;
@@ -208,8 +208,8 @@ int ParseSighashString(const UniValue& sighash)
             {std::string("ALL|ANYONECANPAY"), int(SIGHASH_ALL|SIGHASH_ANYONECANPAY)},
             {std::string("NONE"), int(SIGHASH_NONE)},
             {std::string("NONE|ANYONECANPAY"), int(SIGHASH_NONE|SIGHASH_ANYONECANPAY)},
-            {std::string("QSTEESGLE"), int(SIGHASH_QSTEESGLE)},
-            {std::string("QSTEESGLE|ANYONECANPAY"), int(SIGHASH_QSTEESGLE|SIGHASH_ANYONECANPAY)},
+            {std::string("QTIPARRAYGLE"), int(SIGHASH_QTIPARRAYGLE)},
+            {std::string("QTIPARRAYGLE|ANYONECANPAY"), int(SIGHASH_QTIPARRAYGLE|SIGHASH_ANYONECANPAY)},
         };
         std::string strHashType = sighash.get_str();
         const auto& it = map_sighash_values.find(strHashType);

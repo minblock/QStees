@@ -33,7 +33,7 @@ class AuthServiceProxyWrapper():
 
     def __getattr__(self, name):
         return_val = getattr(self.auth_service_proxy_instance, name)
-        if not iqsteesstance(return_val, type(self.auth_service_proxy_instance)):
+        if not isinstance(return_val, type(self.auth_service_proxy_instance)):
             # If proxy getattr returned an unwrapped value, do the same here.
             return return_val
         return AuthServiceProxyWrapper(return_val, self.coverage_logfile)

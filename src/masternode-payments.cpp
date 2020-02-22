@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -141,29 +141,29 @@ bool IsBlockPayeeValid(const CTransactionRef txNew, int nBlockHeight, CAmount bl
 
 void FillBlockPayments(CMutableTransaction& txNew, int nBlockHeight, CAmount blockReward, std::vector<CTxOut>& txoutMasternodeRet, std::vector<CTxOut>& voutSuperblockRet)
 {
-	int fQSTEESNODE_1 = 0; int fQSTEESNODE_5 = 0; int fQSTEESNODE_10 = 0;
-    qsteestype_pair_vec_t vQsteesType;
+	int fQTIPARRAYNODE_1 = 0; int fQTIPARRAYNODE_5 = 0; int fQTIPARRAYNODE_10 = 0;
+    sintype_pair_vec_t vQtipArrayType;
 
     // FILL BLOCK PAYEE WITH MASTERNODE PAYMENT OTHERWISE
-	mnpayments.NetworkDiagnostic(nBlockHeight, fQSTEESNODE_1, fQSTEESNODE_5, fQSTEESNODE_10);
-	LogPrintf("FillBlockPayments -- QSTEES type in network, height: %d, LILQSTEES: %d MIDQSTEES: %d BIGQSTEES:  %d\n", nBlockHeight, fQSTEESNODE_1, fQSTEESNODE_5, fQSTEESNODE_10);
-    vQsteesType.clear();
-	vQsteesType.push_back(std::make_pair(CMasternode::QsteesType::QSTEESNODE_1, fQSTEESNODE_1));
-	vQsteesType.push_back(std::make_pair(CMasternode::QsteesType::QSTEESNODE_5, fQSTEESNODE_5));
-	vQsteesType.push_back(std::make_pair(CMasternode::QsteesType::QSTEESNODE_10, fQSTEESNODE_10));
-    mnpayments.FillBlockPayee(txNew, nBlockHeight, blockReward, txoutMasternodeRet, vQsteesType);
+	mnpayments.NetworkDiagnostic(nBlockHeight, fQTIPARRAYNODE_1, fQTIPARRAYNODE_5, fQTIPARRAYNODE_10);
+	LogPrintf("FillBlockPayments -- QTIPARRAY type in network, height: %d, LILQTIPARRAY: %d MIDQTIPARRAY: %d BIGQTIPARRAY:  %d\n", nBlockHeight, fQTIPARRAYNODE_1, fQTIPARRAYNODE_5, fQTIPARRAYNODE_10);
+    vQtipArrayType.clear();
+	vQtipArrayType.push_back(std::make_pair(CMasternode::QtipArrayType::QTIPARRAYNODE_1, fQTIPARRAYNODE_1));
+	vQtipArrayType.push_back(std::make_pair(CMasternode::QtipArrayType::QTIPARRAYNODE_5, fQTIPARRAYNODE_5));
+	vQtipArrayType.push_back(std::make_pair(CMasternode::QtipArrayType::QTIPARRAYNODE_10, fQTIPARRAYNODE_10));
+    mnpayments.FillBlockPayee(txNew, nBlockHeight, blockReward, txoutMasternodeRet, vQtipArrayType);
 	for (auto txoutMasternode : txoutMasternodeRet) {
 		LogPrint(BCLog::MNPAYMENTS, "FillBlockPayments -- nBlockHeight %d blockReward %lld txoutMasternodeRet %s txNew %s\n",
                             nBlockHeight, blockReward, txoutMasternode.ToString(), txNew.ToString());
 	}
 
-    mnpayments.NetworkDiagnostic(nBlockHeight + 1, fQSTEESNODE_1, fQSTEESNODE_5, fQSTEESNODE_10);
-	LogPrintf("FillBlockPayments -- QSTEES type in network, height: %d, LILQSTEES: %d MIDQSTEES: %d BIGQSTEES:  %d\n", nBlockHeight + 1, fQSTEESNODE_1, fQSTEESNODE_5, fQSTEESNODE_10);
-    vQsteesType.clear();
-    vQsteesType.push_back(std::make_pair(CMasternode::QsteesType::QSTEESNODE_1, fQSTEESNODE_1));
-	vQsteesType.push_back(std::make_pair(CMasternode::QsteesType::QSTEESNODE_5, fQSTEESNODE_5));
-	vQsteesType.push_back(std::make_pair(CMasternode::QsteesType::QSTEESNODE_10, fQSTEESNODE_10));
-    mnpayments.FillNextBlockPayee(txNew, nBlockHeight + 1, blockReward, txoutMasternodeRet, vQsteesType);
+    mnpayments.NetworkDiagnostic(nBlockHeight + 1, fQTIPARRAYNODE_1, fQTIPARRAYNODE_5, fQTIPARRAYNODE_10);
+	LogPrintf("FillBlockPayments -- QTIPARRAY type in network, height: %d, LILQTIPARRAY: %d MIDQTIPARRAY: %d BIGQTIPARRAY:  %d\n", nBlockHeight + 1, fQTIPARRAYNODE_1, fQTIPARRAYNODE_5, fQTIPARRAYNODE_10);
+    vQtipArrayType.clear();
+    vQtipArrayType.push_back(std::make_pair(CMasternode::QtipArrayType::QTIPARRAYNODE_1, fQTIPARRAYNODE_1));
+	vQtipArrayType.push_back(std::make_pair(CMasternode::QtipArrayType::QTIPARRAYNODE_5, fQTIPARRAYNODE_5));
+	vQtipArrayType.push_back(std::make_pair(CMasternode::QtipArrayType::QTIPARRAYNODE_10, fQTIPARRAYNODE_10));
+    mnpayments.FillNextBlockPayee(txNew, nBlockHeight + 1, blockReward, txoutMasternodeRet, vQtipArrayType);
 	for (auto txoutMasternode : txoutMasternodeRet) {
 		LogPrint(BCLog::MNPAYMENTS, "FillBlockPayments -- nBlockHeight %d blockReward %lld txoutMasternodeRet %s txNew %s\n",
                             nBlockHeight + 1, blockReward, txoutMasternode.ToString(), txNew.ToString());
@@ -202,20 +202,20 @@ bool CMasternodePayments::CanVote(COutPoint outMasternode, int nBlockHeight)
 *   Fill Masternode ONLY payment block
 */
 
-void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, int nBlockHeight, CAmount blockReward, std::vector<CTxOut>& txoutMasternodeRet, qsteestype_pair_vec_t& vQsteesType)
+void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, int nBlockHeight, CAmount blockReward, std::vector<CTxOut>& txoutMasternodeRet, sintype_pair_vec_t& vQtipArrayType)
 {
     // make sure it's not filled yet
     txoutMasternodeRet.clear();
 
     CScript payee;
-	for (auto& qsteestype : vQsteesType) {
-		CAmount masternodePayment = GetMasternodePayment(nBlockHeight, qsteestype.first);
-		if (qsteestype.second == 1) {
-			if(!mnpayments.GetBlockPayee(nBlockHeight, qsteestype.first, payee)) {
+	for (auto& sintype : vQtipArrayType) {
+		CAmount masternodePayment = GetMasternodePayment(nBlockHeight, sintype.first);
+		if (sintype.second == 1) {
+			if(!mnpayments.GetBlockPayee(nBlockHeight, sintype.first, payee)) {
 				// no masternode detected/voted from network...
 				int nCount = 0;
 				masternode_info_t mnInfo;
-				if(!mnodeman.GetNextMasternodeInQueueForPayment(nBlockHeight, true, nCount, mnInfo)) { //this call is always false by QSTEESNODE_UNKNOWN ==> no paid for local miner vote
+				if(!mnodeman.GetNextMasternodeInQueueForPayment(nBlockHeight, true, nCount, mnInfo)) { //this call is always false by QTIPARRAYNODE_UNKNOWN ==> no paid for local miner vote
 					LogPrintf("CMasternodePayments::FillBlockPayee -- Failed to detect masternode to pay\n");
 					continue;
 				}
@@ -233,41 +233,41 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, int nBlockH
 			ExtractDestination(payee, address1);
 			std::string address2 = EncodeDestination(address1);
 
-			LogPrintf("CMasternodePayments::FillBlockPayee -- Masternode payment %lld to %s with QSTEES type %d\n", masternodePayment, address2, qsteestype.first);
+			LogPrintf("CMasternodePayments::FillBlockPayee -- Masternode payment %lld to %s with QTIPARRAY type %d\n", masternodePayment, address2, sintype.first);
 		}else{
 			txNew.vout[0].nValue -= masternodePayment;
 			CTxDestination burnDestination =  DecodeDestination(Params().GetConsensus().cBurnAddress);
 			CScript burnAddressScript = GetScriptForDestination(burnDestination);
 			txNew.vout.push_back(CTxOut(masternodePayment, burnAddressScript));
-			LogPrintf("CMasternodePayments::FillBlockPayee -- Burn coin %lld for QSTEES type %d\n", masternodePayment, qsteestype.first);
+			LogPrintf("CMasternodePayments::FillBlockPayee -- Burn coin %lld for QTIPARRAY type %d\n", masternodePayment, sintype.first);
 		}
 	}
 	return;
 }
 
-void CMasternodePayments::FillNextBlockPayee(CMutableTransaction& txNew, int nBlockHeight, CAmount blockReward, std::vector<CTxOut>& txoutMasternodeRet, qsteestype_pair_vec_t& vQsteesType)
+void CMasternodePayments::FillNextBlockPayee(CMutableTransaction& txNew, int nBlockHeight, CAmount blockReward, std::vector<CTxOut>& txoutMasternodeRet, sintype_pair_vec_t& vQtipArrayType)
 {
     // make sure it's not filled yet
     txoutMasternodeRet.clear();
 
     CScript payee;
-	for (auto& qsteestype : vQsteesType) {
+	for (auto& sintype : vQtipArrayType) {
         CAmount masternodePayment = 0;
-        if (CMasternode::QsteesType::QSTEESNODE_1 == qsteestype.first) {
-            masternodePayment = Params().GetConsensus().nMasternodeBurnQSTEESNODE_1;
+        if (CMasternode::QtipArrayType::QTIPARRAYNODE_1 == sintype.first) {
+            masternodePayment = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1;
         }
-        if (CMasternode::QsteesType::QSTEESNODE_5 == qsteestype.first) {
-            masternodePayment = Params().GetConsensus().nMasternodeBurnQSTEESNODE_5;
+        if (CMasternode::QtipArrayType::QTIPARRAYNODE_5 == sintype.first) {
+            masternodePayment = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5;
         }
-        if (CMasternode::QsteesType::QSTEESNODE_10 == qsteestype.first) {
-            masternodePayment = Params().GetConsensus().nMasternodeBurnQSTEESNODE_10;
+        if (CMasternode::QtipArrayType::QTIPARRAYNODE_10 == sintype.first) {
+            masternodePayment = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10;
         }
-		if (qsteestype.second == 1) {
-			if(!mnpayments.GetBlockPayee(nBlockHeight, qsteestype.first, payee)) {
+		if (sintype.second == 1) {
+			if(!mnpayments.GetBlockPayee(nBlockHeight, sintype.first, payee)) {
 				// no masternode detected/voted from network...
 				int nCount = 0;
 				masternode_info_t mnInfo;
-				if(!mnodeman.GetNextMasternodeInQueueForPayment(nBlockHeight, true, nCount, mnInfo)) { //this call is always false by QSTEESNODE_UNKNOWN ==> no paid for local miner vote
+				if(!mnodeman.GetNextMasternodeInQueueForPayment(nBlockHeight, true, nCount, mnInfo)) { //this call is always false by QTIPARRAYNODE_UNKNOWN ==> no paid for local miner vote
 					LogPrintf("CMasternodePayments::FillBlockPayee -- Failed to detect masternode to pay\n");
 					continue;
 				}
@@ -284,13 +284,13 @@ void CMasternodePayments::FillNextBlockPayee(CMutableTransaction& txNew, int nBl
 			ExtractDestination(payee, address1);
 			std::string address2 = EncodeDestination(address1);
 
-			LogPrintf("CMasternodePayments::FillBlockPayee -- Masternode payment %lld to %s with QSTEES type %d\n", masternodePayment, address2, qsteestype.first);
+			LogPrintf("CMasternodePayments::FillBlockPayee -- Masternode payment %lld to %s with QTIPARRAY type %d\n", masternodePayment, address2, sintype.first);
 		}else{
 			txNew.vout[0].nValue -= masternodePayment;
 			CTxDestination burnDestination =  DecodeDestination(Params().GetConsensus().cBurnAddress);
 			CScript burnAddressScript = GetScriptForDestination(burnDestination);
 			txNew.vout.push_back(CTxOut(masternodePayment, burnAddressScript));
-			LogPrintf("CMasternodePayments::FillBlockPayee -- Burn coin %lld for QSTEES type %d\n", masternodePayment, qsteestype.first);
+			LogPrintf("CMasternodePayments::FillBlockPayee -- Burn coin %lld for QTIPARRAY type %d\n", masternodePayment, sintype.first);
 		}
 	}
 	return;
@@ -436,30 +436,30 @@ bool CMasternodePaymentVote::Sign()
     return true;
 }
 
-bool CMasternodePayments::GetBlockPayee(int nBlockHeight, int qsteestype, CScript& payee)
+bool CMasternodePayments::GetBlockPayee(int nBlockHeight, int sintype, CScript& payee)
 {
     if(mapMasternodeBlocks.count(nBlockHeight)){
-        return mapMasternodeBlocks[nBlockHeight].GetBestPayee(qsteestype, payee);
+        return mapMasternodeBlocks[nBlockHeight].GetBestPayee(sintype, payee);
     }
 
     return false;
 }
 
-void CMasternodePayments::NetworkDiagnostic(int nBlockHeight, int& nQSTEESNODE_1Ret, int& nQSTEESNODE_5Ret, int& nQSTEESNODE_10Ret)
+void CMasternodePayments::NetworkDiagnostic(int nBlockHeight, int& nQTIPARRAYNODE_1Ret, int& nQTIPARRAYNODE_5Ret, int& nQTIPARRAYNODE_10Ret)
 {
-	nQSTEESNODE_1Ret = 0; nQSTEESNODE_5Ret = 0; nQSTEESNODE_10Ret = 0;
+	nQTIPARRAYNODE_1Ret = 0; nQTIPARRAYNODE_5Ret = 0; nQTIPARRAYNODE_10Ret = 0;
 	CScript payee;
 
-	if(mapMasternodeBlocks.count(nBlockHeight) && mapMasternodeBlocks[nBlockHeight].GetBestPayee(CMasternode::QsteesType::QSTEESNODE_1, payee)){
-		nQSTEESNODE_1Ret = 1;
+	if(mapMasternodeBlocks.count(nBlockHeight) && mapMasternodeBlocks[nBlockHeight].GetBestPayee(CMasternode::QtipArrayType::QTIPARRAYNODE_1, payee)){
+		nQTIPARRAYNODE_1Ret = 1;
 	}
 
-	if(mapMasternodeBlocks.count(nBlockHeight) && mapMasternodeBlocks[nBlockHeight].GetBestPayee(CMasternode::QsteesType::QSTEESNODE_5, payee)){
-		nQSTEESNODE_5Ret = 1;
+	if(mapMasternodeBlocks.count(nBlockHeight) && mapMasternodeBlocks[nBlockHeight].GetBestPayee(CMasternode::QtipArrayType::QTIPARRAYNODE_5, payee)){
+		nQTIPARRAYNODE_5Ret = 1;
 	}
 
-	if(mapMasternodeBlocks.count(nBlockHeight) && mapMasternodeBlocks[nBlockHeight].GetBestPayee(CMasternode::QsteesType::QSTEESNODE_10, payee)){
-		nQSTEESNODE_10Ret = 1;
+	if(mapMasternodeBlocks.count(nBlockHeight) && mapMasternodeBlocks[nBlockHeight].GetBestPayee(CMasternode::QtipArrayType::QTIPARRAYNODE_10, payee)){
+		nQTIPARRAYNODE_10Ret = 1;
 	}
 }
 
@@ -478,7 +478,7 @@ bool CMasternodePayments::IsScheduled(CMasternode& mn, int nNotBlockHeight)
     CScript payee;
     for (int64_t h = nCachedBlockHeight; h <= nCachedBlockHeight + 8; h++){
         if(h == nNotBlockHeight) continue;
-        if(mapMasternodeBlocks.count(h) && mapMasternodeBlocks[h].GetBestPayee(mn.GetQsteesTypeInt() ,payee) && mnpayee == payee) {
+        if(mapMasternodeBlocks.count(h) && mapMasternodeBlocks[h].GetBestPayee(mn.GetQtipArrayTypeInt() ,payee) && mnpayee == payee) {
             return true;
         }
     }
@@ -533,16 +533,16 @@ void CMasternodeBlockPayees::AddPayee(const CMasternodePaymentVote& vote)
         return;
     }
 
-    if (pmn->GetQsteesTypeInt() == -1){
+    if (pmn->GetQtipArrayTypeInt() == -1){
         LOCK(cs_main);
         pmn->Check();
     }
 
-    CMasternodePayee payeeNew(vote.payee, pmn->GetQsteesTypeInt(), vote.GetHash());
+    CMasternodePayee payeeNew(vote.payee, pmn->GetQtipArrayTypeInt(), vote.GetHash());
     vecPayees.push_back(payeeNew);
 }
 
-bool CMasternodeBlockPayees::GetBestPayee(int qsteestype, CScript& payeeRet)
+bool CMasternodeBlockPayees::GetBestPayee(int sintype, CScript& payeeRet)
 {
     LOCK(cs_vecPayees);
 
@@ -555,14 +555,14 @@ bool CMasternodeBlockPayees::GetBestPayee(int qsteestype, CScript& payeeRet)
     CMasternodePayee payeetmp;
     for (auto& payee : vecPayees) {
         //first candidate OR not the same vote
-        if (payee.GetVoteCount() > nVotes && payee.GetQsteesType() == qsteestype) {
+        if (payee.GetVoteCount() > nVotes && payee.GetQtipArrayType() == sintype) {
             nVotes = payee.GetVoteCount();
 
             payeeRet = payee.GetPayee();
             payeetmp = payee;
         }
         //found someone with the same vote
-        if (payee.GetVoteCount() == nVotes && payee.GetQsteesType() == qsteestype) {
+        if (payee.GetVoteCount() == nVotes && payee.GetQtipArrayType() == sintype) {
             if (UintToArith256(payee.GetHash()) > UintToArith256(payeetmp.GetHash())){
                  payeeRet = payee.GetPayee();
                  payeetmp = payee;
@@ -616,7 +616,7 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransactionRef txNew)
 				counterNodePayment ++;
 			} else {
 				for (auto& payee : vecPayees) {
-					CAmount nMasternodePayment = GetMasternodePayment(nBlockHeight, payee.GetQsteesType());
+					CAmount nMasternodePayment = GetMasternodePayment(nBlockHeight, payee.GetQtipArrayType());
 					if (payee.GetPayee() == txout.scriptPubKey && (nMasternodePayment == txout.nValue || payee.GetVoteCount() >= (MNPAYMENTS_SIGNATURES_REQUIRED - 1))){
 						LogPrintf("CMasternodeBlockPayees::IsTransactionValid -- Found required payment\n");
 						counterNodePayment ++;
@@ -627,9 +627,9 @@ bool CMasternodeBlockPayees::IsTransactionValid(const CTransactionRef txNew)
 					std::string address2 = EncodeDestination(address1);
 
 					if(strPayeesPossible == "") {
-						strPayeesPossible = strprintf("%s(%d)",address2, payee.GetQsteesType());
+						strPayeesPossible = strprintf("%s(%d)",address2, payee.GetQtipArrayType());
 					} else {
-						strPayeesPossible = strprintf("%s,%s(%d)",strPayeesPossible, address2, payee.GetQsteesType());
+						strPayeesPossible = strprintf("%s,%s(%d)",strPayeesPossible, address2, payee.GetQtipArrayType());
 					}
 				}
 			}
@@ -668,9 +668,9 @@ std::string CMasternodeBlockPayees::GetRequiredPaymentsString()
         std::string address2 = EncodeDestination(address1);
 
         if (strRequiredPayments != "Unknown") {
-            strRequiredPayments += ", " + address2 + "(" + boost::lexical_cast<std::string>(payee.GetQsteesType()) + ")" + ":" + boost::lexical_cast<std::string>(payee.GetVoteCount());
+            strRequiredPayments += ", " + address2 + "(" + boost::lexical_cast<std::string>(payee.GetQtipArrayType()) + ")" + ":" + boost::lexical_cast<std::string>(payee.GetVoteCount());
         } else {
-            strRequiredPayments = address2 + "(" + boost::lexical_cast<std::string>(payee.GetQsteesType()) + ")" + ":" + boost::lexical_cast<std::string>(payee.GetVoteCount());
+            strRequiredPayments = address2 + "(" + boost::lexical_cast<std::string>(payee.GetQtipArrayType()) + ")" + ":" + boost::lexical_cast<std::string>(payee.GetVoteCount());
         }
     }
 
@@ -779,22 +779,22 @@ bool CMasternodePaymentVote::IsValid(CNode* pnode, int nValidationHeight, std::s
     return true;
 }
 
-CMasternode::QsteesType GetQsteesType(CAmount burnValue)
+CMasternode::QtipArrayType GetQtipArrayType(CAmount burnValue)
 {
 
-    if ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 - 1) * COIN < burnValue && burnValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 * COIN) {
-        return CMasternode::QsteesType::QSTEESNODE_1;
+    if ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 - 1) * COIN < burnValue && burnValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 * COIN) {
+        return CMasternode::QtipArrayType::QTIPARRAYNODE_1;
     }
 
-    if ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 -1) * COIN < burnValue &&  burnValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 * COIN) {
-        return CMasternode::QsteesType::QSTEESNODE_5;
+    if ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 -1) * COIN < burnValue &&  burnValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 * COIN) {
+        return CMasternode::QtipArrayType::QTIPARRAYNODE_5;
     }
 
-    if ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_10 - 1) * COIN < burnValue && burnValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_10 * COIN) {
-        return CMasternode::QsteesType::QSTEESNODE_10;
+    if ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10 - 1) * COIN < burnValue && burnValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10 * COIN) {
+        return CMasternode::QtipArrayType::QTIPARRAYNODE_10;
     }
 
-    return CMasternode::QsteesType::QSTEESNODE_UNKNOWN;
+    return CMasternode::QtipArrayType::QTIPARRAYNODE_UNKNOWN;
 }
 
 bool CMasternodePayments::ProcessBlock(int nBlockHeight, CConnman& connman)
@@ -827,13 +827,13 @@ bool CMasternodePayments::ProcessBlock(int nBlockHeight, CConnman& connman)
     } else {
         nBurnFundValue = coin.out.nValue;
     }
-    CMasternode::QsteesType vQsteesType = GetQsteesType(nBurnFundValue); //find my qsteesType
+    CMasternode::QtipArrayType vQtipArrayType = GetQtipArrayType(nBurnFundValue); //find my sinType
     // LOCATE THE NEXT MASTERNODE WHICH SHOULD BE PAID
     // pay to the oldest MN that still had no payment but its input is old enough and it was active long enough
     int nCount = 0;
     masternode_info_t mnInfo;
 
-    if (!mnodeman.GetNextMasternodeInQueueForPayment(nBlockHeight, true, nCount, mnInfo, vQsteesType)) { //vote for the same qsteestype
+    if (!mnodeman.GetNextMasternodeInQueueForPayment(nBlockHeight, true, nCount, mnInfo, vQtipArrayType)) { //vote for the same sintype
         LogPrintf("CMasternodePayments::ProcessBlock -- ERROR: Failed to find masternode to pay\n");
         return false;
     }
@@ -869,15 +869,15 @@ void CMasternodePayments::CheckPreviousBlockVotes(int nPrevBlockHeight)
 
     LOCK2(cs_mapMasternodeBlocks, cs_mapMasternodePaymentVotes);
 
-    bool voteForQsteesType1 = false;
-    bool voteForQsteesType5 = false;
-    bool voteForQsteesType10 = false;
+    bool voteForQtipArrayType1 = false;
+    bool voteForQtipArrayType5 = false;
+    bool voteForQtipArrayType10 = false;
 
     for (int i = 0; i < MNPAYMENTS_SIGNATURES_TOTAL && i < (int)mns.size(); i++) {
         auto mn = mns[i];
         CScript payee;
         bool found = false;
-        int voteQsteesType = -1;
+        int voteQtipArrayType = -1;
 
         if (mapMasternodeBlocks.count(nPrevBlockHeight)) {
             for (auto &p : mapMasternodeBlocks[nPrevBlockHeight].vecPayees) {
@@ -890,11 +890,11 @@ void CMasternodePayments::CheckPreviousBlockVotes(int nPrevBlockHeight)
                     auto vote = mapMasternodePaymentVotes[voteHash];
                     if (vote.vinMasternode.prevout == mn.second.vin.prevout) {
                         payee = vote.payee;
-                        voteQsteesType = p.GetQsteesType();
+                        voteQtipArrayType = p.GetQtipArrayType();
                         found = true;
-                        if ( voteQsteesType == 1 ) voteForQsteesType1 = true;
-                        if ( voteQsteesType == 5 ) voteForQsteesType5 = true;
-                        if ( voteQsteesType == 10 ) voteForQsteesType10 = true;
+                        if ( voteQtipArrayType == 1 ) voteForQtipArrayType1 = true;
+                        if ( voteQtipArrayType == 5 ) voteForQtipArrayType5 = true;
+                        if ( voteQtipArrayType == 10 ) voteForQtipArrayType10 = true;
                         break;
                     }
                 }
@@ -913,10 +913,10 @@ void CMasternodePayments::CheckPreviousBlockVotes(int nPrevBlockHeight)
         std::string address2 = EncodeDestination(address1);
 
         debugStr += strprintf("CMasternodePayments::CheckPreviousBlockVotes --   %s - voted for %s type %d\n",
-                              mn.second.vin.prevout.ToStringShort(), address2, voteQsteesType);
+                              mn.second.vin.prevout.ToStringShort(), address2, voteQtipArrayType);
     }
 
-    if ( !voteForQsteesType1 || !voteForQsteesType5 || !voteForQsteesType10 )
+    if ( !voteForQtipArrayType1 || !voteForQtipArrayType5 || !voteForQtipArrayType10 )
     {
         debugStr += strprintf("CMasternodePayments::CheckPreviousBlockVotes --   +++++++++++ TRY TO GET NEW VOTE ++++++++\n");
     } else {

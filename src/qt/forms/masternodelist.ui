@@ -93,7 +93,7 @@ width: 150px;
               <bool>true</bool>
              </property>
              <property name="selectionMode">
-              <enum>QAbstractItemView::QsteesgleSelection</enum>
+              <enum>QAbstractItemView::QtipArraygleSelection</enum>
              </property>
              <property name="selectionBehavior">
               <enum>QAbstractItemView::SelectRows</enum>
@@ -161,9 +161,9 @@ width: 150px;
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="startAutoQSTEESButton">
+              <widget class="QPushButton" name="startAutoQTIPARRAYButton">
                <property name="text">
-                <string>AutoQSTEES</string>
+                <string>AutoQTIPARRAY</string>
                </property>
               </widget>
              </item>

@@ -195,7 +195,7 @@ bool Solver(const CScript& scriptPubKey, txnouttype& typeRet, std::vector<std::v
                 vSolutionsRet.push_back(vch1);
             }
             else if (opcode2 == OP_SMALLINTEGER)
-            {   // Qsteesgle-byte small integer pushed onto vSolutions
+            {   // QtipArraygle-byte small integer pushed onto vSolutions
                 if (opcode1 == OP_0 ||
                     (opcode1 >= OP_1 && opcode1 <= OP_16))
                 {

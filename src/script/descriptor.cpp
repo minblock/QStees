@@ -200,14 +200,14 @@ public:
 };
 
 /** A parsed pk(P), pkh(P), or wpkh(P) descriptor. */
-class QsteesgleKeyDescriptor final : public Descriptor
+class QtipArraygleKeyDescriptor final : public Descriptor
 {
     const std::function<CScript(const CPubKey&)> m_script_fn;
     const std::string m_fn_name;
     std::unique_ptr<PubkeyProvider> m_provider;
 
 public:
-    QsteesgleKeyDescriptor(std::unique_ptr<PubkeyProvider> prov, const std::function<CScript(const CPubKey&)>& fn, const std::string& name) : m_script_fn(fn), m_fn_name(name), m_provider(std::move(prov)) {}
+    QtipArraygleKeyDescriptor(std::unique_ptr<PubkeyProvider> prov, const std::function<CScript(const CPubKey&)>& fn, const std::string& name) : m_script_fn(fn), m_fn_name(name), m_provider(std::move(prov)) {}
 
     bool IsRange() const override { return m_provider->IsRange(); }
     std::string ToString() const override { return m_fn_name + "(" + m_provider->ToString() + ")"; }
@@ -491,12 +491,12 @@ std::unique_ptr<Descriptor> ParseScript(Span<const char>& sp, ParseScriptContext
     if (Func("pk", expr)) {
         auto pubkey = ParsePubkey(expr, ctx != ParseScriptContext::P2WSH, out);
         if (!pubkey) return nullptr;
-        return MakeUnique<QsteesgleKeyDescriptor>(std::move(pubkey), P2PKGetScript, "pk");
+        return MakeUnique<QtipArraygleKeyDescriptor>(std::move(pubkey), P2PKGetScript, "pk");
     }
     if (Func("pkh", expr)) {
         auto pubkey = ParsePubkey(expr, ctx != ParseScriptContext::P2WSH, out);
         if (!pubkey) return nullptr;
-        return MakeUnique<QsteesgleKeyDescriptor>(std::move(pubkey), P2PKHGetScript, "pkh");
+        return MakeUnique<QtipArraygleKeyDescriptor>(std::move(pubkey), P2PKHGetScript, "pkh");
     }
     if (ctx == ParseScriptContext::TOP && Func("combo", expr)) {
         auto pubkey = ParsePubkey(expr, true, out);
@@ -529,7 +529,7 @@ std::unique_ptr<Descriptor> ParseScript(Span<const char>& sp, ParseScriptContext
     if (ctx != ParseScriptContext::P2WSH && Func("wpkh", expr)) {
         auto pubkey = ParsePubkey(expr, false, out);
         if (!pubkey) return nullptr;
-        return MakeUnique<QsteesgleKeyDescriptor>(std::move(pubkey), P2WPKHGetScript, "wpkh");
+        return MakeUnique<QtipArraygleKeyDescriptor>(std::move(pubkey), P2WPKHGetScript, "wpkh");
     }
     if (ctx == ParseScriptContext::TOP && Func("sh", expr)) {
         auto desc = ParseScript(expr, ParseScriptContext::P2SH, out);

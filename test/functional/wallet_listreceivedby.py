@@ -129,7 +129,7 @@ class ReceivedByTest(BitcoinTestFramework):
         # set pre-state
         label = ''
         address = self.nodes[1].getnewaddress()
-        assert_equal(self.nodes[1].getaddresqsteesfo(address)['label'], label)
+        assert_equal(self.nodes[1].getaddressinfo(address)['label'], label)
         received_by_label_json = [r for r in self.nodes[1].listreceivedbylabel() if r["label"] == label][0]
         balance_by_label = self.nodes[1].getreceivedbylabel(label)
 

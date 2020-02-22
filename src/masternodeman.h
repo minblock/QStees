@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -139,7 +139,7 @@ public:
     /// Check all Masternodes
     void Check();
     void CheckAndRemoveBurnFundNotUniqueNode(CConnman& connman);
-    void CheckAndRemoveLimitNumberNode(CConnman& connman, int nQsteesType, int nLimit);
+    void CheckAndRemoveLimitNumberNode(CConnman& connman, int nQtipArrayType, int nLimit);
     /// Check all Masternodes and remove inactive
     void CheckAndRemove(CConnman& connman);
     /// This is dummy overload to be used for dumping/loading mncache.dat
@@ -157,8 +157,8 @@ public:
     /// Count ENABLED InfinityNode filtered by nProtocolVersion.
     /// InfinityNode nProtocolVersion should match or be above the one specified in param here.
     int CountEnabled(int nProtocolVersion = -1);
-    /// Count InfinityNode by nQsteesType
-    int CountQsteesType(int nQsteesType);
+    /// Count InfinityNode by nQtipArrayType
+    int CountQtipArrayType(int nQtipArrayType);
 
     /// Count InfinityNode by network type - NET_IPV4, NET_IPV6, NET_TOR
     // int CountByIP(int nNetworkType);
@@ -173,9 +173,9 @@ public:
     bool GetMasternodeInfo(const CPubKey& pubKeyMasternode, masternode_info_t& mnInfoRet);
     bool GetMasternodeInfo(const CScript& payee, masternode_info_t& mnInfoRet);
 
-    void LocalDiagnostic(int nBlockHeight, int& nQSTEESNODE_1Ret, int& nQSTEESNODE_5Ret, int& nQSTEESNODE_10Ret);
+    void LocalDiagnostic(int nBlockHeight, int& nQTIPARRAYNODE_1Ret, int& nQTIPARRAYNODE_5Ret, int& nQTIPARRAYNODE_10Ret);
     /// Find an entry in the masternode list that is next to be paid
-    bool GetNextMasternodeInQueueForPayment(int nBlockHeight, bool fFilterSigTime, int& nCountRet, masternode_info_t& mnInfoRet, CMasternode::QsteesType vQsteesType = CMasternode::QsteesType::QSTEESNODE_UNKNOWN);
+    bool GetNextMasternodeInQueueForPayment(int nBlockHeight, bool fFilterSigTime, int& nCountRet, masternode_info_t& mnInfoRet, CMasternode::QtipArrayType vQtipArrayType = CMasternode::QtipArrayType::QTIPARRAYNODE_UNKNOWN);
     /// Same as above but use current block height
     bool GetNextMasternodeInQueueForPayment(bool fFilterSigTime, int& nCountRet, masternode_info_t& mnInfoRet);
 

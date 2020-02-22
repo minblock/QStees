@@ -30,7 +30,7 @@ public:
 
     enum ColumnIndex {
         Label = 0,   /**< User specified label */
-        Address = 1  /**< QSTEES address */
+        Address = 1  /**< QTIPARRAY address */
     };
 
     enum RoleIndex {

@@ -110,7 +110,7 @@ Thanks to everybody who contributed to this release:
 
 Alexander Kjeldaas
 Andrey Alekseenko
-Arnav Qsteesgh
+Arnav QtipArraygh
 Christian von Roques
 Eric Lombrozo
 Forrest Voight

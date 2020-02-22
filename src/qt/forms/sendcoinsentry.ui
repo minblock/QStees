@@ -57,7 +57,7 @@
       <item>
        <widget class="QValidatedLineEdit" name="payTo">
         <property name="toolTip">
-         <string>The QSTEES address to send the payment to</string>
+         <string>The QTIPARRAY address to send the payment to</string>
         </property>
        </widget>
       </item>
@@ -70,7 +70,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../qstees.qrc">
+         <iconset resource="../sin.qrc">
           <normaloff>:/icons/address-book</normaloff>:/icons/address-book</iconset>
         </property>
         <property name="iconSize">
@@ -93,7 +93,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../qstees.qrc">
+         <iconset resource="../sin.qrc">
           <normaloff>:/icons/editpaste</normaloff>:/icons/editpaste</iconset>
         </property>
         <property name="iconSize">
@@ -116,7 +116,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../qstees.qrc">
+         <iconset resource="../sin.qrc">
           <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
         </property>
         <property name="iconSize">
@@ -165,7 +165,7 @@
     <item row="2" column="1">
      <layout class="QHBoxLayout" name="horizontalLayoutAmount" stretch="0,1,0">
       <item>
-       <widget class="QSTEESAmountField" name="payAmount"/>
+       <widget class="QTIPARRAYAmountField" name="payAmount"/>
       
 	  </item>
       <item>
@@ -219,7 +219,7 @@
       <item>
        <widget class="QCheckBox" name="checkboxSubtractFeeFromAmount">
         <property name="toolTip">
-         <string>The fee will be deducted from the amount being sent. The recipient will receive less qsteess than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</string>
+         <string>The fee will be deducted from the amount being sent. The recipient will receive less sins than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</string>
         </property>
         <property name="text">
          <string>S&amp;ubtract fee from amount</string>
@@ -248,7 +248,7 @@
     <item row="3" column="1">
      <widget class="QLabel" name="messageTextLabel">
       <property name="toolTip">
-       <string>A message that was attached to the qstees: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the QSTEES network.</string>
+       <string>A message that was attached to the sin: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the QTIPARRAY network.</string>
       </property>
       <property name="textFormat">
        <enum>Qt::PlainText</enum>
@@ -720,7 +720,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../qstees.qrc">
+         <iconset resource="../sin.qrc">
           <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
         </property>
        </widget>
@@ -758,7 +758,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QSTEESAmountField" name="payAmount_is">
+     <widget class="QTIPARRAYAmountField" name="payAmount_is">
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
@@ -1253,7 +1253,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../qstees.qrc">
+         <iconset resource="../sin.qrc">
           <normaloff>:/icons/remove</normaloff>:/icons/remove</iconset>
         </property>
        </widget>
@@ -1291,7 +1291,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QSTEESAmountField" name="payAmount_s">
+     <widget class="QTIPARRAYAmountField" name="payAmount_s">
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
@@ -1307,9 +1307,9 @@
    <header>qt/qvalidatedlineedit.h</header>
   </customwidget>
   <customwidget>
-   <class>QSTEESAmountField</class>
+   <class>QTIPARRAYAmountField</class>
    <extends>QLineEdit</extends>
-   <header>qt/qsteesamountfield.h</header>
+   <header>qt/sinamountfield.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
@@ -1325,7 +1325,7 @@
   <tabstop>deleteButton_s</tabstop>
  </tabstops>
  <resources>
-  <include location="../qstees.qrc"/>
+  <include location="../sin.qrc"/>
  </resources>
  <connections/>
 </ui>

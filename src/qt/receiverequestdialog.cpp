@@ -5,7 +5,7 @@
 #include <qt/receiverequestdialog.h>
 #include <qt/forms/ui_receiverequestdialog.h>
 
-#include <qt/qsteesunits.h>
+#include <qt/sinunits.h>
 #include <qt/guiconstants.h>
 #include <qt/guiutil.h>
 #include <qt/optionsmodel.h>
@@ -20,7 +20,7 @@
 #include <QUrl>
 
 #if defined(HAVE_CONFIG_H)
-#include <config/qstees-config.h> /* for USE_QRCODE */
+#include <config/sin-config.h> /* for USE_QRCODE */
 #endif
 
 #ifdef USE_QRCODE
@@ -215,7 +215,7 @@ void ReceiveRequestDialog::on_btnCopyAddress_clicked()
 }
 void ReceiveRequestDialog::on_btnCoinRequest_clicked()
 {
-    std::string creq = "https://coinrequest.io/create?coin=qsteesovate&address=";
+    std::string creq = "https://coinrequest.io/create?coin=sinovate&address=";
 
     QString cruri;
     cruri += GUIUtil::HtmlEscape(info.address);

@@ -53,10 +53,10 @@ bool CAddrInfo::IsTerrible(int64_t nNow) const
 double CAddrInfo::GetChance(int64_t nNow) const
 {
     double fChance = 1.0;
-    int64_t nQsteesceLastTry = std::max<int64_t>(nNow - nLastTry, 0);
+    int64_t nQtipArrayceLastTry = std::max<int64_t>(nNow - nLastTry, 0);
 
     // deprioritize very recent attempts away
-    if (nQsteesceLastTry < 60 * 10)
+    if (nQtipArrayceLastTry < 60 * 10)
         fChance *= 0.01;
 
     // deprioritize 66% after each failed attempt, but at most 1/28th to avoid the search taking forever or overly penalizing outages.

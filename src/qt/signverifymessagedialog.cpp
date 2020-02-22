@@ -27,14 +27,14 @@ SignVerifyMessageDialog::SignVerifyMessageDialog(const PlatformStyle *_platformS
 {
     ui->setupUi(this);
 
-    ui->addressBookButton_SM->setIcon(platformStyle->QsteesgleColorIcon(":/icons/address-book"));
-    ui->pasteButton_SM->setIcon(platformStyle->QsteesgleColorIcon(":/icons/editpaste"));
-    ui->copySignatureButton_SM->setIcon(platformStyle->QsteesgleColorIcon(":/icons/editcopy"));
-    ui->signMessageButton_SM->setIcon(platformStyle->QsteesgleColorIcon(":/icons/edit"));
-    ui->clearButton_SM->setIcon(platformStyle->QsteesgleColorIcon(":/icons/remove"));
-    ui->addressBookButton_VM->setIcon(platformStyle->QsteesgleColorIcon(":/icons/address-book"));
-    ui->verifyMessageButton_VM->setIcon(platformStyle->QsteesgleColorIcon(":/icons/transaction_0"));
-    ui->clearButton_VM->setIcon(platformStyle->QsteesgleColorIcon(":/icons/remove"));
+    ui->addressBookButton_SM->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/address-book"));
+    ui->pasteButton_SM->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/editpaste"));
+    ui->copySignatureButton_SM->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/editcopy"));
+    ui->signMessageButton_SM->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/edit1"));
+    ui->clearButton_SM->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/remove1"));
+    ui->addressBookButton_VM->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/address-book"));
+    ui->verifyMessageButton_VM->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/transaction01"));
+    ui->clearButton_VM->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/remove1"));
 
     ui->signatureOut_SM->setPlaceholderText(tr("Click \"Sign Message\" to generate signature"));
 

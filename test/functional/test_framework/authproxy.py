@@ -58,7 +58,7 @@ class JSONRPCException(Exception):
 
 
 def EncodeDecimal(o):
-    if iqsteesstance(o, decimal.Decimal):
+    if isinstance(o, decimal.Decimal):
         return str(o)
     raise TypeError(repr(o) + " is not JSON serializable")
 

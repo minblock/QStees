@@ -392,7 +392,7 @@ Thanks to everyone who contributed to this release:
 - Scott Willeke
 - Sergey Kazenyuk
 - Shawn Wilkinson
-- Qsteesed
+- QtipArrayed
 - sje
 - Subo1978
 - super3

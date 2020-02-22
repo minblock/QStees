@@ -221,7 +221,7 @@ class Stats {
     AppendWithSpace(&message_, msg);
   }
 
-  void FinishedQsteesgleOp() {
+  void FinishedQtipArraygleOp() {
     if (FLAGS_histogram) {
       double now = g_env->NowMicros();
       double micros = now - last_op_finish_;
@@ -253,7 +253,7 @@ class Stats {
 
   void Report(const Slice& name) {
     // Pretend at least one op was done in case we are running a benchmark
-    // that does not call FinishedQsteesgleOp().
+    // that does not call FinishedQtipArraygleOp().
     if (done_ < 1) done_ = 1;
 
     std::string extra;
@@ -633,7 +633,7 @@ class Benchmark {
     uint32_t crc = 0;
     while (bytes < 500 * 1048576) {
       crc = crc32c::Value(data.data(), size);
-      thread->stats.FinishedQsteesgleOp();
+      thread->stats.FinishedQtipArraygleOp();
       bytes += size;
     }
     // Print so result is not dead
@@ -654,7 +654,7 @@ class Benchmark {
         ptr = ap.Acquire_Load();
       }
       count++;
-      thread->stats.FinishedQsteesgleOp();
+      thread->stats.FinishedQtipArraygleOp();
     }
     if (ptr == NULL) exit(1); // Disable unused variable warning.
   }
@@ -670,7 +670,7 @@ class Benchmark {
       ok = port::Snappy_Compress(input.data(), input.size(), &compressed);
       produced += compressed.size();
       bytes += input.size();
-      thread->stats.FinishedQsteesgleOp();
+      thread->stats.FinishedQtipArraygleOp();
     }
 
     if (!ok) {
@@ -695,7 +695,7 @@ class Benchmark {
       ok =  port::Snappy_Uncompress(compressed.data(), compressed.size(),
                                     uncompressed);
       bytes += input.size();
-      thread->stats.FinishedQsteesgleOp();
+      thread->stats.FinishedQtipArraygleOp();
     }
     delete[] uncompressed;
 
@@ -729,7 +729,7 @@ class Benchmark {
     for (int i = 0; i < num_; i++) {
       delete db_;
       Open();
-      thread->stats.FinishedQsteesgleOp();
+      thread->stats.FinishedQtipArraygleOp();
     }
   }
 
@@ -760,7 +760,7 @@ class Benchmark {
         snprintf(key, sizeof(key), "%016d", k);
         batch.Put(key, gen.Generate(value_size_));
         bytes += value_size_ + strlen(key);
-        thread->stats.FinishedQsteesgleOp();
+        thread->stats.FinishedQtipArraygleOp();
       }
       s = db_->Write(write_options_, &batch);
       if (!s.ok()) {
@@ -777,7 +777,7 @@ class Benchmark {
     int64_t bytes = 0;
     for (iter->SeekToFirst(); i < reads_ && iter->Valid(); iter->Next()) {
       bytes += iter->key().size() + iter->value().size();
-      thread->stats.FinishedQsteesgleOp();
+      thread->stats.FinishedQtipArraygleOp();
       ++i;
     }
     delete iter;
@@ -790,7 +790,7 @@ class Benchmark {
     int64_t bytes = 0;
     for (iter->SeekToLast(); i < reads_ && iter->Valid(); iter->Prev()) {
       bytes += iter->key().size() + iter->value().size();
-      thread->stats.FinishedQsteesgleOp();
+      thread->stats.FinishedQtipArraygleOp();
       ++i;
     }
     delete iter;
@@ -808,7 +808,7 @@ class Benchmark {
       if (db_->Get(options, key, &value).ok()) {
         found++;
       }
-      thread->stats.FinishedQsteesgleOp();
+      thread->stats.FinishedQtipArraygleOp();
     }
     char msg[100];
     snprintf(msg, sizeof(msg), "(%d of %d found)", found, num_);
@@ -823,7 +823,7 @@ class Benchmark {
       const int k = thread->rand.Next() % FLAGS_num;
       snprintf(key, sizeof(key), "%016d.", k);
       db_->Get(options, key, &value);
-      thread->stats.FinishedQsteesgleOp();
+      thread->stats.FinishedQtipArraygleOp();
     }
   }
 
@@ -836,7 +836,7 @@ class Benchmark {
       const int k = thread->rand.Next() % range;
       snprintf(key, sizeof(key), "%016d", k);
       db_->Get(options, key, &value);
-      thread->stats.FinishedQsteesgleOp();
+      thread->stats.FinishedQtipArraygleOp();
     }
   }
 
@@ -851,7 +851,7 @@ class Benchmark {
       iter->Seek(key);
       if (iter->Valid() && iter->key() == key) found++;
       delete iter;
-      thread->stats.FinishedQsteesgleOp();
+      thread->stats.FinishedQtipArraygleOp();
     }
     char msg[100];
     snprintf(msg, sizeof(msg), "(%d of %d found)", found, num_);
@@ -869,7 +869,7 @@ class Benchmark {
         char key[100];
         snprintf(key, sizeof(key), "%016d", k);
         batch.Delete(key);
-        thread->stats.FinishedQsteesgleOp();
+        thread->stats.FinishedQtipArraygleOp();
       }
       s = db_->Write(write_options_, &batch);
       if (!s.ok()) {

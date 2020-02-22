@@ -86,7 +86,7 @@ Thanks to everyone who contributed to this release:
 - Johnathan Corgan
 - Julian Haight
 - Michael Ford
-- Pavel Vaqstees
+- Pavel Vasin
 - Peter Todd
 - phantomcircuit
 - Pieter Wuille

@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -44,19 +44,19 @@ class CMasternodePayee
 {
 private:
     CScript scriptPubKey;
-    int qsteestype;
+    int sintype;
     std::vector<uint256> vecVoteHashes;
 
 public:
     CMasternodePayee() :
         scriptPubKey(),
-        qsteestype(),
+        sintype(),
         vecVoteHashes()
         {}
 
-    CMasternodePayee(CScript payee, int qsteestypeIn, uint256 hashIn) :
+    CMasternodePayee(CScript payee, int sintypeIn, uint256 hashIn) :
         scriptPubKey(payee),
-        qsteestype(qsteestypeIn),
+        sintype(sintypeIn),
         vecVoteHashes()
     {
         vecVoteHashes.push_back(hashIn);
@@ -67,7 +67,7 @@ public:
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action) {
         READWRITE(*(CScriptBase*)(&scriptPubKey));
-        READWRITE(qsteestype);
+        READWRITE(sintype);
         READWRITE(vecVoteHashes);
     }
 
@@ -75,12 +75,12 @@ public:
     {
         CHashWriter ss(SER_GETHASH, PROTOCOL_VERSION);
         ss << scriptPubKey;
-        ss << qsteestype;
+        ss << sintype;
         return ss.GetHash();
     }
 
     CScript GetPayee() { return scriptPubKey; }
-    int GetQsteesType() { return qsteestype; }
+    int GetQtipArrayType() { return sintype; }
 
     void AddVoteHash(uint256 hashIn) { vecVoteHashes.push_back(hashIn); }
     std::vector<uint256> GetVoteHashes() { return vecVoteHashes; }
@@ -112,7 +112,7 @@ public:
     }
 
     void AddPayee(const CMasternodePaymentVote& vote);
-    bool GetBestPayee(int qsteestype, CScript& payeeRet);
+    bool GetBestPayee(int sintype, CScript& payeeRet);
     bool HasPayeeWithVotes(const CScript& payeeIn, int nVotesReq);
 
     bool IsTransactionValid(const CTransactionRef txNew);
@@ -178,8 +178,8 @@ public:
 // Masternode Payments Class
 // Keeps track of who should get paid for which blocks
 //
-typedef std::pair<int, int> qsteestype_pair_t; // <int qsteestype, int inNetwork(0,1)>
-typedef std::vector<qsteestype_pair_t> qsteestype_pair_vec_t;
+typedef std::pair<int, int> sintype_pair_t; // <int sintype, int inNetwork(0,1)>
+typedef std::vector<sintype_pair_t> sintype_pair_vec_t;
 
 class CMasternodePayments
 {
@@ -212,14 +212,14 @@ public:
 
     bool AddPaymentVote(const CMasternodePaymentVote& vote);
     bool HasVerifiedPaymentVote(uint256 hashIn);
-    bool ProcessBlock(int nBlockHeight, CConnman& connman);//QSTEES: add check can vote or not
+    bool ProcessBlock(int nBlockHeight, CConnman& connman);//QTIPARRAY: add check can vote or not
     void CheckPreviousBlockVotes(int nPrevBlockHeight);
 
     void Sync(CNode* node, CConnman& connman);
     void RequestLowDataPaymentBlocks(CNode* pnode, CConnman& connman);
     void CheckAndRemove();
 
-    bool GetBlockPayee(int nBlockHeight, int qsteestype, CScript& payee);
+    bool GetBlockPayee(int nBlockHeight, int sintype, CScript& payee);
     bool IsTransactionValid(const CTransactionRef txNew, int nBlockHeight);
     bool IsScheduled(CMasternode& mn, int nNotBlockHeight);
 
@@ -228,8 +228,8 @@ public:
     int GetMinMasternodePaymentsProto();
     void ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStream& vRecv, CConnman& connman);
     std::string GetRequiredPaymentsString(int nBlockHeight);
-    void FillBlockPayee(CMutableTransaction& txNew, int nBlockHeight, CAmount blockReward, std::vector<CTxOut>& txoutMasternodeRet, qsteestype_pair_vec_t& vQsteesType);
-    void FillNextBlockPayee(CMutableTransaction& txNew, int nBlockHeight, CAmount blockReward, std::vector<CTxOut>& txoutMasternodeRet, qsteestype_pair_vec_t& vQsteesType);
+    void FillBlockPayee(CMutableTransaction& txNew, int nBlockHeight, CAmount blockReward, std::vector<CTxOut>& txoutMasternodeRet, sintype_pair_vec_t& vQtipArrayType);
+    void FillNextBlockPayee(CMutableTransaction& txNew, int nBlockHeight, CAmount blockReward, std::vector<CTxOut>& txoutMasternodeRet, sintype_pair_vec_t& vQtipArrayType);
     std::string ToString() const;
 
     int GetBlockCount() { return mapMasternodeBlocks.size(); }
@@ -239,7 +239,7 @@ public:
     int GetStorageLimit();
 
     void UpdatedBlockTip(const CBlockIndex *pindex, CConnman& connman);
-	void NetworkDiagnostic(int nBlockHeight, int& nQSTEESNODE_1Ret, int& nQSTEESNODE_5Ret, int& nQSTEESNODE_10Ret);
+	void NetworkDiagnostic(int nBlockHeight, int& nQTIPARRAYNODE_1Ret, int& nQTIPARRAYNODE_5Ret, int& nQTIPARRAYNODE_10Ret);
 };
 
 #endif // FXTC_MASTERNODE-PAYMENTS_H

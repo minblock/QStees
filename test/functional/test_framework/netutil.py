@@ -24,7 +24,7 @@ from binascii import unhexlify, hexlify
 # STATE_CLOSE_WAIT = '08'
 # STATE_LAST_ACK = '09'
 STATE_LISTEN = '0A'
-# STATE_CLOQSTEESG = '0B'
+# STATE_CLOQTIPARRAYG = '0B'
 
 def get_socket_inodes(pid):
     '''

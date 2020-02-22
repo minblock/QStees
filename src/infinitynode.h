@@ -1,9 +1,9 @@
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef QSTEES_INFINITYNODE_H
-#define QSTEES_INFINITYNODE_H
+#ifndef QTIPARRAY_INFINITYNODE_H
+#define QTIPARRAY_INFINITYNODE_H
 
 #include <key.h> // for typr int65_t
 #include <validation.h>
@@ -36,7 +36,7 @@ struct infinitynode_info_t
     int nLastRewardHeight = -1;
     int nNextRewardHeight = -1;
     CAmount nBurnValue = 0;
-    int nQSTEESType = 0;
+    int nQTIPARRAYType = 0;
     std::string collateralAddress = "";
     CScript scriptPubKey{};
     std::string backupAddress = "BackupAddress";
@@ -52,8 +52,8 @@ private:
     // critical section to protect the inner data structures
     mutable CCriticalSection cs;
 public:
-    enum QsteesType {
-        QSTEESNODE_1 = 1, QSTEESNODE_5 = 5, QSTEESNODE_10 = 10, QSTEESNODE_UNKNOWN = 0
+    enum QtipArrayType {
+        QTIPARRAYNODE_1 = 1, QTIPARRAYNODE_5 = 5, QTIPARRAYNODE_10 = 10, QTIPARRAYNODE_UNKNOWN = 0
     };
 
     CInfinitynode();
@@ -73,7 +73,7 @@ public:
         READWRITE(nLastRewardHeight);
         READWRITE(nNextRewardHeight);
         READWRITE(nBurnValue);
-        READWRITE(nQSTEESType);
+        READWRITE(nQTIPARRAYType);
         READWRITE(collateralAddress);
         READWRITE(scriptPubKey);
         READWRITE(backupAddress);
@@ -86,7 +86,7 @@ public:
     void setCollateralAddress(std::string address) { collateralAddress = address;}
     void setScriptPublicKey(CScript scriptpk){scriptPubKey = scriptpk;}
     void setBurnValue(CAmount burnFund){nBurnValue = burnFund;}
-    void setQSTEESType(int QSTEESType){nQSTEESType = QSTEESType;}
+    void setQTIPARRAYType(int QTIPARRAYType){nQTIPARRAYType = QTIPARRAYType;}
     void setLastRewardHeight(int nReward){nLastRewardHeight = nReward;}
     void setRank(int nRankIn){nRank=nRankIn;}
     void setBackupAddress(std::string address) { backupAddress = address;}
@@ -101,7 +101,7 @@ public:
     int getHeight(){return nHeight;}
     int getExpireHeight(){return nExpireHeight ;}
     int getRoundBurnValue(){CAmount nBurnAmount = nBurnValue / COIN + 1; return nBurnAmount;}
-    int getQSTEESType(){return nQSTEESType;}
+    int getQTIPARRAYType(){return nQTIPARRAYType;}
     int getLastRewardHeight(){return nLastRewardHeight;}
     int getRank(){return nRank;}
     int getMetadataHeight(){return nMetadataHeight;}
@@ -123,4 +123,4 @@ inline bool operator!=(const CInfinitynode& a, const CInfinitynode& b)
 {
     return !(a.vinBurnFund == b.vinBurnFund);
 }
-#endif // QSTEES_INFINITYNODE_H
+#endif // QTIPARRAY_INFINITYNODE_H

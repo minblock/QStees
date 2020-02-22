@@ -30,7 +30,7 @@ static const unsigned platform_styles_count = sizeof(platform_styles)/sizeof(*pl
 namespace {
 /* Local functions for colorizing single-color images */
 
-void MakeQsteesgleColorImage(QImage& img, const QColor& colorbase)
+void MakeQtipArraygleColorImage(QImage& img, const QColor& colorbase)
 {
     img = img.convertToFormat(QImage::Format_ARGB32);
     for (int x = img.width(); x--; )
@@ -49,7 +49,7 @@ QIcon ColorizeIcon(const QIcon& ico, const QColor& colorbase)
     for (const QSize& sz : ico.availableSizes())
     {
         QImage img(ico.pixmap(sz).toImage());
-        MakeQsteesgleColorImage(img, colorbase);
+        MakeQtipArraygleColorImage(img, colorbase);
         new_ico.addPixmap(QPixmap::fromImage(img));
     }
     return new_ico;
@@ -58,7 +58,7 @@ QIcon ColorizeIcon(const QIcon& ico, const QColor& colorbase)
 QImage ColorizeImage(const QString& filename, const QColor& colorbase)
 {
     QImage img(filename);
-    MakeQsteesgleColorImage(img, colorbase);
+    MakeQtipArraygleColorImage(img, colorbase);
     return img;
 }
 
@@ -95,25 +95,25 @@ PlatformStyle::PlatformStyle(const QString &_name, bool _imagesOnButtons, bool _
     textColor = QColor(QApplication::palette().color(QPalette::WindowText));
 }
 
-QImage PlatformStyle::QsteesgleColorImage(const QString& filename) const
+QImage PlatformStyle::QtipArraygleColorImage(const QString& filename) const
 {
     if (!colorizeIcons)
         return QImage(filename);
-    return ColorizeImage(filename, QsteesgleColor());
+    return ColorizeImage(filename, QtipArraygleColor());
 }
 
-QIcon PlatformStyle::QsteesgleColorIcon(const QString& filename) const
+QIcon PlatformStyle::QtipArraygleColorIcon(const QString& filename) const
 {
     if (!colorizeIcons)
         return QIcon(filename);
-    return ColorizeIcon(filename, QsteesgleColor());
+    return ColorizeIcon(filename, QtipArraygleColor());
 }
 
-QIcon PlatformStyle::QsteesgleColorIcon(const QIcon& icon) const
+QIcon PlatformStyle::QtipArraygleColorIcon(const QIcon& icon) const
 {
     if (!colorizeIcons)
         return icon;
-    return ColorizeIcon(icon, QsteesgleColor());
+    return ColorizeIcon(icon, QtipArraygleColor());
 }
 
 QIcon PlatformStyle::TextColorIcon(const QString& filename) const

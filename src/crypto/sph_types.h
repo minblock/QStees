@@ -35,7 +35,7 @@
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
  * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
  * CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
- * TORT OR OTHERWISE, ARIQSTEESG FROM, OUT OF OR IN CONNECTION WITH THE
+ * TORT OR OTHERWISE, ARIQTIPARRAYG FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * ===========================(LICENSE END)=============================
@@ -156,7 +156,7 @@
  * <code>sph_XXX_init()</code> function. This function sets the context
  * state to proper initial values for hashing.
  *
- * Qsteesce all state data is contained within the context structure,
+ * QtipArrayce all state data is contained within the context structure,
  * <code>sphlib</code> is thread-safe and reentrant: several hash
  * computations may be performed in parallel, provided that they do not
  * operate on the same context. Moreover, a running computation can be

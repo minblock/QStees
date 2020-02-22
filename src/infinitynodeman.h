@@ -1,9 +1,9 @@
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef QSTEES_INFINITYNODEMAN_H
-#define QSTEES_INFINITYNODEMAN_H
+#ifndef QTIPARRAY_INFINITYNODEMAN_H
+#define QTIPARRAY_INFINITYNODEMAN_H
 
 #include <infinitynode.h>
 
@@ -106,25 +106,25 @@ public:
     int Count();
     std::map<COutPoint, CInfinitynode> GetFullInfinitynodeMap() { LOCK(cs); return mapInfinitynodes; }
     std::map<COutPoint, CInfinitynode> GetFullInfinitynodeNonMaturedMap() { LOCK(cs); return mapInfinitynodesNonMatured; }
-    std::map<int, int> getStatementMap(int nQsteesType){
+    std::map<int, int> getStatementMap(int nQtipArrayType){
         LOCK(cs);
         std::map<int, int> nullmap = {{0,0}};
-        if(nQsteesType == 10) return mapStatementBIG;
-        else if(nQsteesType == 5) return mapStatementMID;
-        else if(nQsteesType == 1) return mapStatementLIL;
+        if(nQtipArrayType == 10) return mapStatementBIG;
+        else if(nQtipArrayType == 5) return mapStatementMID;
+        else if(nQtipArrayType == 1) return mapStatementLIL;
         else return nullmap;
     }
-    int getLastStatement(int nQsteesType){
+    int getLastStatement(int nQtipArrayType){
         LOCK(cs);
-        if(nQsteesType == 10) return nBIGLastStmHeight;
-        if(nQsteesType == 5) return nMIDLastStmHeight;
-        if(nQsteesType == 1) return nLILLastStmHeight;
+        if(nQtipArrayType == 10) return nBIGLastStmHeight;
+        if(nQtipArrayType == 5) return nMIDLastStmHeight;
+        if(nQtipArrayType == 1) return nLILLastStmHeight;
     }
-    int getLastStatementSize(int nQsteesType){
+    int getLastStatementSize(int nQtipArrayType){
         LOCK(cs);
-        if(nQsteesType == 10) return nBIGLastStmSize;
-        if(nQsteesType == 5) return nMIDLastStmSize;
-        if(nQsteesType == 1) return nLILLastStmSize;
+        if(nQtipArrayType == 10) return nBIGLastStmSize;
+        if(nQtipArrayType == 5) return nMIDLastStmSize;
+        if(nQtipArrayType == 1) return nLILLastStmSize;
     }
 
     std::map<CScript, int> GetFullLastPaidMap() { return mapLastPaid; }
@@ -138,17 +138,17 @@ public:
     bool updateInfinitynodeList(int fromHeight);//call in init.cppp
     bool initialInfinitynodeList(int fromHeight);//call in init.cpp
 
-    bool deterministicRewardStatement(int nQsteesType);
-    bool deterministicRewardAtHeight(int nBlockHeight, int nQsteesType, CInfinitynode& infinitynodeRet);
-    std::map<int, CInfinitynode> calculInfinityNodeRank(int nBlockHeight, int nQsteesType, bool updateList=false);
+    bool deterministicRewardStatement(int nQtipArrayType);
+    bool deterministicRewardAtHeight(int nBlockHeight, int nQtipArrayType, CInfinitynode& infinitynodeRet);
+    std::map<int, CInfinitynode> calculInfinityNodeRank(int nBlockHeight, int nQtipArrayType, bool updateList=false);
     void calculAllInfinityNodesRankAtLastStm();
-    std::pair<int, int> getLastStatementByQsteesType(int nQsteesType);
+    std::pair<int, int> getLastStatementByQtipArrayType(int nQtipArrayType);
     std::string getLastStatementString() const;
-    int getRoi(int nQsteesType, int totalNode);
+    int getRoi(int nQtipArrayType, int totalNode);
 
     void CheckAndRemove(CConnman& connman);
     /// This is dummy overload to be used for dumping/loading mncache.dat
     void CheckAndRemove() {}
     void UpdatedBlockTip(const CBlockIndex *pindex);
 };
-#endif // QSTEES_INFINITYNODEMAN_H
+#endif // QTIPARRAY_INFINITYNODEMAN_H

@@ -699,7 +699,7 @@ void TorController::disconnected_cb(TorControlConnection& _conn)
 
     LogPrint(BCLog::TOR, "tor: Not connected to Tor control port %s, trying to reconnect\n", target);
 
-    // Qsteesgle-shot timer for reconnect. Use exponential backoff.
+    // QtipArraygle-shot timer for reconnect. Use exponential backoff.
     struct timeval time = MillisToTimeval(int64_t(reconnect_timeout * 1000.0));
     if (reconnect_ev)
         event_add(reconnect_ev, &time);

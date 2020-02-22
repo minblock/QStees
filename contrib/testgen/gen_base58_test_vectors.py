@@ -64,7 +64,7 @@ def gen_valid_vectors():
             assert is_valid(rv)
             metadata = {x: y for x, y in zip(metadata_keys,template[3]) if y is not None}
             hexrepr = b2a_hex(payload)
-            if iqsteesstance(hexrepr, bytes):
+            if isinstance(hexrepr, bytes):
                 hexrepr = hexrepr.decode('utf8')
             yield (rv, hexrepr, metadata)
 

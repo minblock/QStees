@@ -18,7 +18,7 @@ class RpcCreateMultiSigTest(BitcoinTestFramework):
     def get_keys(self):
         node0, node1, node2 = self.nodes
         self.add = [node1.getnewaddress() for _ in range(self.nkeys)]
-        self.pub = [node1.getaddresqsteesfo(a)["pubkey"] for a in self.add]
+        self.pub = [node1.getaddressinfo(a)["pubkey"] for a in self.add]
         self.priv = [node1.dumpprivkey(a) for a in self.add]
         self.final = node2.getnewaddress()
 

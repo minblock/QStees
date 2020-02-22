@@ -30,7 +30,7 @@ because database writes are queued to speed up download
 time.
 
 
-NEW FEATURES QSTEESCE BITCOIN VERSION 0.5
+NEW FEATURES QTIPARRAYCE BITCOIN VERSION 0.5
 
 Initial network synchronization should be much faster
 (one or two hours on a typical machine instead of ten or more

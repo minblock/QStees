@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 class QUrl;
 QT_END_NAMESPACE
 
-/** Dialog for sending qsteess */
+/** Dialog for sending sins */
 class SendCoinsDialog : public QDialog
 {
     Q_OBJECT

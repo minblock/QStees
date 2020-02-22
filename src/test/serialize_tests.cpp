@@ -5,7 +5,7 @@
 #include <serialize.h>
 #include <streams.h>
 #include <hash.h>
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 
 #include <stdint.h>
 
@@ -13,7 +13,7 @@
 
 BOOST_FIXTURE_TEST_SUITE(serialize_tests, BasicTestingSetup)
 
-class CSerializeMethodsTestQsteesgle
+class CSerializeMethodsTestQtipArraygle
 {
 protected:
     int intval;
@@ -22,8 +22,8 @@ protected:
     char charstrval[16];
     CTransactionRef txval;
 public:
-    CSerializeMethodsTestQsteesgle() = default;
-    CSerializeMethodsTestQsteesgle(int intvalin, bool boolvalin, std::string stringvalin, const char* charstrvalin, const CTransactionRef& txvalin) : intval(intvalin), boolval(boolvalin), stringval(std::move(stringvalin)), txval(txvalin)
+    CSerializeMethodsTestQtipArraygle() = default;
+    CSerializeMethodsTestQtipArraygle(int intvalin, bool boolvalin, std::string stringvalin, const char* charstrvalin, const CTransactionRef& txvalin) : intval(intvalin), boolval(boolvalin), stringval(std::move(stringvalin)), txval(txvalin)
     {
         memcpy(charstrval, charstrvalin, sizeof(charstrval));
     }
@@ -39,7 +39,7 @@ public:
         READWRITE(txval);
     }
 
-    bool operator==(const CSerializeMethodsTestQsteesgle& rhs)
+    bool operator==(const CSerializeMethodsTestQtipArraygle& rhs)
     {
         return  intval == rhs.intval && \
                 boolval == rhs.boolval && \
@@ -49,10 +49,10 @@ public:
     }
 };
 
-class CSerializeMethodsTestMany : public CSerializeMethodsTestQsteesgle
+class CSerializeMethodsTestMany : public CSerializeMethodsTestQtipArraygle
 {
 public:
-    using CSerializeMethodsTestQsteesgle::CSerializeMethodsTestQsteesgle;
+    using CSerializeMethodsTestQtipArraygle::CSerializeMethodsTestQtipArraygle;
     ADD_SERIALIZE_METHODS;
 
     template <typename Stream, typename Operation>
@@ -351,9 +351,9 @@ BOOST_AUTO_TEST_CASE(class_methods)
     const char charstrval[16] = "testing charstr";
     CMutableTransaction txval;
     CTransactionRef tx_ref{MakeTransactionRef(txval)};
-    CSerializeMethodsTestQsteesgle methodtest1(intval, boolval, stringval, charstrval, tx_ref);
+    CSerializeMethodsTestQtipArraygle methodtest1(intval, boolval, stringval, charstrval, tx_ref);
     CSerializeMethodsTestMany methodtest2(intval, boolval, stringval, charstrval, tx_ref);
-    CSerializeMethodsTestQsteesgle methodtest3;
+    CSerializeMethodsTestQtipArraygle methodtest3;
     CSerializeMethodsTestMany methodtest4;
     CDataStream ss(SER_DISK, PROTOCOL_VERSION);
     BOOST_CHECK(methodtest1 == methodtest2);

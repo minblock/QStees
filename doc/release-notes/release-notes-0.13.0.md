@@ -16,7 +16,7 @@ To receive security and update notifications, please subscribe to:
 Compatibility
 ==============
 
-Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBuqsteesess/end-of-xp-support),
+Microsoft ended support for Windows XP on [April 8th, 2014](https://www.microsoft.com/en-us/WindowsForBusiness/end-of-xp-support),
 an OS initially released in 2001. This means that not even critical security
 updates will be released anymore. Without security updates, using a bitcoin
 wallet on a XP machine is irresponsible at least.
@@ -291,7 +291,7 @@ Low-level P2P changes
   transactions. To compensate for the removal of instant relay, the frequency of
   batch sending was doubled for outgoing peers.
 
-- Qsteesce PR #7840 the BIP35 `mempool` command is also subject to batch processing.
+- QtipArrayce PR #7840 the BIP35 `mempool` command is also subject to batch processing.
   Also the `mempool` message is no longer handled for non-whitelisted peers when
   `NODE_BLOOM` is disabled through `-peerbloomfilters=0`.
 
@@ -625,7 +625,7 @@ git merge commit are mentioned.
 - #7773 `7c80e72` Fix comments in tests (btcdrak)
 - #7489 `e9723cb` tests: Make proxy_test work on travis servers without IPv6 (laanwj)
 - #7801 `70ac71b` Remove misleading "errorString syntax" (MarcoFalke)
-- #7803 `401c65c` maxblockqsteesflight: Actually enable test (MarcoFalke)
+- #7803 `401c65c` maxblocksinflight: Actually enable test (MarcoFalke)
 - #7802 `3bc71e1` httpbasics: Actually test second connection (MarcoFalke)
 - #7849 `ab8586e` tests: add varints_bitpatterns test (laanwj)
 - #7846 `491171f` Clean up lockorder data of destroyed mutexes (sipa)
@@ -842,7 +842,7 @@ Thanks to everyone who directly contributed to this release:
 - Paul Rabahy
 - paveljanik
 - Pavel Janík
-- Pavel Vaqstees
+- Pavel Vasin
 - Pedro Branco
 - Peter Todd
 - Philip Kaufmann

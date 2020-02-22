@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 #include <utilstrencodings.h>
 #include <wallet/crypter.h>
 
@@ -15,7 +15,7 @@ BOOST_FIXTURE_TEST_SUITE(wallet_crypto_tests, BasicTestingSetup)
 class TestCrypter
 {
 public:
-static void TestPassphraseQsteesgle(const std::vector<unsigned char>& vchSalt, const SecureString& passphrase, uint32_t rounds,
+static void TestPassphraseQtipArraygle(const std::vector<unsigned char>& vchSalt, const SecureString& passphrase, uint32_t rounds,
                  const std::vector<unsigned char>& correctKey = std::vector<unsigned char>(),
                  const std::vector<unsigned char>& correctIV=std::vector<unsigned char>())
 {
@@ -34,9 +34,9 @@ static void TestPassphrase(const std::vector<unsigned char>& vchSalt, const Secu
                  const std::vector<unsigned char>& correctKey = std::vector<unsigned char>(),
                  const std::vector<unsigned char>& correctIV=std::vector<unsigned char>())
 {
-    TestPassphraseQsteesgle(vchSalt, passphrase, rounds, correctKey, correctIV);
+    TestPassphraseQtipArraygle(vchSalt, passphrase, rounds, correctKey, correctIV);
     for(SecureString::const_iterator i(passphrase.begin()); i != passphrase.end(); ++i)
-        TestPassphraseQsteesgle(vchSalt, SecureString(i, passphrase.end()), rounds);
+        TestPassphraseQtipArraygle(vchSalt, SecureString(i, passphrase.end()), rounds);
 }
 
 static void TestDecrypt(const CCrypter& crypt, const std::vector<unsigned char>& vchCiphertext, \
@@ -48,7 +48,7 @@ static void TestDecrypt(const CCrypter& crypt, const std::vector<unsigned char>&
         BOOST_CHECK(CKeyingMaterial(vchPlaintext.begin(), vchPlaintext.end()) == vchDecrypted);
 }
 
-static void TestEncryptQsteesgle(const CCrypter& crypt, const CKeyingMaterial& vchPlaintext,
+static void TestEncryptQtipArraygle(const CCrypter& crypt, const CKeyingMaterial& vchPlaintext,
                        const std::vector<unsigned char>& vchCiphertextCorrect = std::vector<unsigned char>())
 {
     std::vector<unsigned char> vchCiphertext;
@@ -64,9 +64,9 @@ static void TestEncryptQsteesgle(const CCrypter& crypt, const CKeyingMaterial& v
 static void TestEncrypt(const CCrypter& crypt, const std::vector<unsigned char>& vchPlaintextIn, \
                        const std::vector<unsigned char>& vchCiphertextCorrect = std::vector<unsigned char>())
 {
-    TestEncryptQsteesgle(crypt, CKeyingMaterial(vchPlaintextIn.begin(), vchPlaintextIn.end()), vchCiphertextCorrect);
+    TestEncryptQtipArraygle(crypt, CKeyingMaterial(vchPlaintextIn.begin(), vchPlaintextIn.end()), vchCiphertextCorrect);
     for(std::vector<unsigned char>::const_iterator i(vchPlaintextIn.begin()); i != vchPlaintextIn.end(); ++i)
-        TestEncryptQsteesgle(crypt, CKeyingMaterial(i, vchPlaintextIn.end()));
+        TestEncryptQtipArraygle(crypt, CKeyingMaterial(i, vchPlaintextIn.end()));
 }
 
 };

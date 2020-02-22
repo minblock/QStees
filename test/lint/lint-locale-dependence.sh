@@ -93,7 +93,7 @@ LOCALE_DEPENDENT_FUNCTIONS=(
     mblen        # LC_CTYPE
     mbrlen
     mbrtowc
-    mbqsteesit
+    mbsinit
     mbsnrtowcs
     mbsrtowcs
     mbstowcs     # LC_CTYPE

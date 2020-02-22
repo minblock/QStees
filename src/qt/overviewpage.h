@@ -18,12 +18,16 @@ class TxViewDelegate;
 class PlatformStyle;
 class WalletModel;
 
+
+
 namespace Ui {
     class OverviewPage;
 }
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
+class QNetworkAccessManager;
+class QNetworkRequest;
 QT_END_NAMESPACE
 
 /** Overview ("home") page widget */
@@ -43,6 +47,8 @@ public:
 public Q_SLOTS:
     void infinityNodeStat();
     void setBalance(const interfaces::WalletBalances& balances);
+    void getPriceInfo();
+    void getPriceInfoBTC();
 
 Q_SIGNALS:
     void transactionClicked(const QModelIndex &index);
@@ -54,6 +60,13 @@ private:
     ClientModel *clientModel;
     WalletModel *walletModel;
     interfaces::WalletBalances m_balances;
+    QTimer *pricingTimer;
+    QTimer *pricingTimerBTC;
+    QNetworkAccessManager* networkManager;
+    QNetworkAccessManager* networkManagerBTC;
+    QNetworkRequest* request;
+    QNetworkRequest* requestBTC;
+    qint64 totalBalance;
     int nDisplayUnit;
 
     TxViewDelegate *txdelegate;
@@ -67,15 +80,7 @@ private Q_SLOTS:
     void updateAlerts(const QString &warnings);
     void updateWatchOnlyLabels(bool showWatchOnly);
     void handleOutOfSyncWarningClicks();
-    void on_pushButton_Website_clicked();
-	void on_pushButton_Discord_clicked();
-    void on_pushButton_Telegram_clicked();
-    void on_pushButton_Twitter_clicked();
-    void on_pushButton_Explorer_clicked();
-	void on_pushButton_Btctalk_clicked();
-	void on_pushButton_Reddit_clicked();
-	void on_pushButton_Facebook_clicked();
-	void on_pushButton_Youtube_clicked();
+    
 
 };
 

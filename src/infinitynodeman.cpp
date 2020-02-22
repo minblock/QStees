@@ -1,4 +1,4 @@
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -125,7 +125,7 @@ void CInfinitynodeMan::UpdatedBlockTip(const CBlockIndex *pindex)
     nCachedBlockHeight = pindex->nHeight;
     if(fMasterNode) {
         // normal wallet does not need to update this every block, doing update on rpc call should be enough
-        /* QSTEES::TODO - update last paid for all infinitynode */
+        /* QTIPARRAY::TODO - update last paid for all infinitynode */
         //UpdateLastPaid(pindex);
     }
 }
@@ -168,15 +168,15 @@ void CInfinitynodeMan::CheckAndRemove(CConnman& connman)
     return;
 }
 
-int CInfinitynodeMan::getRoi(int nQsteesType, int totalNode)
+int CInfinitynodeMan::getRoi(int nQtipArrayType, int totalNode)
 {
      LOCK(cs);
      int nBurnAmount = 0;
-     if (nQsteesType == 10) nBurnAmount = Params().GetConsensus().nMasternodeBurnQSTEESNODE_10;
-     if (nQsteesType == 5) nBurnAmount = Params().GetConsensus().nMasternodeBurnQSTEESNODE_5;
-     if (nQsteesType == 1) nBurnAmount = Params().GetConsensus().nMasternodeBurnQSTEESNODE_1;
+     if (nQtipArrayType == 10) nBurnAmount = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10;
+     if (nQtipArrayType == 5) nBurnAmount = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5;
+     if (nQtipArrayType == 1) nBurnAmount = Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1;
 
-     float nReward = GetMasternodePayment(nCachedBlockHeight, nQsteesType) / COIN;
+     float nReward = GetMasternodePayment(nCachedBlockHeight, nQtipArrayType) / COIN;
      float roi = nBurnAmount / ((720 / (float)totalNode) * nReward) ;
      return (int) roi;
 }
@@ -232,8 +232,8 @@ bool CInfinitynodeMan::buildInfinitynodeList(int nBlockHeight, int nLowHeight)
     pindex = LookupBlockIndex(blockHash);
     CBlockIndex* prevBlockIndex = pindex;
 
-    int nLastPaidScanDeepth = max(Params().GetConsensus().nLimitQSTEESNODE_1, max(Params().GetConsensus().nLimitQSTEESNODE_5, Params().GetConsensus().nLimitQSTEESNODE_10));
-    //at fork heigh, scan limit will change to 800 - each tier of QSTEES network will never go to this limit
+    int nLastPaidScanDeepth = max(Params().GetConsensus().nLimitQTIPARRAYNODE_1, max(Params().GetConsensus().nLimitQTIPARRAYNODE_5, Params().GetConsensus().nLimitQTIPARRAYNODE_10));
+    //at fork heigh, scan limit will change to 800 - each tier of QTIPARRAY network will never go to this limit
     if (nBlockHeight >= 350000){nLastPaidScanDeepth=800;}
     //at begin of network
     if (nLastPaidScanDeepth > nBlockHeight) {nLastPaidScanDeepth = nBlockHeight - 1;}
@@ -258,9 +258,9 @@ LogPrintf("CInfinitynodeMan::updateInfinityNodeInfo -- read block number: %d, en
                         {
                             //Amount for InfnityNode
                             if (
-                            ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 - 1) * COIN < out.nValue && out.nValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 * COIN) ||
-                            ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 - 1) * COIN < out.nValue && out.nValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 * COIN) ||
-                            ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_10 - 1) * COIN < out.nValue && out.nValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_10 * COIN)
+                            ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 - 1) * COIN < out.nValue && out.nValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 * COIN) ||
+                            ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 - 1) * COIN < out.nValue && out.nValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 * COIN) ||
+                            ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10 - 1) * COIN < out.nValue && out.nValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10 * COIN)
                             ) {
                                 COutPoint outpoint(tx->GetHash(), i);
                                 CInfinitynode inf(PROTOCOL_VERSION, outpoint);
@@ -274,9 +274,9 @@ LogPrintf("CInfinitynodeMan::updateInfinityNodeInfo -- read block number: %d, en
                                         inf.setBackupAddress(backupAddress);
                                     }
                                 }
-                                //QSTEESType
+                                //QTIPARRAYType
                                 CAmount nBurnAmount = out.nValue / COIN + 1; //automaticaly round
-                                inf.setQSTEESType(nBurnAmount / 100000);
+                                inf.setQTIPARRAYType(nBurnAmount / 100000);
                                 //Address payee: we known that there is only 1 input
                                 const CTxIn& txin = tx->vin[0];
                                 int index = txin.prevout.n;
@@ -379,8 +379,8 @@ LogPrintf("CInfinitynodeMan::updateInfinityNodeInfo -- read block number: %d, en
                         if (whichType == TX_BURN_DATA && Params().GetConsensus().cMetadataAddress == EncodeDestination(CKeyID(uint160(vSolutions[0]))))
                         {
                             //Amount for UpdateMeta
-                            if (( Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 - 1) * COIN < out.nValue 
-                                && out.nValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 * COIN){
+                            if (( Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 - 1) * COIN < out.nValue 
+                                && out.nValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 * COIN){
                                 if (vSolutions.size() == 2){
                                     std::string metadata(vSolutions[1].begin(), vSolutions[1].end());
                                     string s;
@@ -427,14 +427,14 @@ LogPrintf("CInfinitynodeMan::updateInfinityNodeInfo -- read block number: %d, en
                 } else { //Coinbase tx => update mapLastPaid
                     if (prevBlockIndex->nHeight >= pindex->nHeight - nLastPaidScanDeepth){
                         //block payment value
-                        CAmount nNodePaymentQSTEESNODE_1 = GetMasternodePayment(prevBlockIndex->nHeight, 1);
-                        CAmount nNodePaymentQSTEESNODE_5 = GetMasternodePayment(prevBlockIndex->nHeight, 5);
-                        CAmount nNodePaymentQSTEESNODE_10 = GetMasternodePayment(prevBlockIndex->nHeight, 10);
+                        CAmount nNodePaymentQTIPARRAYNODE_1 = GetMasternodePayment(prevBlockIndex->nHeight, 1);
+                        CAmount nNodePaymentQTIPARRAYNODE_5 = GetMasternodePayment(prevBlockIndex->nHeight, 5);
+                        CAmount nNodePaymentQTIPARRAYNODE_10 = GetMasternodePayment(prevBlockIndex->nHeight, 10);
                         //compare and update map
                         for (auto txout : blockReadFromDisk.vtx[0]->vout)
                         {
-                            if (txout.nValue == nNodePaymentQSTEESNODE_1 || txout.nValue == nNodePaymentQSTEESNODE_5 ||
-                                txout.nValue == nNodePaymentQSTEESNODE_10)
+                            if (txout.nValue == nNodePaymentQTIPARRAYNODE_1 || txout.nValue == nNodePaymentQTIPARRAYNODE_5 ||
+                                txout.nValue == nNodePaymentQTIPARRAYNODE_10)
                             {
                                 AddUpdateLastPaid(txout.scriptPubKey, prevBlockIndex->nHeight);
                             }
@@ -515,61 +515,61 @@ void CInfinitynodeMan::updateLastPaid()
     }
 }
 
-bool CInfinitynodeMan::deterministicRewardStatement(int nQsteesType)
+bool CInfinitynodeMan::deterministicRewardStatement(int nQtipArrayType)
 {
     int stm_height_temp = Params().GetConsensus().nInfinityNodeGenesisStatement;
-    if (nQsteesType == 10) mapStatementBIG.clear();
-    if (nQsteesType == 5) mapStatementMID.clear();
-    if (nQsteesType == 1) mapStatementLIL.clear();
+    if (nQtipArrayType == 10) mapStatementBIG.clear();
+    if (nQtipArrayType == 5) mapStatementMID.clear();
+    if (nQtipArrayType == 1) mapStatementLIL.clear();
 
     LOCK(cs);
     while (stm_height_temp < nCachedBlockHeight)
     {
         std::map<COutPoint, CInfinitynode> mapInfinitynodesCopy;
-        int totalQsteesType = 0;
+        int totalQtipArrayType = 0;
         for (auto& infpair : mapInfinitynodes) {
             CInfinitynode inf = infpair.second;
-            if (inf.getQSTEESType() == nQsteesType && inf.getHeight() < stm_height_temp && stm_height_temp <= inf.getExpireHeight()){
+            if (inf.getQTIPARRAYType() == nQtipArrayType && inf.getHeight() < stm_height_temp && stm_height_temp <= inf.getExpireHeight()){
                 mapInfinitynodesCopy[inf.vinBurnFund.prevout] = inf;
-                ++totalQsteesType;
+                ++totalQtipArrayType;
             }
         }
 
         //if no node of this type, then break condition
-        if (totalQsteesType == 0){stm_height_temp = nCachedBlockHeight;}
+        if (totalQtipArrayType == 0){stm_height_temp = nCachedBlockHeight;}
 
-        if (nQsteesType == 10)
+        if (nQtipArrayType == 10)
         {
-            mapStatementBIG[stm_height_temp] = totalQsteesType;
+            mapStatementBIG[stm_height_temp] = totalQtipArrayType;
             nBIGLastStmHeight = stm_height_temp;
-            nBIGLastStmSize = totalQsteesType;
+            nBIGLastStmSize = totalQtipArrayType;
         }
 
-        if (nQsteesType == 5)
+        if (nQtipArrayType == 5)
         {
-            mapStatementMID[stm_height_temp] = totalQsteesType;
+            mapStatementMID[stm_height_temp] = totalQtipArrayType;
             nMIDLastStmHeight = stm_height_temp;
-            nMIDLastStmSize = totalQsteesType;
+            nMIDLastStmSize = totalQtipArrayType;
         }
 
-        if (nQsteesType == 1)
+        if (nQtipArrayType == 1)
         {
-            mapStatementLIL[stm_height_temp] = totalQsteesType;
+            mapStatementLIL[stm_height_temp] = totalQtipArrayType;
             nLILLastStmHeight = stm_height_temp;
-            nLILLastStmSize = totalQsteesType;
+            nLILLastStmSize = totalQtipArrayType;
         }
 
         //loop
-        stm_height_temp = stm_height_temp + totalQsteesType;
+        stm_height_temp = stm_height_temp + totalQtipArrayType;
     }
     return true;
 }
 
-std::pair<int, int> CInfinitynodeMan::getLastStatementByQsteesType(int nQsteesType)
+std::pair<int, int> CInfinitynodeMan::getLastStatementByQtipArrayType(int nQtipArrayType)
 {
-    if (nQsteesType == 10) return std::make_pair(nBIGLastStmHeight, nBIGLastStmSize);
-    else if (nQsteesType == 5) return std::make_pair(nMIDLastStmHeight, nMIDLastStmSize);
-    else if (nQsteesType == 1) return std::make_pair(nLILLastStmHeight, nLILLastStmSize);
+    if (nQtipArrayType == 10) return std::make_pair(nBIGLastStmHeight, nBIGLastStmSize);
+    else if (nQtipArrayType == 5) return std::make_pair(nMIDLastStmHeight, nMIDLastStmSize);
+    else if (nQtipArrayType == 1) return std::make_pair(nLILLastStmHeight, nLILLastStmSize);
     else return std::make_pair(0, 0);
 }
 
@@ -590,7 +590,7 @@ std::string CInfinitynodeMan::getLastStatementString() const
 *
 * called in CheckAndRemove
 */
-std::map<int, CInfinitynode> CInfinitynodeMan::calculInfinityNodeRank(int nBlockHeight, int nQsteesType, bool updateList)
+std::map<int, CInfinitynode> CInfinitynodeMan::calculInfinityNodeRank(int nBlockHeight, int nQtipArrayType, bool updateList)
 {
     AssertLockHeld(cs);
     std::vector<std::pair<int, CInfinitynode*> > vecCInfinitynodeHeight;
@@ -598,10 +598,10 @@ std::map<int, CInfinitynode> CInfinitynodeMan::calculInfinityNodeRank(int nBlock
 
     for (auto& infpair : mapInfinitynodes) {
         CInfinitynode inf = infpair.second;
-        //reinitial Rank to 0 all nodes of nQsteesType
-        if (inf.getQSTEESType() == nQsteesType) infpair.second.setRank(0);
+        //reinitial Rank to 0 all nodes of nQtipArrayType
+        if (inf.getQTIPARRAYType() == nQtipArrayType) infpair.second.setRank(0);
         //put valid node in vector
-        if (inf.getQSTEESType() == nQsteesType && inf.getExpireHeight() >= nBlockHeight && inf.getHeight() < nBlockHeight)
+        if (inf.getQTIPARRAYType() == nQtipArrayType && inf.getExpireHeight() >= nBlockHeight && inf.getHeight() < nBlockHeight)
         {
             vecCInfinitynodeHeight.push_back(std::make_pair(inf.getHeight(), &infpair.second));
         }
@@ -632,17 +632,17 @@ void CInfinitynodeMan::calculAllInfinityNodesRankAtLastStm()
         calculInfinityNodeRank(nLILLastStmHeight, 1, true);
 }
 
-bool CInfinitynodeMan::deterministicRewardAtHeight(int nBlockHeight, int nQsteesType, CInfinitynode& infinitynodeRet)
+bool CInfinitynodeMan::deterministicRewardAtHeight(int nBlockHeight, int nQtipArrayType, CInfinitynode& infinitynodeRet)
 {
     assert(nBlockHeight >= Params().GetConsensus().nInfinityNodeGenesisStatement);
-    //step1: copy mapStatement for nQsteesType
-    std::map<int, int> mapStatementQsteesType = getStatementMap(nQsteesType);
+    //step1: copy mapStatement for nQtipArrayType
+    std::map<int, int> mapStatementQtipArrayType = getStatementMap(nQtipArrayType);
 
     LOCK(cs);
     //step2: find last Statement for nBlockHeight;
     int nDelta = 100000; //big enough > number of 
     int lastStatement = 0;
-    for(auto& stm : mapStatementQsteesType)
+    for(auto& stm : mapStatementQtipArrayType)
     {
         if (nBlockHeight > stm.first && nDelta > (nBlockHeight -stm.first))
         {
@@ -653,7 +653,7 @@ bool CInfinitynodeMan::deterministicRewardAtHeight(int nBlockHeight, int nQstees
     //return false if not found statement
     if (lastStatement == 0) return false;
 
-    std::map<int, CInfinitynode> rankOfStatement = calculInfinityNodeRank(lastStatement, nQsteesType, false);
+    std::map<int, CInfinitynode> rankOfStatement = calculInfinityNodeRank(lastStatement, nQtipArrayType, false);
     infinitynodeRet = rankOfStatement[nBlockHeight - lastStatement];
     return true;
 }

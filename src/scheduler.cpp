@@ -146,7 +146,7 @@ bool CScheduler::AreThreadsServicingQueue() const {
 }
 
 
-void QsteesgleThreadedSchedulerClient::MaybeScheduleProcessQueue() {
+void QtipArraygleThreadedSchedulerClient::MaybeScheduleProcessQueue() {
     {
         LOCK(m_cs_callbacks_pending);
         // Try to avoid scheduling too many copies here, but if we
@@ -155,10 +155,10 @@ void QsteesgleThreadedSchedulerClient::MaybeScheduleProcessQueue() {
         if (m_are_callbacks_running) return;
         if (m_callbacks_pending.empty()) return;
     }
-    m_pscheduler->schedule(std::bind(&QsteesgleThreadedSchedulerClient::ProcessQueue, this));
+    m_pscheduler->schedule(std::bind(&QtipArraygleThreadedSchedulerClient::ProcessQueue, this));
 }
 
-void QsteesgleThreadedSchedulerClient::ProcessQueue() {
+void QtipArraygleThreadedSchedulerClient::ProcessQueue() {
     std::function<void (void)> callback;
     {
         LOCK(m_cs_callbacks_pending);
@@ -173,8 +173,8 @@ void QsteesgleThreadedSchedulerClient::ProcessQueue() {
     // RAII the setting of fCallbacksRunning and calling MaybeScheduleProcessQueue
     // to ensure both happen safely even if callback() throws.
     struct RAIICallbacksRunning {
-        QsteesgleThreadedSchedulerClient* instance;
-        explicit RAIICallbacksRunning(QsteesgleThreadedSchedulerClient* _instance) : instance(_instance) {}
+        QtipArraygleThreadedSchedulerClient* instance;
+        explicit RAIICallbacksRunning(QtipArraygleThreadedSchedulerClient* _instance) : instance(_instance) {}
         ~RAIICallbacksRunning() {
             {
                 LOCK(instance->m_cs_callbacks_pending);
@@ -187,7 +187,7 @@ void QsteesgleThreadedSchedulerClient::ProcessQueue() {
     callback();
 }
 
-void QsteesgleThreadedSchedulerClient::AddToProcessQueue(std::function<void (void)> func) {
+void QtipArraygleThreadedSchedulerClient::AddToProcessQueue(std::function<void (void)> func) {
     assert(m_pscheduler);
 
     {
@@ -197,7 +197,7 @@ void QsteesgleThreadedSchedulerClient::AddToProcessQueue(std::function<void (voi
     MaybeScheduleProcessQueue();
 }
 
-void QsteesgleThreadedSchedulerClient::EmptyQueue() {
+void QtipArraygleThreadedSchedulerClient::EmptyQueue() {
     assert(!m_pscheduler->AreThreadsServicingQueue());
     bool should_continue = true;
     while (should_continue) {
@@ -207,7 +207,7 @@ void QsteesgleThreadedSchedulerClient::EmptyQueue() {
     }
 }
 
-size_t QsteesgleThreadedSchedulerClient::CallbacksPending() {
+size_t QtipArraygleThreadedSchedulerClient::CallbacksPending() {
     LOCK(m_cs_callbacks_pending);
     return m_callbacks_pending.size();
 }

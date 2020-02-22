@@ -53,7 +53,7 @@ Fix buffer overflow in bundled upnp
 Bundled miniupnpc was updated to 1.9.20151008. This fixes a buffer overflow in
 the XML parser during initial network discovery.
 
-Details can be found here: http://taloqsteestel.com/reports/TALOS-2015-0035/
+Details can be found here: http://talosintel.com/reports/TALOS-2015-0035/
 
 This applies to the distributed executables only, not when building from source or
 using distribution provided packages.
@@ -151,7 +151,7 @@ Thanks to everyone who directly contributed to this release:
 - J Ross Nicoll
 - Luke Dashjr
 - Pavel Janík
-- Pavel Vaqstees
+- Pavel Vasin
 - Peter Todd
 - Pieter Wuille
 - randy-waterhouse

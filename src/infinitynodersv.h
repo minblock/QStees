@@ -1,9 +1,9 @@
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef QSTEES_INFINITYNODERSV_H
-#define QSTEES_INFINITYNODERSV_H
+#ifndef QTIPARRAY_INFINITYNODERSV_H
+#define QTIPARRAY_INFINITYNODERSV_H
 
 #include <key.h>
 #include <validation.h>
@@ -100,4 +100,4 @@ public:
     void CheckAndRemove() {}
 
 };
-#endif // QSTEES_INFINITYNODERSV_H
+#endif // QTIPARRAY_INFINITYNODERSV_H

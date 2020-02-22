@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -54,7 +54,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "VentureBeat 1/16/20 Google Reformer AI can read entirety of Novels";
+    const char* pszTimestamp = "The Guardian 27/06/18 One football pitch of forest lost every second in 2017";
     const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
@@ -84,12 +84,12 @@ public:
         consensus.nMasternodeMinimumConfirmations = 15;
         consensus.nMasternodePaymentsStartBlock = 50;
         consensus.nMasternodeCollateralMinimum = 10000;
-        consensus.nMasternodeBurnQSTEESNODE_1 = 100000;
-        consensus.nMasternodeBurnQSTEESNODE_5 = 500000;
-        consensus.nMasternodeBurnQSTEESNODE_10 = 1000000;
-        consensus.nLimitQSTEESNODE_1=375;
-        consensus.nLimitQSTEESNODE_5=375;
-        consensus.nLimitQSTEESNODE_10=375;
+        consensus.nMasternodeBurnQTIPARRAYNODE_1 = 100000;
+        consensus.nMasternodeBurnQTIPARRAYNODE_5 = 500000;
+        consensus.nMasternodeBurnQTIPARRAYNODE_10 = 1000000;
+        consensus.nLimitQTIPARRAYNODE_1=375;
+        consensus.nLimitQTIPARRAYNODE_5=375;
+        consensus.nLimitQTIPARRAYNODE_10=375;
         consensus.nInstantSendKeepLock = 24;
         consensus.nInfinityNodeBeginHeight=160000;
         consensus.nInfinityNodeGenesisStatement=250000;
@@ -121,10 +121,10 @@ public:
         consensus.devAddressPubKey = "841e6bf56b99a59545da932de2efb23ab93b4f44";
         consensus.devAddress = "SZLafuDjnjqh2tAfTrG9ZAGzbP8HkzNXvB";
         consensus.cBurnAddressPubKey = "ebaf5ec74cb2e2342dfda0229111738ff4dc742d";
-        consensus.cBurnAddress = "QsteesBurnAddress123456789SuqaXbx3AMC";
-        consensus.cMetadataAddress = "QsteesBurnAddressForMetadataXXXXEU2mj";
-        consensus.cNotifyAddress = "QsteesBurnAddressForNotifyXXXXXc42TcT";
-        consensus.cGovernanceAddress = "QsteesBurnAddressGovernanceVoteba5vkQ";
+        consensus.cBurnAddress = "QtipArrayBurnAddress123456789SuqaXbx3AMC";
+        consensus.cMetadataAddress = "QtipArrayBurnAddressForMetadataXXXXEU2mj";
+        consensus.cNotifyAddress = "QtipArrayBurnAddressForNotifyXXXXXc42TcT";
+        consensus.cGovernanceAddress = "QtipArrayBurnAddressGovernanceVoteba5vkQ";
         strSporkPubKey = "0449434681D96595AC04470E5613475D259489CAA79C260814D22D4F29F7361D84A85F1F535F7B11F51B87F4E7B8E168AA68747A6E7465DCF34ABDD25570430573";
 
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
@@ -153,27 +153,34 @@ public:
          * a large 32-bit integer with any alignment.
          */
         pchMessageStart[0] = 0xf8;
-        pchMessageStart[1] = 0xda;
+        pchMessageStart[1] = 0xdd;
         pchMessageStart[2] = 0xd4;
         pchMessageStart[3] = 0xb8;
-        nDefaultPort = 3337;
+        nDefaultPort = 20970;
         nPruneAfterHeight = 100000;
 
-        genesis = CreateGenesisBlock(1579181820, 10161, 0x1f00ffff, 1, 0 * COIN);
+        genesis = CreateGenesisBlock(1533029778, 1990615403, 0x1f00ffff, 1, 0 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
+        assert(consensus.hashGenesisBlock == uint256S("000032bd27c65ec42967b7854a49df222abdfae8d9350a61083af8eab2a25e03"));
+        assert(genesis.hashMerkleRoot == uint256S("c3555790e3804130514a674f3374b451dce058407dad6b9e82e191e198012680"));
 
-	assert(consensus.hashGenesisBlock == uint256S("00002a571488f2c1a6f2d43badb583db44406854da9d13ae434fcdd1e49fb71d"));
-        assert(genesis.hashMerkleRoot == uint256S("e495f8dece93b1505646e246be3720b815a9c2cf19b7a0d696821bdb4a55a354"));
+        vSeeds.push_back("88.198.108.224");
+        vSeeds.push_back("95.216.140.124");
+        vSeeds.push_back("149.28.109.29");
+        vSeeds.push_back("104.248.4.79");
+        vSeeds.push_back("157.245.166.223");
+        vSeeds.push_back("206.189.147.193");
+        vSeeds.push_back("167.172.42.45");
+        vSeeds.push_back("138.197.135.125");
 
-        vSeeds.push_back("192.3.3.30");
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,58); //qtip addresses begin with Q
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,57); //qtip segwit addresses begin with P or Q
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,63);
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,191);
         base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x88, 0xB2, 0x1E};
         base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x88, 0xAD, 0xE4};
 
-        bech32_hrp = "qtc";
+        bech32_hrp = "bc";
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
 
@@ -214,12 +221,12 @@ public:
         consensus.nMasternodeMinimumConfirmations = 15;
         consensus.nMasternodePaymentsStartBlock = 50;
         consensus.nMasternodeCollateralMinimum = 10;
-        consensus.nMasternodeBurnQSTEESNODE_1 = 100000;
-        consensus.nMasternodeBurnQSTEESNODE_5 = 500000;
-        consensus.nMasternodeBurnQSTEESNODE_10 = 1000000;
-        consensus.nLimitQSTEESNODE_1=6;
-        consensus.nLimitQSTEESNODE_5=6;
-        consensus.nLimitQSTEESNODE_10=6;
+        consensus.nMasternodeBurnQTIPARRAYNODE_1 = 100000;
+        consensus.nMasternodeBurnQTIPARRAYNODE_5 = 500000;
+        consensus.nMasternodeBurnQTIPARRAYNODE_10 = 1000000;
+        consensus.nLimitQTIPARRAYNODE_1=6;
+        consensus.nLimitQTIPARRAYNODE_5=6;
+        consensus.nLimitQTIPARRAYNODE_10=6;
         consensus.nInstantSendKeepLock = 24;
         consensus.nInfinityNodeBeginHeight=100;
         consensus.nInfinityNodeGenesisStatement=110;
@@ -247,11 +254,11 @@ public:
         consensus.nMinerConfirmationWindow = 2016;
         consensus.devAddressPubKey = "841e6bf56b99a59545da932de2efb23ab93b4f44";
         consensus.devAddress = "SZLafuDjnjqh2tAfTrG9ZAGzbP8HkzNXvB";
-        consensus.cBurnAddress = "QsteesBurnAddress123456789SuqaXbx3AMC";
+        consensus.cBurnAddress = "QtipArrayBurnAddress123456789SuqaXbx3AMC";
         consensus.cBurnAddressPubKey = "ebaf5ec74cb2e2342dfda0229111738ff4dc742d";
-        consensus.cMetadataAddress = "QsteesBurnAddressForMetadataXXXXEU2mj";
-        consensus.cNotifyAddress = "QsteesBurnAddressForNotifyXXXXXc42TcT";
-        consensus.cGovernanceAddress = "QsteesBurnAddressGovernanceVoteba5vkQ";
+        consensus.cMetadataAddress = "QtipArrayBurnAddressForMetadataXXXXEU2mj";
+        consensus.cNotifyAddress = "QtipArrayBurnAddressForNotifyXXXXXc42TcT";
+        consensus.cGovernanceAddress = "QtipArrayBurnAddressGovernanceVoteba5vkQ";
         strSporkPubKey = "0454E1B43ECCAC17E50402370477455BE34593E272CA9AE0DF04F6F3D423D1366D017822C77990A3D8DD980C60D3692C9B6D7DFD75F683F7056C1E97E82BD94DBE";
 
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;
@@ -336,12 +343,12 @@ public:
         consensus.nMasternodeMinimumConfirmations = 15;
         consensus.nMasternodePaymentsStartBlock = 50;
         consensus.nMasternodeCollateralMinimum = 10;
-        consensus.nMasternodeBurnQSTEESNODE_1 = 100000;
-        consensus.nMasternodeBurnQSTEESNODE_5 = 500000;
-        consensus.nMasternodeBurnQSTEESNODE_10 = 1000000;
-        consensus.nLimitQSTEESNODE_1=6;
-        consensus.nLimitQSTEESNODE_5=6;
-        consensus.nLimitQSTEESNODE_10=6;
+        consensus.nMasternodeBurnQTIPARRAYNODE_1 = 100000;
+        consensus.nMasternodeBurnQTIPARRAYNODE_5 = 500000;
+        consensus.nMasternodeBurnQTIPARRAYNODE_10 = 1000000;
+        consensus.nLimitQTIPARRAYNODE_1=6;
+        consensus.nLimitQTIPARRAYNODE_5=6;
+        consensus.nLimitQTIPARRAYNODE_10=6;
         consensus.nInstantSendKeepLock = 24;
         consensus.nInfinityNodeBeginHeight=100;
         consensus.nInfinityNodeGenesisStatement=110;
@@ -369,11 +376,11 @@ public:
         consensus.nMinerConfirmationWindow = 2016;
         consensus.devAddressPubKey = "841e6bf56b99a59545da932de2efb23ab93b4f44";
         consensus.devAddress = "SZLafuDjnjqh2tAfTrG9ZAGzbP8HkzNXvB";
-        consensus.cBurnAddress = "QsteesBurnAddress123456789SuqaXbx3AMC";
+        consensus.cBurnAddress = "QtipArrayBurnAddress123456789SuqaXbx3AMC";
         consensus.cBurnAddressPubKey = "ebaf5ec74cb2e2342dfda0229111738ff4dc742d";
-        consensus.cMetadataAddress = "QsteesBurnAddressForMetadataXXXXEU2mj";
-        consensus.cNotifyAddress = "QsteesBurnAddressForNotifyXXXXXc42TcT";
-        consensus.cGovernanceAddress = "QsteesBurnAddressGovernanceVoteba5vkQ";
+        consensus.cMetadataAddress = "QtipArrayBurnAddressForMetadataXXXXEU2mj";
+        consensus.cNotifyAddress = "QtipArrayBurnAddressForNotifyXXXXXc42TcT";
+        consensus.cGovernanceAddress = "QtipArrayBurnAddressGovernanceVoteba5vkQ";
         strSporkPubKey = "0454E1B43ECCAC17E50402370477455BE34593E272CA9AE0DF04F6F3D423D1366D017822C77990A3D8DD980C60D3692C9B6D7DFD75F683F7056C1E97E82BD94DBE";
 
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].bit = 28;

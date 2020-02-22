@@ -12,7 +12,7 @@
 #include <script/sign.h>
 #include <util.h>
 #include <utilstrencodings.h>
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 #include <rpc/server.h>
 
 #if defined(HAVE_CONSENSUS_LIB)
@@ -1195,7 +1195,7 @@ BOOST_AUTO_TEST_CASE(script_combineSigs)
     SignatureData combined = CombineSignatures(txFrom.vout[0], txTo, empty, empty);
     BOOST_CHECK(combined.scriptSig.empty());
 
-    // Qsteesgle signature case:
+    // QtipArraygle signature case:
     SignSignature(keystore, txFrom, txTo, 0, SIGHASH_ALL); // changes scriptSig
     scriptSig = DataFromTransaction(txTo, 0, txFrom.vout[0]);
     combined = CombineSignatures(txFrom.vout[0], txTo, scriptSig, empty);
@@ -1210,9 +1210,9 @@ BOOST_AUTO_TEST_CASE(script_combineSigs)
     BOOST_CHECK(combined.scriptSig == scriptSigCopy.scriptSig || combined.scriptSig == scriptSig.scriptSig);
 
     // P2SH, single-signature case:
-    CScript pkQsteesgle; pkQsteesgle << ToByteVector(keys[0].GetPubKey()) << OP_CHECKSIG;
-    keystore.AddCScript(pkQsteesgle);
-    scriptPubKey = GetScriptForDestination(CScriptID(pkQsteesgle));
+    CScript pkQtipArraygle; pkQtipArraygle << ToByteVector(keys[0].GetPubKey()) << OP_CHECKSIG;
+    keystore.AddCScript(pkQtipArraygle);
+    scriptPubKey = GetScriptForDestination(CScriptID(pkQtipArraygle));
     SignSignature(keystore, txFrom, txTo, 0, SIGHASH_ALL);
     scriptSig = DataFromTransaction(txTo, 0, txFrom.vout[0]);
     combined = CombineSignatures(txFrom.vout[0], txTo, scriptSig, empty);
@@ -1245,9 +1245,9 @@ BOOST_AUTO_TEST_CASE(script_combineSigs)
     BOOST_CHECK(keys[1].Sign(hash2, sig2));
     sig2.push_back(SIGHASH_NONE);
     std::vector<unsigned char> sig3;
-    uint256 hash3 = SignatureHash(scriptPubKey, txTo, 0, SIGHASH_QSTEESGLE, 0, SigVersion::BASE);
+    uint256 hash3 = SignatureHash(scriptPubKey, txTo, 0, SIGHASH_QTIPARRAYGLE, 0, SigVersion::BASE);
     BOOST_CHECK(keys[2].Sign(hash3, sig3));
-    sig3.push_back(SIGHASH_QSTEESGLE);
+    sig3.push_back(SIGHASH_QTIPARRAYGLE);
 
     // Not fussy about order (or even existence) of placeholders or signatures:
     CScript partial1a = CScript() << OP_0 << sig1 << OP_0;
@@ -1332,10 +1332,10 @@ BOOST_AUTO_TEST_CASE(script_GetScriptAsm)
     BOOST_CHECK_EQUAL(derSig + "80 " + pubKey, ScriptToAsmStr(CScript() << ToByteVector(ParseHex(derSig + "80")) << vchPubKey, true));
     BOOST_CHECK_EQUAL(derSig + "[ALL] " + pubKey, ScriptToAsmStr(CScript() << ToByteVector(ParseHex(derSig + "01")) << vchPubKey, true));
     BOOST_CHECK_EQUAL(derSig + "[NONE] " + pubKey, ScriptToAsmStr(CScript() << ToByteVector(ParseHex(derSig + "02")) << vchPubKey, true));
-    BOOST_CHECK_EQUAL(derSig + "[QSTEESGLE] " + pubKey, ScriptToAsmStr(CScript() << ToByteVector(ParseHex(derSig + "03")) << vchPubKey, true));
+    BOOST_CHECK_EQUAL(derSig + "[QTIPARRAYGLE] " + pubKey, ScriptToAsmStr(CScript() << ToByteVector(ParseHex(derSig + "03")) << vchPubKey, true));
     BOOST_CHECK_EQUAL(derSig + "[ALL|ANYONECANPAY] " + pubKey, ScriptToAsmStr(CScript() << ToByteVector(ParseHex(derSig + "81")) << vchPubKey, true));
     BOOST_CHECK_EQUAL(derSig + "[NONE|ANYONECANPAY] " + pubKey, ScriptToAsmStr(CScript() << ToByteVector(ParseHex(derSig + "82")) << vchPubKey, true));
-    BOOST_CHECK_EQUAL(derSig + "[QSTEESGLE|ANYONECANPAY] " + pubKey, ScriptToAsmStr(CScript() << ToByteVector(ParseHex(derSig + "83")) << vchPubKey, true));
+    BOOST_CHECK_EQUAL(derSig + "[QTIPARRAYGLE|ANYONECANPAY] " + pubKey, ScriptToAsmStr(CScript() << ToByteVector(ParseHex(derSig + "83")) << vchPubKey, true));
 
     BOOST_CHECK_EQUAL(derSig + "00 " + pubKey, ScriptToAsmStr(CScript() << ToByteVector(ParseHex(derSig + "00")) << vchPubKey));
     BOOST_CHECK_EQUAL(derSig + "80 " + pubKey, ScriptToAsmStr(CScript() << ToByteVector(ParseHex(derSig + "80")) << vchPubKey));

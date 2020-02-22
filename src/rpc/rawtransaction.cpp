@@ -27,7 +27,7 @@
 #include <txmempool.h>
 #include <uint256.h>
 #include <utilstrencodings.h>
-/*QSTEES*/
+/*QTIPARRAY*/
 #include <instantx.h>
 #ifdef ENABLE_WALLET
 #include <wallet/rpcwallet.h>
@@ -40,10 +40,10 @@
 
 static void TxToJSON(const CTransaction& tx, const uint256 hashBlock, UniValue& entry)
 {
-    // Call into TxToUniv() in qstees-common to decode the transaction hex.
+    // Call into TxToUniv() in sin-common to decode the transaction hex.
     //
     // Blockchain contextual information (confirmations and blocktime) is not
-    // available to code in qstees-common, so we query them here and push the
+    // available to code in sin-common, so we query them here and push the
     // data into the returned UniValue.
     TxToUniv(tx, uint256(), entry, true, RPCSerializationFlags());
 
@@ -123,7 +123,7 @@ static UniValue getrawtransaction(const JSONRPCRequest& request)
             "         \"reqSigs\" : n,            (numeric) The required sigs\n"
             "         \"type\" : \"pubkeyhash\",  (string) The type, eg 'pubkeyhash'\n"
             "         \"addresses\" : [           (json array of string)\n"
-            "           \"address\"        (string) qstees address\n"
+            "           \"address\"        (string) sin address\n"
             "           ,...\n"
             "         ]\n"
             "       }\n"
@@ -430,7 +430,7 @@ CMutableTransaction ConstructTransaction(const UniValue& inputs_in, const UniVal
         } else {
             CTxDestination destination = DecodeDestination(name_);
             if (!IsValidDestination(destination)) {
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid QSTEES address: ") + name_);
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid QTIPARRAY address: ") + name_);
             }
 
             if (!destinations.insert(destination).second) {
@@ -558,7 +558,7 @@ static UniValue decoderawtransaction(const JSONRPCRequest& request)
             "         \"reqSigs\" : n,            (numeric) The required sigs\n"
             "         \"type\" : \"pubkeyhash\",  (string) The type, eg 'pubkeyhash'\n"
             "         \"addresses\" : [           (json array of string)\n"
-            "           \"12tvKAXCxZjSmdNbao16dKXC8tRWfcF5oc\"   (string) qstees address\n"
+            "           \"12tvKAXCxZjSmdNbao16dKXC8tRWfcF5oc\"   (string) sin address\n"
             "           ,...\n"
             "         ]\n"
             "       }\n"
@@ -605,7 +605,7 @@ static UniValue decodescript(const JSONRPCRequest& request)
             "  \"type\":\"type\", (string) The output type\n"
             "  \"reqSigs\": n,    (numeric) The required signatures\n"
             "  \"addresses\": [   (json array of string)\n"
-            "     \"address\"     (string) qstees address\n"
+            "     \"address\"     (string) sin address\n"
             "     ,...\n"
             "  ],\n"
             "  \"p2sh\",\"address\" (string) address of P2SH script wrapping this redeem script (not returned if the script is already a P2SH).\n"
@@ -857,7 +857,7 @@ UniValue SignTransaction(CMutableTransaction& mtx, const UniValue& prevTxsUnival
 
     int nHashType = ParseSighashString(hashType);
 
-    bool fHashQsteesgle = ((nHashType & ~SIGHASH_ANYONECANPAY) == SIGHASH_QSTEESGLE);
+    bool fHashQtipArraygle = ((nHashType & ~SIGHASH_ANYONECANPAY) == SIGHASH_QTIPARRAYGLE);
 
     // Script verification errors
     UniValue vErrors(UniValue::VARR);
@@ -877,8 +877,8 @@ UniValue SignTransaction(CMutableTransaction& mtx, const UniValue& prevTxsUnival
         const CAmount& amount = coin.out.nValue;
 
         SignatureData sigdata = DataFromTransaction(mtx, i, coin.out);
-        // Only sign SIGHASH_QSTEESGLE if there's a corresponding output:
-        if (!fHashQsteesgle || (i < mtx.vout.size())) {
+        // Only sign SIGHASH_QTIPARRAYGLE if there's a corresponding output:
+        if (!fHashQtipArraygle || (i < mtx.vout.size())) {
             ProduceSignature(*keystore, MutableTransactionSignatureCreator(&mtx, i, amount, nHashType), prevPubKey, sigdata);
         }
 
@@ -943,10 +943,10 @@ static UniValue signrawtransactionwithkey(const JSONRPCRequest& request)
             "4. \"sighashtype\"                    (string, optional, default=ALL) The signature hash type. Must be one of\n"
             "       \"ALL\"\n"
             "       \"NONE\"\n"
-            "       \"QSTEESGLE\"\n"
+            "       \"QTIPARRAYGLE\"\n"
             "       \"ALL|ANYONECANPAY\"\n"
             "       \"NONE|ANYONECANPAY\"\n"
-            "       \"QSTEESGLE|ANYONECANPAY\"\n"
+            "       \"QTIPARRAYGLE|ANYONECANPAY\"\n"
 
             "\nResult:\n"
             "{\n"
@@ -1029,10 +1029,10 @@ UniValue signrawtransaction(const JSONRPCRequest& request)
             "4. \"sighashtype\"     (string, optional, default=ALL) The signature hash type. Must be one of\n"
             "       \"ALL\"\n"
             "       \"NONE\"\n"
-            "       \"QSTEESGLE\"\n"
+            "       \"QTIPARRAYGLE\"\n"
             "       \"ALL|ANYONECANPAY\"\n"
             "       \"NONE|ANYONECANPAY\"\n"
-            "       \"QSTEESGLE|ANYONECANPAY\"\n"
+            "       \"QTIPARRAYGLE|ANYONECANPAY\"\n"
 
             "\nResult:\n"
             "{\n"
@@ -1057,7 +1057,7 @@ UniValue signrawtransaction(const JSONRPCRequest& request)
 
     if (!IsDeprecatedRPCEnabled("signrawtransaction")) {
         throw JSONRPCError(RPC_METHOD_DEPRECATED, "signrawtransaction is deprecated and will be fully removed in v0.18. "
-            "To use signrawtransaction in v0.17, restart qsteesd with -deprecatedrpc=signrawtransaction.\n"
+            "To use signrawtransaction in v0.17, restart sind with -deprecatedrpc=signrawtransaction.\n"
             "Projects should transition to using signrawtransactionwithkey and signrawtransactionwithwallet before upgrading to v0.18");
     }
 
@@ -1143,7 +1143,7 @@ static UniValue sendrawtransaction(const JSONRPCRequest& request)
     }
     bool fHaveMempool = mempool.exists(hashTx);
     if (!fHaveMempool && !fHaveChain) {
-        /*QSTEES*/
+        /*QTIPARRAY*/
         // push to local node and sync with wallets
         if (fInstantSend && !instantsend.ProcessTxLockRequest(*tx, *g_connman)) {
             throw JSONRPCError(RPC_TRANSACTION_ERROR, "Not a valid InstantSend transaction, see debug.log for more info");
@@ -1185,7 +1185,7 @@ static UniValue sendrawtransaction(const JSONRPCRequest& request)
 
     if(!g_connman)
         throw JSONRPCError(RPC_CLIENT_P2P_DISABLED, "Error: Peer-to-peer functionality missing or disabled");
-    /*QSTEES*/
+    /*QTIPARRAY*/
     /*
     CInv inv(MSG_TX, hashTx);
     g_connman->ForEachNode([&inv](CNode* pnode)
@@ -1717,7 +1717,7 @@ UniValue createpsbt(const JSONRPCRequest& request)
                             "That is, each address can only appear once and there can only be one 'data' object.\n"
                             "   [\n"
                             "    {\n"
-                            "      \"address\": x.xxx,    (obj, optional) A key-value pair. The key (string) is the qstees address, the value (float or string) is the amount in " + CURRENCY_UNIT + "\n"
+                            "      \"address\": x.xxx,    (obj, optional) A key-value pair. The key (string) is the sin address, the value (float or string) is the amount in " + CURRENCY_UNIT + "\n"
                             "    },\n"
                             "    {\n"
                             "      \"data\": \"hex\"        (obj, optional) A key-value pair. The key must be \"data\", the value is hex encoded data\n"

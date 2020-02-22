@@ -10,7 +10,7 @@
 #include <miner.h>
 #include <pow.h>
 #include <random.h>
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 #include <validation.h>
 #include <validationinterface.h>
 

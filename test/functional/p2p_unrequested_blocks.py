@@ -127,7 +127,7 @@ class AcceptBlockTest(BitcoinTestFramework):
         test_node.send_message(msg_block(block_h2f))
 
         test_node.sync_with_ping()
-        # Qsteesce the earlier block was not processed by node, the new block
+        # QtipArrayce the earlier block was not processed by node, the new block
         # can't be fully validated.
         tip_entry_found = False
         for x in self.nodes[0].getchaintips():
@@ -146,7 +146,7 @@ class AcceptBlockTest(BitcoinTestFramework):
         test_node.send_message(msg_block(block_h3))
 
         test_node.sync_with_ping()
-        # Qsteesce the earlier block was not processed by node, the new block
+        # QtipArrayce the earlier block was not processed by node, the new block
         # can't be fully validated.
         tip_entry_found = False
         for x in self.nodes[0].getchaintips():

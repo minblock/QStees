@@ -12,7 +12,7 @@
 #include <crypto/hmac_sha512.h>
 #include <random.h>
 #include <utilstrencodings.h>
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 
 #include <vector>
 

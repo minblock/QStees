@@ -87,9 +87,9 @@ struct STLLessThan {
 };
 }  // namespace
 
-class StringQsteesk: public WritableFile {
+class StringQtipArrayk: public WritableFile {
  public:
-  ~StringQsteesk() { }
+  ~StringQtipArrayk() { }
 
   const std::string& contents() const { return contents_; }
 
@@ -229,8 +229,8 @@ class TableConstructor: public Constructor {
   }
   virtual Status FinishImpl(const Options& options, const KVMap& data) {
     Reset();
-    StringQsteesk qsteesk;
-    TableBuilder builder(options, &qsteesk);
+    StringQtipArrayk sink;
+    TableBuilder builder(options, &sink);
 
     for (KVMap::const_iterator it = data.begin();
          it != data.end();
@@ -241,13 +241,13 @@ class TableConstructor: public Constructor {
     Status s = builder.Finish();
     ASSERT_TRUE(s.ok()) << s.ToString();
 
-    ASSERT_EQ(qsteesk.contents().size(), builder.FileSize());
+    ASSERT_EQ(sink.contents().size(), builder.FileSize());
 
     // Open the table
-    source_ = new StringSource(qsteesk.contents());
+    source_ = new StringSource(sink.contents());
     Options table_options;
     table_options.comparator = options.comparator;
-    return Table::Open(table_options, source_, qsteesk.contents().size(), &table_);
+    return Table::Open(table_options, source_, sink.contents().size(), &table_);
   }
 
   virtual Iterator* NewIterator() const {
@@ -684,7 +684,7 @@ TEST(Harness, SimpleEmptyKey) {
   }
 }
 
-TEST(Harness, SimpleQsteesgle) {
+TEST(Harness, SimpleQtipArraygle) {
   for (int i = 0; i < kNumTestArgs; i++) {
     Init(kTestArgList[i]);
     Random rnd(test::RandomSeed() + 2);

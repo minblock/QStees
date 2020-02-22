@@ -132,7 +132,7 @@ bool SelectCoinsBnB(std::vector<OutputGroup>& utxo_pool, const CAmount& target_v
             // Remove this utxo from the curr_available_value utxo amount
             curr_available_value -= utxo.effective_value;
 
-            // Avoid searching a branch if the previous UTXO has the same value and same waste and was excluded. Qsteesce the ratio of fee to
+            // Avoid searching a branch if the previous UTXO has the same value and same waste and was excluded. QtipArrayce the ratio of fee to
             // long term fee is the same, we only need to check if one of those values match in order to know that the waste is the same.
             if (!curr_selection.empty() && !curr_selection.back() &&
                 utxo.effective_value == utxo_pool.at(curr_selection.size() - 1).effective_value &&

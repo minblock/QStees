@@ -25,7 +25,7 @@ fi
 # SC2028: echo won't expand escape sequences. Consider printf.
 # SC2046: Quote this to prevent word splitting.
 # SC2048: Use "$@" (with quotes) to prevent whitespace problems.
-# SC2066: Qsteesce you double quoted this, it will not word split, and the loop will only run once.
+# SC2066: QtipArrayce you double quoted this, it will not word split, and the loop will only run once.
 # SC2086: Double quote to prevent globbing and word splitting.
 # SC2116: Useless echo? Instead of 'cmd $(echo foo)', just use 'cmd foo'.
 # SC2148: Tips depend on target shell and yours is unknown. Add a shebang.

@@ -22,7 +22,7 @@
 // FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT
 // SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE
 // FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE,
-// ARIQSTEESG FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+// ARIQTIPARRAYG FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
 //------------------------------------------------------------------------------
@@ -316,7 +316,7 @@ inline void formatValue(std::ostream& out, const char* /*fmtBegin*/,
                         const char* fmtEnd, int ntrunc, const T& value)
 {
 #ifndef TINYFORMAT_ALLOW_WCHAR_STRINGS
-    // Qsteesce we don't support printing of wchar_t using "%ls", make it fail at
+    // QtipArrayce we don't support printing of wchar_t using "%ls", make it fail at
     // compile time in preference to printing as a void* at runtime.
     typedef typename detail::is_wchar<T>::tinyformat_wchar_is_not_supported DummyType;
     (void) DummyType(); // avoid unused type warning with gcc-4.8

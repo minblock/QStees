@@ -823,7 +823,7 @@ DBErrors CWallet::ReorderTransactions()
             if (!nOrderPosOff)
                 continue;
 
-            // Qsteesce we're changing the order, write it back
+            // QtipArrayce we're changing the order, write it back
             if (pwtx)
             {
                 if (!batch.WriteTx(*pwtx))
@@ -1721,7 +1721,7 @@ int64_t CalculateMaximumSignedTxSize(const CTransaction &tx, const CWallet *wall
     if (!wallet->DummySignTx(txNew, txouts, use_max_sig)) {
         // This should never happen, because IsAllFromMe(ISMINE_SPENDABLE)
         // implies that we can sign for every input.
-	// QSTEES: we had to disable this as it made previously timelocked coins spend fail
+	// QTIPARRAY: we had to disable this as it made previously timelocked coins spend fail
         //return -1;
     }
     return GetVirtualTransactionSize(txNew);
@@ -2594,8 +2594,8 @@ std::map<CTxDestination, std::vector<COutput>> CWallet::ListCoins() const
     // CWalletTx objects, callers to this function really should acquire the
     // cs_wallet lock before calling it. However, the current caller doesn't
     // acquire this lock yet. There was an attempt to add the missing lock in
-    // https://github.com/qstees/qstees/pull/10340, but that change has been
-    // postponed until after https://github.com/qstees/qstees/pull/10244 to
+    // https://github.com/sin/sin/pull/10340, but that change has been
+    // postponed until after https://github.com/sin/sin/pull/10244 to
     // avoid adding some extra complexity to the Qt code.
 
     std::map<CTxDestination, std::vector<COutput>> result;
@@ -2905,7 +2905,7 @@ int CWallet::CountInputsWithAmount(CAmount nInputAmount)
                 int nDepth = pcoin->GetDepthInMainChain(false);
 
                 for (unsigned int i = 0; i < pcoin->tx->vout.size(); i++) {
-                    COutput out = COutput(pcoin, i, nDepth, true, true, true); // QSTEES TODO: last bool is fSafe
+                    COutput out = COutput(pcoin, i, nDepth, true, true, true); // QTIPARRAY TODO: last bool is fSafe
                     //COutPoint outpoint = COutPoint(out.tx->GetHash(), out.i);
 
                     if(out.tx->tx->vout[out.i].nValue != nInputAmount) continue;
@@ -3038,7 +3038,7 @@ bool CWallet::FundTransaction(CMutableTransaction& tx, CAmount& nFeeRet, int& nC
 
 OutputType CWallet::TransactionChangeType(OutputType change_type, const std::vector<CRecipient>& vecSend)
 {
-    // Suit QSTEES legacy
+    // Suit QTIPARRAY legacy
     return OutputType::LEGACY;
 
     // If -changetype is specified, always use that change type.
@@ -3143,7 +3143,7 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CTransac
 
             // Create change script that will be used if we need change
             // TODO: pass in scriptChange instead of reservekey so
-            // change transaction isn't always pay-to-qstees-address
+            // change transaction isn't always pay-to-sin-address
             CScript scriptChange;
 
             // coin control: send change to custom address
@@ -3282,7 +3282,7 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CTransac
 
                     // Dash
                     if (fUseInstantSend && nValueIn > sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE)*COIN) {
-                        strFailReason += " " + strprintf(_("InstantSend doesn't support sending: Selected coins: %lld, Send values: %lld. Transactions are currently limited to %1 QSTEES."),nValueIn, nValueToSelect, sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE));
+                        strFailReason += " " + strprintf(_("InstantSend doesn't support sending: Selected coins: %lld, Send values: %lld. Transactions are currently limited to %1 QTIPARRAY."),nValueIn, nValueToSelect, sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE));
                         return false;
                     }
 
@@ -3633,7 +3633,7 @@ DBErrors CWallet::LoadWallet(bool& fFirstRunRet)
             setExternalKeyPool.clear();
             m_pool_key_to_index.clear();
             // Dash
-            nKeysLeftQsteesceAutoBackup = 0;
+            nKeysLeftQtipArrayceAutoBackup = 0;
             //
             // Note: can't top-up keypool here, because wallet is locked.
             // User will be prompted to unlock wallet the next operation
@@ -3707,7 +3707,7 @@ DBErrors CWallet::ZapWalletTx(std::vector<CWalletTx>& vWtx)
             setExternalKeyPool.clear();
             m_pool_key_to_index.clear();
             // Dash
-            nKeysLeftQsteesceAutoBackup = 0;
+            nKeysLeftQtipArrayceAutoBackup = 0;
             //
             // Note: can't top-up keypool here, because wallet is locked.
             // User will be prompted to unlock wallet the next operation
@@ -3949,7 +3949,7 @@ void CWallet::KeepKey(int64_t nIndex)
     batch.ErasePool(nIndex);
 
     // Dash
-    nKeysLeftQsteesceAutoBackup = nWalletBackups ? nKeysLeftQsteesceAutoBackup - 1 : 0;
+    nKeysLeftQtipArrayceAutoBackup = nWalletBackups ? nKeysLeftQtipArrayceAutoBackup - 1 : 0;
     //
 
     WalletLogPrintf("keypool keep %d\n", nIndex);
@@ -4231,7 +4231,7 @@ void CWallet::MarkReserveKeysAsUsed(int64_t keypool_id)
         if (batch.ReadPool(index, keypool)) { //TODO: This should be unnecessary
             m_pool_key_to_index.erase(keypool.vchPubKey.GetID());
         }
-		//QSTEES don't support P2SH_SEGWIT and BECH32 yet
+		//QTIPARRAY don't support P2SH_SEGWIT and BECH32 yet
         LearnAllRelatedScripts(keypool.vchPubKey);
         batch.ErasePool(index);
         WalletLogPrintf("keypool index %d removed\n", index);
@@ -4389,8 +4389,8 @@ void CWallet::GetKeyBirthTimes(std::map<CTxDestination, int64_t> &mapKeyBirth) c
  *   the block time.
  *
  * For more information see CWalletTx::nTimeSmart,
- * https://qsteestalk.org/?topic=54527, or
- * https://github.com/qstees/qstees/pull/1393.
+ * https://sintalk.org/?topic=54527, or
+ * https://github.com/sin/sin/pull/1393.
  */
 unsigned int CWallet::ComputeTimeSmart(const CWalletTx& wtx) const
 {
@@ -5001,7 +5001,7 @@ void CWallet::LearnRelatedScripts(const CPubKey& key, OutputType type)
 void CWallet::LearnAllRelatedScripts(const CPubKey& key)
 {
     // OutputType::P2SH_SEGWIT always adds all necessary scripts for all types.
-	// QSTEES Don't support P2SH_SEGWIT
+	// QTIPARRAY Don't support P2SH_SEGWIT
     // LearnRelatedScripts(key, OutputType::P2SH_SEGWIT);
 }
 

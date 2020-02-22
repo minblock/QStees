@@ -185,7 +185,7 @@ bool PaymentRequestPlus::getMerchant(X509_STORE* certStore, QString& merchant) c
         else {
             throw SSLVerifyError("Bad certificate, missing common name.");
         }
-        // TODO: detect EV certificates and set merchant = buqsteesess name instead of unfriendly NID_commonName ?
+        // TODO: detect EV certificates and set merchant = business name instead of unfriendly NID_commonName ?
     }
     catch (const SSLVerifyError& err) {
         fResult = false;

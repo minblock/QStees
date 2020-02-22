@@ -223,7 +223,7 @@ class Benchmark {
     next_report_ = 100;
   }
 
-  void FinishedQsteesgleOp() {
+  void FinishedQtipArraygleOp() {
     if (FLAGS_histogram) {
       double now = Env::Default()->NowMicros() * 1e-6;
       double micros = (now - last_op_finish_) * 1e6;
@@ -253,7 +253,7 @@ class Benchmark {
     double finish = Env::Default()->NowMicros() * 1e-6;
 
     // Pretend at least one op was done in case we are running a benchmark
-    // that does not call FinishedQsteesgleOp().
+    // that does not call FinishedQtipArraygleOp().
     if (done_ < 1) done_ = 1;
 
     if (bytes_ > 0) {
@@ -452,7 +452,7 @@ class Benchmark {
       if (!db_->set(cpp_key, gen_.Generate(value_size).ToString())) {
         fprintf(stderr, "set error: %s\n", db_->error().name());
       }
-      FinishedQsteesgleOp();
+      FinishedQtipArraygleOp();
     }
   }
 
@@ -462,7 +462,7 @@ class Benchmark {
     std::string ckey, cvalue;
     while (cur->get(&ckey, &cvalue, true)) {
       bytes_ += ckey.size() + cvalue.size();
-      FinishedQsteesgleOp();
+      FinishedQtipArraygleOp();
     }
     delete cur;
   }
@@ -474,7 +474,7 @@ class Benchmark {
       const int k = rand_.Next() % reads_;
       snprintf(key, sizeof(key), "%016d", k);
       db_->get(key, &value);
-      FinishedQsteesgleOp();
+      FinishedQtipArraygleOp();
     }
   }
 };

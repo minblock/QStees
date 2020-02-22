@@ -223,13 +223,13 @@ class Label:
 
         for address in self.addresses:
             assert_equal(
-                node.getaddresqsteesfo(address)['labels'][0],
+                node.getaddressinfo(address)['labels'][0],
                 {"name": self.name,
                  "purpose": self.purpose[address]})
             if self.accounts_api:
                 assert_equal(node.getaccount(address), self.name)
             else:
-                assert_equal(node.getaddresqsteesfo(address)['label'], self.name)
+                assert_equal(node.getaddressinfo(address)['label'], self.name)
 
         assert_equal(
             node.getaddressesbylabel(self.name),

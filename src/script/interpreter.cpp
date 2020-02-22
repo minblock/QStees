@@ -191,7 +191,7 @@ bool static IsDefinedHashtypeSignature(const valtype &vchSig) {
         return false;
     }
     unsigned char nHashType = vchSig[vchSig.size() - 1] & (~(SIGHASH_ANYONECANPAY));
-    if (nHashType < SIGHASH_ALL || nHashType > SIGHASH_QSTEESGLE)
+    if (nHashType < SIGHASH_ALL || nHashType > SIGHASH_QTIPARRAYGLE)
         return false;
 
     return true;
@@ -1097,14 +1097,14 @@ private:
     const CScript& scriptCode; //!< output script being consumed
     const unsigned int nIn;    //!< input index of txTo being signed
     const bool fAnyoneCanPay;  //!< whether the hashtype has the SIGHASH_ANYONECANPAY flag set
-    const bool fHashQsteesgle;    //!< whether the hashtype is SIGHASH_QSTEESGLE
+    const bool fHashQtipArraygle;    //!< whether the hashtype is SIGHASH_QTIPARRAYGLE
     const bool fHashNone;      //!< whether the hashtype is SIGHASH_NONE
 
 public:
     CTransactionSignatureSerializer(const T& txToIn, const CScript& scriptCodeIn, unsigned int nInIn, int nHashTypeIn) :
         txTo(txToIn), scriptCode(scriptCodeIn), nIn(nInIn),
         fAnyoneCanPay(!!(nHashTypeIn & SIGHASH_ANYONECANPAY)),
-        fHashQsteesgle((nHashTypeIn & 0x1f) == SIGHASH_QSTEESGLE),
+        fHashQtipArraygle((nHashTypeIn & 0x1f) == SIGHASH_QTIPARRAYGLE),
         fHashNone((nHashTypeIn & 0x1f) == SIGHASH_NONE) {}
 
     /** Serialize the passed scriptCode, skipping OP_CODESEPARATORs */
@@ -1145,7 +1145,7 @@ public:
         else
             SerializeScriptCode(s);
         // Serialize the nSequence
-        if (nInput != nIn && (fHashQsteesgle || fHashNone))
+        if (nInput != nIn && (fHashQtipArraygle || fHashNone))
             // let the others update at will
             ::Serialize(s, (int)0);
         else
@@ -1155,7 +1155,7 @@ public:
     /** Serialize an output of txTo */
     template<typename S>
     void SerializeOutput(S &s, unsigned int nOutput) const {
-        if (fHashQsteesgle && nOutput != nIn)
+        if (fHashQtipArraygle && nOutput != nIn)
             // Do not lock-in the txout payee at other indices as txin
             ::Serialize(s, CTxOut());
         else
@@ -1173,7 +1173,7 @@ public:
         for (unsigned int nInput = 0; nInput < nInputs; nInput++)
              SerializeInput(s, nInput);
         // Serialize vout
-        unsigned int nOutputs = fHashNone ? 0 : (fHashQsteesgle ? nIn+1 : txTo.vout.size());
+        unsigned int nOutputs = fHashNone ? 0 : (fHashQtipArraygle ? nIn+1 : txTo.vout.size());
         ::WriteCompactSize(s, nOutputs);
         for (unsigned int nOutput = 0; nOutput < nOutputs; nOutput++)
              SerializeOutput(s, nOutput);
@@ -1245,14 +1245,14 @@ uint256 SignatureHash(const CScript& scriptCode, const T& txTo, unsigned int nIn
             hashPrevouts = cacheready ? cache->hashPrevouts : GetPrevoutHash(txTo);
         }
 
-        if (!(nHashType & SIGHASH_ANYONECANPAY) && (nHashType & 0x1f) != SIGHASH_QSTEESGLE && (nHashType & 0x1f) != SIGHASH_NONE) {
+        if (!(nHashType & SIGHASH_ANYONECANPAY) && (nHashType & 0x1f) != SIGHASH_QTIPARRAYGLE && (nHashType & 0x1f) != SIGHASH_NONE) {
             hashSequence = cacheready ? cache->hashSequence : GetSequenceHash(txTo);
         }
 
 
-        if ((nHashType & 0x1f) != SIGHASH_QSTEESGLE && (nHashType & 0x1f) != SIGHASH_NONE) {
+        if ((nHashType & 0x1f) != SIGHASH_QTIPARRAYGLE && (nHashType & 0x1f) != SIGHASH_NONE) {
             hashOutputs = cacheready ? cache->hashOutputs : GetOutputsHash(txTo);
-        } else if ((nHashType & 0x1f) == SIGHASH_QSTEESGLE && nIn < txTo.vout.size()) {
+        } else if ((nHashType & 0x1f) == SIGHASH_QTIPARRAYGLE && nIn < txTo.vout.size()) {
             CHashWriter ss(SER_GETHASH, 0);
             ss << txTo.vout[nIn];
             hashOutputs = ss.GetHash();
@@ -1283,8 +1283,8 @@ uint256 SignatureHash(const CScript& scriptCode, const T& txTo, unsigned int nIn
 
     static const uint256 one(uint256S("0000000000000000000000000000000000000000000000000000000000000001"));
 
-    // Check for invalid use of SIGHASH_QSTEESGLE
-    if ((nHashType & 0x1f) == SIGHASH_QSTEESGLE) {
+    // Check for invalid use of SIGHASH_QTIPARRAYGLE
+    if ((nHashType & 0x1f) == SIGHASH_QTIPARRAYGLE) {
         if (nIn >= txTo.vout.size()) {
             //  nOut out of range
             return one;

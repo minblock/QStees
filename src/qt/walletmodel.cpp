@@ -24,7 +24,7 @@
 #include <validation.h>
 
 #include <stdint.h>
-/*QSTEES*/
+/*QTIPARRAY*/
 #include <instantx.h>
 #include <spork.h>
 
@@ -170,7 +170,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
             total += subtotal;
         }
         else
-        {   // User-entered qstees address / amount:
+        {   // User-entered sin address / amount:
             if(!validateAddress(rcp.address))
             {
                 return InvalidAddress;
@@ -194,13 +194,13 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
                 }
                 ss << "Term Deposit Instruction Detected: " << std::fixed;
                 ss.precision(8);
-                ss << "This will send the amount of " << (0.0+rcp.amount)/COIN <<" QSTEES ";
+                ss << "This will send the amount of " << (0.0+rcp.amount)/COIN <<" QTIPARRAY ";
                 ss << "to be locked for " << termDepositLength << " blocks. ";
                 ss.precision(2);
                 ss << "This is approximately " << (0.0+termDepositLength)/(720) << " days. ";
                 CAmount withInterest=GetInterest(rcp.amount, chainActive.Height()+1, chainActive.Height()+1+termDepositLength, chainActive.Height()+1+termDepositLength);
                 ss.precision(8);
-                ss << "Upon maturation, it will be worth " << (0.0+withInterest)/COIN << " QSTEES. ";
+                ss << "Upon maturation, it will be worth " << (0.0+withInterest)/COIN << " QTIPARRAY. ";
                 termdepositquestion = ss.str();
                 scriptPubKey = GetTimeLockScriptForDestination(address,chainActive.Height()+1+termDepositLength);
             }else{
@@ -226,7 +226,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
     }
 
     if(recipients[0].fUseInstantSend && total > sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE)*COIN) {
-        Q_EMIT message(tr("Send Coins"), tr("InstantSend doesn't support sending values %1 that high yet. Transactions are currently limited to %2 QSTEES.").arg(total/COIN).arg(sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE)), CClientUIInterface::MSG_ERROR);
+        Q_EMIT message(tr("Send Coins"), tr("InstantSend doesn't support sending values %1 that high yet. Transactions are currently limited to %2 QTIPARRAY.").arg(total/COIN).arg(sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE)), CClientUIInterface::MSG_ERROR);
         return TransactionCreationFailed;
     }
 
@@ -255,7 +255,7 @@ WalletModel::SendCoinsReturn WalletModel::prepareTransaction(WalletModelTransact
             }
 
             if(nValueOut > sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE)*COIN) {
-                Q_EMIT message(tr("Send Coins"), tr("InstantSend doesn't support sending values %1 that high yet. Transactions are currently limited to %2 QSTEES.").arg(nValueOut).arg(sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE)), CClientUIInterface::MSG_ERROR);
+                Q_EMIT message(tr("Send Coins"), tr("InstantSend doesn't support sending values %1 that high yet. Transactions are currently limited to %2 QTIPARRAY.").arg(nValueOut).arg(sporkManager.GetSporkValue(SPORK_5_INSTANTSEND_MAX_VALUE)), CClientUIInterface::MSG_ERROR);
                 return TransactionCreationFailed;
             }
 
@@ -305,7 +305,7 @@ WalletModel::SendCoinsReturn WalletModel::sendCoins(WalletModelTransaction &tran
                 rcp.paymentRequest.SerializeToString(&value);
                 vOrderForm.emplace_back("PaymentRequest", std::move(value));
             }
-            else if (!rcp.message.isEmpty()) // Message from normal qstees:URI (qstees:123...?message=example)
+            else if (!rcp.message.isEmpty()) // Message from normal sin:URI (sin:123...?message=example)
                 vOrderForm.emplace_back("Message", rcp.message.toStdString());
         }
 

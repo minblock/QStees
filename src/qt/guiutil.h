@@ -49,7 +49,7 @@ namespace GUIUtil
     // Set up widget for address
     void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent);
 
-    // Parse "qstees:" URI into recipient object, return true on successful parsing
+    // Parse "sin:" URI into recipient object, return true on successful parsing
     bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out);
     bool parseBitcoinURI(QString uri, SendCoinsRecipient *out);
     QString formatBitcoinURI(const SendCoinsRecipient &info);
@@ -128,6 +128,40 @@ namespace GUIUtil
     // Open masternode.conf
     void openMNConfigfile();
     //
+
+    // start Exchange and Web links
+    // Function for Hyperlinks
+    void hyperlinks_slot1();
+    void hyperlinks_slot2();
+    void hyperlinks_slot3();
+    void hyperlinks_slot4();
+    void hyperlinks_slot5();
+    void hyperlinks_slot6();
+    void hyperlinks_slot7();
+    void hyperlinks_slot8();
+    void hyperlinks_slot9();
+    
+    void hyperlinks2_slot1();
+    void hyperlinks2_slot2();
+    void hyperlinks2_slot3();
+    void hyperlinks2_slot4();
+    void hyperlinks2_slot5();
+    void hyperlinks2_slot6();
+    void hyperlinks2_slot7();
+    void hyperlinks2_slot8();
+    void hyperlinks2_slot9();
+    void hyperlinks2_slot10();
+    void hyperlinks2_slot11();
+    void hyperlinks2_slot12();
+
+    void hyperlinks3_slot1();
+    void hyperlinks3_slot2();
+    void hyperlinks3_slot3();
+    void hyperlinks3_slot4();
+    void hyperlinks3_slot5();
+    void hyperlinks3_slot6();
+    void hyperlinks3_slot7();
+    // end Exchange and Web links
 
     /** Qt event filter that intercepts ToolTipChange events, and replaces the tooltip with a rich text
       representation if needed. This assures that Qt can word-wrap long tooltip messages.

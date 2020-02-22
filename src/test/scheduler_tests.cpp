@@ -5,7 +5,7 @@
 #include <random.h>
 #include <scheduler.h>
 
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
@@ -117,8 +117,8 @@ BOOST_AUTO_TEST_CASE(singlethreadedscheduler_ordered)
     CScheduler scheduler;
 
     // each queue should be well ordered with respect to itself but not other queues
-    QsteesgleThreadedSchedulerClient queue1(&scheduler);
-    QsteesgleThreadedSchedulerClient queue2(&scheduler);
+    QtipArraygleThreadedSchedulerClient queue1(&scheduler);
+    QtipArraygleThreadedSchedulerClient queue2(&scheduler);
 
     // create more threads than queues
     // if the queues only permit execution of one task at once then
@@ -129,7 +129,7 @@ BOOST_AUTO_TEST_CASE(singlethreadedscheduler_ordered)
         threads.create_thread(boost::bind(&CScheduler::serviceQueue, &scheduler));
     }
 
-    // these are not atomic, if QsteesglethreadedSchedulerClient prevents
+    // these are not atomic, if QtipArrayglethreadedSchedulerClient prevents
     // parallel execution at the queue level no synchronization should be required here
     int counter1 = 0;
     int counter2 = 0;

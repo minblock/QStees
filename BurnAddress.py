@@ -7,10 +7,10 @@ from base58 import b58encode, b58decode
 
 ABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 
-class BurnQSTEESError(Exception):
+class BurnQTIPARRAYError(Exception):
   pass
 
-class AlphabetError(BurnQSTEESError):
+class AlphabetError(BurnQTIPARRAYError):
   pass
 
 def hh256(s):
@@ -34,7 +34,7 @@ def burn(s):
   return b58ec(coded)
 
 def usage():
-  print "usage: python BurnAddress.py QsteesBurnAddressForUpMetadataXXXXXXX"
+  print "usage: python BurnAddress.py QtipArrayBurnAddressForUpMetadataXXXXXXX"
   print
   print "   TEMPLATE - 34 letters & numbers (no zeros)"
   print "              the first two are coin specific"
@@ -44,7 +44,7 @@ if __name__ == "__main__":
   if len(sys.argv) != 2:
     usage()
   if sys.argv[1] == "test":
-    template = "QsteesBurnAddressForUpMetadataXXXXXXX"
+    template = "QtipArrayBurnAddressForUpMetadataXXXXXXX"
   else:
     template = sys.argv[1]
   for c in template:

@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -116,7 +116,7 @@ struct masternode_info_t
     int nProtocolVersion = 0;
     int64_t sigTime = 0; //mnb message time
     //infinitynode information
-    int nQsteesType = -1;
+    int nQtipArrayType = -1;
     CAmount nBurnAmount = 0;
     CAmount nCollateralAmount = 0;
     int nExpireHeight = -1;
@@ -178,14 +178,14 @@ public:
         BURNFUND_INVALID_AMOUNT
     };
 
-    enum QsteesType {
-        QSTEESNODE_1 = 1, QSTEESNODE_5 = 5, QSTEESNODE_10 = 10, QSTEESNODE_UNKNOWN = 0
+    enum QtipArrayType {
+        QTIPARRAYNODE_1 = 1, QTIPARRAYNODE_5 = 5, QTIPARRAYNODE_10 = 10, QTIPARRAYNODE_UNKNOWN = 0
     };
 
 
     CMasternodePing lastPing{};
     std::vector<unsigned char> vchSig{};
-    std::vector<QsteesType> vQsteesTypeCanVote = {QSTEESNODE_5, QSTEESNODE_10};
+    std::vector<QtipArrayType> vQtipArrayTypeCanVote = {QTIPARRAYNODE_5, QTIPARRAYNODE_10};
 
     uint256 nCollateralMinConfBlockHash{};
     int nBlockLastPaid{};
@@ -248,9 +248,9 @@ public:
     bool CanVoteForReward(); //I can vote or not
 
     void Check(bool fForce = false);
-    QsteesType GetQsteesType();
-    QsteesType GetQsteesType(CAmount burnValue);
-    int GetQsteesTypeInt();
+    QtipArrayType GetQtipArrayType();
+    QtipArrayType GetQtipArrayType(CAmount burnValue);
+    int GetQtipArrayTypeInt();
 
     bool IsBroadcastedWithin(int nSeconds) { return GetAdjustedTime() - sigTime < nSeconds; }
 

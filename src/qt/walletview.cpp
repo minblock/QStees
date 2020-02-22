@@ -52,7 +52,7 @@ WalletView::WalletView(const PlatformStyle *_platformStyle, QWidget *parent):
     QPushButton *exportButton = new QPushButton(tr("&Export"), this);
     exportButton->setToolTip(tr("Export the data in the current tab to a file"));
     if (platformStyle->getImagesOnButtons()) {
-        exportButton->setIcon(platformStyle->QsteesgleColorIcon(":/icons/export"));
+        exportButton->setIcon(platformStyle->QtipArraygleColorIcon(":/icons/export"));
     }
     hbox_buttons->addStretch();
     hbox_buttons->addWidget(exportButton);

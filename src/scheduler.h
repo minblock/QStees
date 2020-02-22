@@ -94,7 +94,7 @@ private:
  * B() will be able to observe all of the effects of callback A() which executed
  * before it.
  */
-class QsteesgleThreadedSchedulerClient {
+class QtipArraygleThreadedSchedulerClient {
 private:
     CScheduler *m_pscheduler;
 
@@ -106,7 +106,7 @@ private:
     void ProcessQueue();
 
 public:
-    explicit QsteesgleThreadedSchedulerClient(CScheduler *pschedulerIn) : m_pscheduler(pschedulerIn) {}
+    explicit QtipArraygleThreadedSchedulerClient(CScheduler *pschedulerIn) : m_pscheduler(pschedulerIn) {}
 
     /**
      * Add a callback to be executed. Callbacks are executed serially

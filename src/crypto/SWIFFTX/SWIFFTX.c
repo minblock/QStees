@@ -57,7 +57,7 @@
 // - A: the input.
 #define Q_REDUCE(A) (((A) & 0xff) - ((A) >> 8))
 
-// Qsteesce we need to do the setup only once, this is the indicator variable:
+// QtipArrayce we need to do the setup only once, this is the indicator variable:
 static bool wasSetupDone = false;
 
 // This array stores the powers of omegas that correspond to the indices, which are the input
@@ -1066,7 +1066,7 @@ void SWIFFTSum(const swift_int32_t *input, int m, unsigned char *output, const s
 	output[N] = carry;
 }
 
-void ComputeQsteesgleSWIFFTX(unsigned char input[SWIFFTX_INPUT_BLOCK_SIZE],
+void ComputeQtipArraygleSWIFFTX(unsigned char input[SWIFFTX_INPUT_BLOCK_SIZE],
                           unsigned char output[SWIFFTX_OUTPUT_BLOCK_SIZE],
 						  bool doSmooth)
 {

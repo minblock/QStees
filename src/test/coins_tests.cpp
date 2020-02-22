@@ -7,7 +7,7 @@
 #include <uint256.h>
 #include <undo.h>
 #include <utilstrencodings.h>
-#include <test/test_qstees.h>
+#include <test/test_sin.h>
 #include <validation.h>
 #include <consensus/validation.h>
 
@@ -591,10 +591,10 @@ void WriteCoinsViewEntry(CCoinsView& view, CAmount value, char flags)
     view.BatchWrite(map, {});
 }
 
-class QsteesgleEntryCacheTest
+class QtipArraygleEntryCacheTest
 {
 public:
-    QsteesgleEntryCacheTest(CAmount base_value, CAmount cache_value, char cache_flags)
+    QtipArraygleEntryCacheTest(CAmount base_value, CAmount cache_value, char cache_flags)
     {
         WriteCoinsViewEntry(base, base_value, base_value == ABSENT ? NO_ENTRY : DIRTY);
         cache.usage() += InsertCoinsMapEntry(cache.map(), cache_value, cache_flags);
@@ -607,7 +607,7 @@ public:
 
 static void CheckAccessCoin(CAmount base_value, CAmount cache_value, CAmount expected_value, char cache_flags, char expected_flags)
 {
-    QsteesgleEntryCacheTest test(base_value, cache_value, cache_flags);
+    QtipArraygleEntryCacheTest test(base_value, cache_value, cache_flags);
     test.cache.AccessCoin(OUTPOINT);
     test.cache.SelfTest();
 
@@ -658,7 +658,7 @@ BOOST_AUTO_TEST_CASE(ccoins_access)
 
 static void CheckSpendCoins(CAmount base_value, CAmount cache_value, CAmount expected_value, char cache_flags, char expected_flags)
 {
-    QsteesgleEntryCacheTest test(base_value, cache_value, cache_flags);
+    QtipArraygleEntryCacheTest test(base_value, cache_value, cache_flags);
     test.cache.SpendCoin(OUTPOINT);
     test.cache.SelfTest();
 
@@ -709,7 +709,7 @@ BOOST_AUTO_TEST_CASE(ccoins_spend)
 
 static void CheckAddCoinBase(CAmount base_value, CAmount cache_value, CAmount modify_value, CAmount expected_value, char cache_flags, char expected_flags, bool coinbase)
 {
-    QsteesgleEntryCacheTest test(base_value, cache_value, cache_flags);
+    QtipArraygleEntryCacheTest test(base_value, cache_value, cache_flags);
 
     CAmount result_value;
     char result_flags;
@@ -772,7 +772,7 @@ BOOST_AUTO_TEST_CASE(ccoins_add)
 
 void CheckWriteCoins(CAmount parent_value, CAmount child_value, CAmount expected_value, char parent_flags, char child_flags, char expected_flags)
 {
-    QsteesgleEntryCacheTest test(ABSENT, parent_value, parent_flags);
+    QtipArraygleEntryCacheTest test(ABSENT, parent_value, parent_flags);
 
     CAmount result_value;
     char result_flags;

@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -34,7 +34,7 @@ QT_END_NAMESPACE
 struct infinitynode_conf_t
 {
     std::string IPaddress = "";
-    int port = 3337;
+    int port = 20970;
     std::string infinitynodePrivateKey;
     std::string collateralHash = "";
     int collateralIndex = 0;
@@ -88,7 +88,7 @@ private Q_SLOTS:
     void on_filterLineEdit_textChanged(const QString &strFilterIn);
     void on_startButton_clicked();
     void on_startAllButton_clicked();
-    void on_startAutoQSTEESButton_clicked();
+    void on_startAutoQTIPARRAYButton_clicked();
     void on_tableWidgetMyMasternodes_itemSelectionChanged();
     void on_UpdateButton_clicked();
 };

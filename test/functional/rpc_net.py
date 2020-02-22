@@ -35,7 +35,7 @@ class NetTest(BitcoinTestFramework):
 
     def _test_getnettotals(self):
         # getnettotals totalbytesrecv and totalbytessent should be
-        # consistent with getpeerinfo. Qsteesce the RPC calls are not atomic,
+        # consistent with getpeerinfo. QtipArrayce the RPC calls are not atomic,
         # and messages might have been recvd or sent between RPC calls, call
         # getnettotals before and after and verify that the returned values
         # from getpeerinfo are bounded by those values.

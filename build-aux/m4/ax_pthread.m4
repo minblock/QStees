@@ -175,10 +175,10 @@ case $host_os in
         # not set. (We don't define these ourselves, as they can affect
         # other portions of the system API in unpredictable ways.)
 
-        AC_EGREP_CPP([AX_PTHREAD_ZOS_MISQSTEESG],
+        AC_EGREP_CPP([AX_PTHREAD_ZOS_MISQTIPARRAYG],
             [
 #            if !defined(_OPEN_THREADS) && !defined(_UNIX03_THREADS)
-             AX_PTHREAD_ZOS_MISQSTEESG
+             AX_PTHREAD_ZOS_MISQTIPARRAYG
 #            endif
             ],
             [AC_MSG_WARN([IBM z/OS requires -D_OPEN_THREADS or -D_UNIX03_THREADS to enable pthreads support.])])

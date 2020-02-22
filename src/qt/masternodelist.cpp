@@ -1,6 +1,6 @@
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -48,8 +48,8 @@ MasternodeList::MasternodeList(const PlatformStyle *platformStyle, QWidget *pare
     ui->startButton->setEnabled(false);
 
     int columnAliasWidth = 100;
-    int columnAddressWidth = 200;
-    int columnProtocolWidth = 60;
+    int columnAddressWidth = 180;
+    int columnProtocolWidth = 80;
     int columnStatusWidth = 80;
     int columnActiveWidth = 130;
     int columnLastSeenWidth = 130;
@@ -214,7 +214,7 @@ void MasternodeList::updateMyMasternodeInfo(QString strAlias, QString strAddr, c
     QTableWidgetItem *aliasItem = new QTableWidgetItem(strAlias);
     QTableWidgetItem *addrItem = new QTableWidgetItem(fFound ? QString::fromStdString(infoMn.addr.ToString()) : strAddr);
     QTableWidgetItem *protocolItem = new QTableWidgetItem(QString::number(fFound ? infoMn.nProtocolVersion : -1));
-    QTableWidgetItem *statusItem = new QTableWidgetItem(QString::fromStdString(fFound ? CMasternode::StateToString(infoMn.nActiveState) : "MISQSTEESG"));
+    QTableWidgetItem *statusItem = new QTableWidgetItem(QString::fromStdString(fFound ? CMasternode::StateToString(infoMn.nActiveState) : "MISQTIPARRAYG"));
     QTableWidgetItem *activeSecondsItem = new QTableWidgetItem(QString::fromStdString(DurationToDHMS(fFound ? (infoMn.nTimeLastPing - infoMn.sigTime) : 0)));
     QTableWidgetItem *lastSeenItem = new QTableWidgetItem(QString::fromStdString(FormatISO8601DateTime(fFound ? infoMn.nTimeLastPing + GetOffsetFromUtc() : 0)));
     QTableWidgetItem *pubkeyItem = new QTableWidgetItem(QString::fromStdString(fFound ? EncodeDestination(infoMn.pubKeyCollateralAddress.GetID()) : ""));
@@ -394,14 +394,14 @@ void MasternodeList::on_startAllButton_clicked()
     StartAll();
 }
 
-void MasternodeList::on_startAutoQSTEESButton_clicked()
+void MasternodeList::on_startAutoQTIPARRAYButton_clicked()
 {
     std::vector<std::shared_ptr<CWallet>> wallets = GetWallets();
     CWallet * const pwallet = (wallets.size() > 0) ? wallets[0].get() : nullptr;
     LOCK2(cs_main, pwallet->cs_wallet);
     bool ok;
     setStyleSheet( "QDialog{ background-color: #0d1827; }");
-    QString vpsip = QInputDialog::getText(this, tr("QSTEESnode"), tr("Enter VPS address:"), QLineEdit::Normal, "", &ok);
+    QString vpsip = QInputDialog::getText(this, tr("QTIPARRAYnode"), tr("Enter VPS address:"), QLineEdit::Normal, "", &ok);
 
     if (!ok)
        return;
@@ -415,7 +415,7 @@ void MasternodeList::on_startAutoQSTEESButton_clicked()
                             "# infinitynode1 127.0.0.1:20980 7RVuQhi45vfazyVtskTRLBgNuSrYGecS5zj2xERaooFVnWKKjhS b7ed8c1396cf57ac78d756186b6022d3023fd2f1c338b7fbae42d342fdd7070a 0 563d9434e816b3e8ffc5347c6b8db07509de6068f6759f21a16be5d92b7e3111 1\n";
     fwrite(strHeader.c_str(), std::strlen(strHeader.c_str()), 1, configFile);
 
-    LogPrintf("MasternodeList::AutoQSTEES -- location of configFile is %s\n",pathMasternodeConfigFile.string());
+    LogPrintf("MasternodeList::AutoQTIPARRAY -- location of configFile is %s\n",pathMasternodeConfigFile.string());
     // quick input parsing
     int vpsiplen = strlen(vpsip.toUtf8().constData());
     if (vpsiplen < 7 || vpsiplen > 16) {
@@ -459,9 +459,9 @@ void MasternodeList::on_startAutoQSTEESButton_clicked()
           if (
                 (address == BurnAddress) &&
                 (
-                    ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 - 1) * COIN < pcoin->tx->vout[i].nValue && pcoin->tx->vout[i].nValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_1 * COIN) ||
-                    ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 - 1) * COIN < pcoin->tx->vout[i].nValue && pcoin->tx->vout[i].nValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_5 * COIN) ||
-                    ((Params().GetConsensus().nMasternodeBurnQSTEESNODE_10 - 1) * COIN < pcoin->tx->vout[i].nValue && pcoin->tx->vout[i].nValue <= Params().GetConsensus().nMasternodeBurnQSTEESNODE_10 * COIN)
+                    ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 - 1) * COIN < pcoin->tx->vout[i].nValue && pcoin->tx->vout[i].nValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_1 * COIN) ||
+                    ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 - 1) * COIN < pcoin->tx->vout[i].nValue && pcoin->tx->vout[i].nValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_5 * COIN) ||
+                    ((Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10 - 1) * COIN < pcoin->tx->vout[i].nValue && pcoin->tx->vout[i].nValue <= Params().GetConsensus().nMasternodeBurnQTIPARRAYNODE_10 * COIN)
                 )
           ) {
                     //add dummy
@@ -474,8 +474,8 @@ void MasternodeList::on_startAutoQSTEESButton_clicked()
                     const CTxIn txin = pcoin->tx->vin[0]; //BurnFund Input is only one address. So we can take the first without problem
                     CTxDestination sendAddress;
                     ExtractDestination(pwallet->mapWallet.at(txin.prevout.hash).tx->vout[txin.prevout.n].scriptPubKey, sendAddress);
-                    LogPrintf("MasternodeList::AutoQSTEES -- find BurnFund tx: %s, index: %d\n",listNode[counter].burnFundHash, listNode[counter].burnFundIndex);
-                    LogPrintf("MasternodeList::AutoQSTEES -- Sender's address:%s\n", EncodeDestination(sendAddress));
+                    LogPrintf("MasternodeList::AutoQTIPARRAY -- find BurnFund tx: %s, index: %d\n",listNode[counter].burnFundHash, listNode[counter].burnFundIndex);
+                    LogPrintf("MasternodeList::AutoQTIPARRAY -- Sender's address:%s\n", EncodeDestination(sendAddress));
                     listNode[counter].collateralAddress = sendAddress;
                     secret.MakeNewKey(false);
                     listNode[counter].infinitynodePrivateKey = EncodeSecret(secret);
@@ -505,7 +505,7 @@ void MasternodeList::on_startAutoQSTEESButton_clicked()
     }
 
     if (!foundBurn) {
-        LogPrintf("MasternodeList::AutoQSTEES -- burnTx not found\n");
+        LogPrintf("MasternodeList::AutoQTIPARRAY -- burnTx not found\n");
         strHeader = "#BurnFund tx was not found\n";
         fwrite(strHeader.c_str(), std::strlen(strHeader.c_str()), 1, configFile);
     } else {
@@ -514,7 +514,7 @@ void MasternodeList::on_startAutoQSTEESButton_clicked()
     }
 
     if (!foundCollat) {
-        LogPrintf("MasternodeList::AutoQSTEES -- collateral not found\n");
+        LogPrintf("MasternodeList::AutoQTIPARRAY -- collateral not found\n");
         strHeader = "#Collateral tx was not found\n";
         fwrite(strHeader.c_str(), std::strlen(strHeader.c_str()), 1, configFile);
     } else {

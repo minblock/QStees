@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -104,8 +104,8 @@ bool fLiteMode = false;
 int nWalletBackups = 10;
 //
 
-const char * const BITCOIN_CONF_FILENAME = "qstees.conf";
-const char * const BITCOIN_PID_FILENAME = "qsteesd.pid";
+const char * const BITCOIN_CONF_FILENAME = "sin.conf";
+const char * const BITCOIN_PID_FILENAME = "sind.pid";
 
 const char * const MASTERNODE_CONF_FILENAME_ARG = "-sinconf";
 const char * const MASTERNODE_CONF_FILENAME = "infinitynode.conf";
@@ -134,7 +134,7 @@ void locking_callback(int mode, int i, const char* file, int line) NO_THREAD_SAF
     }
 }
 
-// Qsteesgleton for wrapping OpenSSL setup/teardown.
+// QtipArraygleton for wrapping OpenSSL setup/teardown.
 class CInit
 {
 public:
@@ -308,7 +308,7 @@ public:
         std::pair<bool,std::string> found_result(false, std::string());
 
         // We pass "true" to GetArgHelper in order to return the last
-        // argument value seen from the command line (so "qsteesd -foo=bar
+        // argument value seen from the command line (so "sind -foo=bar
         // -foo=baz" gives GetArg(am,"foo")=={true,"baz"}
         found_result = GetArgHelper(am.m_override_args, arg, true);
         if (found_result.first) {
@@ -720,7 +720,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(nullptr, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "qstees";
+    const char* pszModule = "sin";
 #endif
     if (pex)
         return strprintf(
@@ -739,20 +739,20 @@ void PrintExceptionContinue(const std::exception* pex, const char* pszThread)
 
 fs::path GetDefaultDataDir()
 {
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\QSTEES
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\QSTEES
-    // Mac: ~/Library/Application Support/QSTEES
-    // Unix: ~/.qstees
-	fs::path pathQSTEESFolder;
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\QTIPARRAY
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\QTIPARRAY
+    // Mac: ~/Library/Application Support/QTIPARRAY
+    // Unix: ~/.sin
+	fs::path pathQTIPARRAYFolder;
     fs::path pathOldFolder;
 #ifdef WIN32
     // Windows
     pathOldFolder = GetSpecialFolderPath(CSIDL_APPDATA) / "SUQA";
-	pathQSTEESFolder = GetSpecialFolderPath(CSIDL_APPDATA) / "QSTEES";
+	pathQTIPARRAYFolder = GetSpecialFolderPath(CSIDL_APPDATA) / "QTIPARRAY";
 
-	if (fs::is_directory(pathQSTEESFolder)) return pathQSTEESFolder;
+	if (fs::is_directory(pathQTIPARRAYFolder)) return pathQTIPARRAYFolder;
     else if (fs::is_directory(pathOldFolder)) return pathOldFolder;
-    else return GetSpecialFolderPath(CSIDL_APPDATA) / "QSTEES";
+    else return GetSpecialFolderPath(CSIDL_APPDATA) / "QTIPARRAY";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -762,20 +762,20 @@ fs::path GetDefaultDataDir()
         pathRet = fs::path(pszHome);
 #ifdef MAC_OSX
     // Mac
-	pathQSTEESFolder = pathRet / "Library/Application Support/QSTEES";
+	pathQTIPARRAYFolder = pathRet / "Library/Application Support/QTIPARRAY";
     pathOldFolder = pathRet / "Library/Application Support/SUQA";
 
-	if (fs::is_directory(pathQSTEESFolder)) return pathQSTEESFolder;
+	if (fs::is_directory(pathQTIPARRAYFolder)) return pathQTIPARRAYFolder;
 	else if (fs::is_directory(pathOldFolder)) return pathOldFolder;
-    else return pathRet / "Library/Application Support/QSTEES";
+    else return pathRet / "Library/Application Support/QTIPARRAY";
 #else
     // Unix
-	pathQSTEESFolder = pathRet / ".qstees";
+	pathQTIPARRAYFolder = pathRet / ".sin";
     pathOldFolder = pathRet / ".SUQA";
 
-	if (fs::is_directory(pathQSTEESFolder)) return pathQSTEESFolder;
+	if (fs::is_directory(pathQTIPARRAYFolder)) return pathQTIPARRAYFolder;
 	else if (fs::is_directory(pathOldFolder)) return pathOldFolder;
-    else return pathRet / ".qstees";
+    else return pathRet / ".sin";
 #endif
 #endif
 }
@@ -805,10 +805,10 @@ const fs::path &GetBackupsDir()
         if (fs::is_directory(backupsDir)) return backupsDir;
         // Fallback to default path if it doesn't
         LogPrintf("%s: Warning: incorrect parameter -walletbackupsdir, path must exist! Using default path.\n", __func__);
-        // QSTEES TODO: check
+        // QTIPARRAY TODO: check
         //strMiscWarning = _("Warning: incorrect parameter -walletbackupsdir, path must exist! Using default path.");
         std::string strMessage = strprintf(_("Warning: incorrect parameter -walletbackupsdir, path must exist! Using default path."));
-        // QSTEES TODO: SetMiscWarning(strMessage);
+        // QTIPARRAY TODO: SetMiscWarning(strMessage);
     }
     // Default path
     backupsDir = GetDataDir() / "backups";

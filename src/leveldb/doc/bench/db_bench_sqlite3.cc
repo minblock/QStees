@@ -247,7 +247,7 @@ class Benchmark {
     next_report_ = 100;
   }
 
-  void FinishedQsteesgleOp() {
+  void FinishedQtipArraygleOp() {
     if (FLAGS_histogram) {
       double now = Env::Default()->NowMicros() * 1e-6;
       double micros = (now - last_op_finish_) * 1e6;
@@ -277,7 +277,7 @@ class Benchmark {
     double finish = Env::Default()->NowMicros() * 1e-6;
 
     // Pretend at least one op was done in case we are running a benchmark
-    // that does not call FinishedQsteesgleOp().
+    // that does not call FinishedQtipArraygleOp().
     if (done_ < 1) done_ = 1;
 
     if (bytes_ > 0) {
@@ -558,7 +558,7 @@ class Benchmark {
         status = sqlite3_reset(replace_stmt);
         ErrorCheck(status);
 
-        FinishedQsteesgleOp();
+        FinishedQtipArraygleOp();
       }
 
       // End write transaction
@@ -626,7 +626,7 @@ class Benchmark {
         ErrorCheck(status);
         status = sqlite3_reset(read_stmt);
         ErrorCheck(status);
-        FinishedQsteesgleOp();
+        FinishedQtipArraygleOp();
       }
 
       // End read transaction
@@ -655,7 +655,7 @@ class Benchmark {
     ErrorCheck(status);
     for (int i = 0; i < reads_ && SQLITE_ROW == sqlite3_step(pStmt); i++) {
       bytes_ += sqlite3_column_bytes(pStmt, 1) + sqlite3_column_bytes(pStmt, 2);
-      FinishedQsteesgleOp();
+      FinishedQtipArraygleOp();
     }
 
     status = sqlite3_finalize(pStmt);

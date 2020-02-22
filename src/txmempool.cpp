@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -20,7 +20,7 @@
 #include <util.h>
 #include <utilmoneystr.h>
 #include <utiltime.h>
-/*QSTEES*/
+/*QTIPARRAY*/
 #include <instantx.h>
 
 CTxMemPoolEntry::CTxMemPoolEntry(const CTransactionRef& _tx, const CAmount& _nFee,
@@ -281,7 +281,7 @@ void CTxMemPool::UpdateForRemoveFromMempool(const setEntries &entriesToRemove, b
         setEntries setAncestors;
         const CTxMemPoolEntry &entry = *removeIt;
         std::string dummy;
-        // Qsteesce this is a tx that is already in the mempool, we can call CMPA
+        // QtipArrayce this is a tx that is already in the mempool, we can call CMPA
         // with fSearchForParents = false.  If the mempool is in a consistent
         // state, then using true or false should both be correct, though false
         // should be a bit faster.
@@ -585,7 +585,7 @@ void CTxMemPool::removeForBlock(const std::vector<CTransactionRef>& vtx, unsigne
         ClearPrioritisation(tx->GetHash());
     }
     lastRollingFeeUpdate = GetTime();
-    blockQsteesceLastRollingFeeBump = true;
+    blockQtipArrayceLastRollingFeeBump = true;
 }
 
 void CTxMemPool::_clear()
@@ -596,7 +596,7 @@ void CTxMemPool::_clear()
     totalTxSize = 0;
     cachedInnerUsage = 0;
     lastRollingFeeUpdate = GetTime();
-    blockQsteesceLastRollingFeeBump = false;
+    blockQtipArrayceLastRollingFeeBump = false;
     rollingMinimumFeeRate = 0;
     ++nTransactionsUpdated;
 }
@@ -712,17 +712,17 @@ void CTxMemPool::check(const CCoinsViewCache *pcoins) const
             CheckInputsAndUpdateCoins(tx, mempoolDuplicate, spendheight);
         }
     }
-    unsigned int stepsQsteesceLastRemove = 0;
+    unsigned int stepsQtipArrayceLastRemove = 0;
     while (!waitingOnDependants.empty()) {
         const CTxMemPoolEntry* entry = waitingOnDependants.front();
         waitingOnDependants.pop_front();
         if (!mempoolDuplicate.HaveInputs(entry->GetTx())) {
             waitingOnDependants.push_back(entry);
-            stepsQsteesceLastRemove++;
-            assert(stepsQsteesceLastRemove < waitingOnDependants.size());
+            stepsQtipArrayceLastRemove++;
+            assert(stepsQtipArrayceLastRemove < waitingOnDependants.size());
         } else {
             CheckInputsAndUpdateCoins(entry->GetTx(), mempoolDuplicate, spendheight);
-            stepsQsteesceLastRemove = 0;
+            stepsQtipArrayceLastRemove = 0;
         }
     }
     for (auto it = mapNextTx.cbegin(); it != mapNextTx.cend(); it++) {
@@ -984,7 +984,7 @@ int CTxMemPool::Expire(int64_t time) {
     indexed_transaction_set::index<entry_time>::type::iterator it = mapTx.get<entry_time>().begin();
     setEntries toremove;
     while (it != mapTx.get<entry_time>().end() && it->GetTime() < time) {
-        /*QSTEES*/
+        /*QTIPARRAY*/
         // locked txes do not expire until mined and have sufficient confirmations
         if (instantsend.IsLockedInstantSendTransaction(it->GetTx().GetHash())) {
             it++;
@@ -1048,7 +1048,7 @@ const CTxMemPool::setEntries & CTxMemPool::GetMemPoolChildren(txiter entry) cons
 
 CFeeRate CTxMemPool::GetMinFee(size_t sizelimit) const {
     LOCK(cs);
-    if (!blockQsteesceLastRollingFeeBump || rollingMinimumFeeRate == 0)
+    if (!blockQtipArrayceLastRollingFeeBump || rollingMinimumFeeRate == 0)
         return CFeeRate(llround(rollingMinimumFeeRate));
 
     int64_t time = GetTime();
@@ -1074,7 +1074,7 @@ void CTxMemPool::trackPackageRemoved(const CFeeRate& rate) {
     AssertLockHeld(cs);
     if (rate.GetFeePerK() > rollingMinimumFeeRate) {
         rollingMinimumFeeRate = rate.GetFeePerK();
-        blockQsteesceLastRollingFeeBump = false;
+        blockQtipArrayceLastRollingFeeBump = false;
     }
 }
 

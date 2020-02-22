@@ -4,10 +4,10 @@ AlignAfterOpenBracket: false
 AlignEscapedNewlinesLeft: true
 AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: false
-AllowShortBlocksOnAQsteesgleLine: false
-AllowShortFunctionsOnAQsteesgleLine: All
-AllowShortIfStatementsOnAQsteesgleLine: true
-AllowShortLoopsOnAQsteesgleLine: false
+AllowShortBlocksOnAQtipArraygleLine: false
+AllowShortFunctionsOnAQtipArraygleLine: All
+AllowShortIfStatementsOnAQtipArraygleLine: true
+AllowShortLoopsOnAQtipArraygleLine: false
 AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: true
 BinPackParameters: false

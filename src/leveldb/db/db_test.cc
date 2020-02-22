@@ -688,7 +688,7 @@ TEST(DBTest, IterEmpty) {
   delete iter;
 }
 
-TEST(DBTest, IterQsteesgle) {
+TEST(DBTest, IterQtipArraygle) {
   ASSERT_OK(Put("a", "va"));
   Iterator* iter = db_->NewIterator(ReadOptions());
 

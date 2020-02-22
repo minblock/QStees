@@ -1,27 +1,27 @@
 
-QSTEESOVATE 
+QSTEES 
 Create –  Build – Innovate
 =============
 
-QSTEESOVATE (QSTEES) is an open-source state of the art Peer-to-Peer digital cryptocurrency dedicated to building innovative blockchain services, and solutions.
+QSTEES (QTIPARRAY) is an open-source state of the art Peer-to-Peer digital cryptocurrency dedicated to building innovative blockchain services, and solutions.
 ---------------------
 
 
-QSTEES Core
+QTIPARRAY Core
 
 
-To download QSTEES Core, visit https://qsteesovate.io/ or [https://github.com/QSTEESOVATEblockchain/QSTEES-core)
+To download QTIPARRAY Core, visit https://sinovate.io/ or [https://github.com/minblock/QStees)
 
 Running
 ---------------------
-The following are some helpful notes on how to run QSTEES Core on your native platform.
+The following are some helpful notes on how to run QTIPARRAY Core on your native platform.
 
 ### Unix
 
 Unpack the files into a directory and run:
 
-- `bin/qstees-qt` (GUI) or
-- `bin/qsteesd` (headless)
+- `bin/sin-qt` (GUI) or
+- `bin/sind` (headless)
 
 ### Windows
 
@@ -29,13 +29,13 @@ Unpack the files into a directory, and then run bitcoin-qt.exe.
 
 ### macOS
 
-Drag QSTEES Core to your applications folder, and then run QSTEES Core.
+Drag QTIPARRAY Core to your applications folder, and then run QTIPARRAY Core.
 
 ### Need Help?
 
-* See the documentation at the [https://qsteesovate.io/documents/)
+* See the documentation at the [https://sinovate.io/documents/)
 for help and more information.
-* Ask for help on [QSTEES Discord server https://discord.gg/8rxutDv).
+* Ask for help on [QTIPARRAY Discord server https://discord.gg/8rxutDv).
 * Ask for help on the [BitcoinTalk](https://bitcointalk.org/index.php?topic=5147827.new#new)
 Building
 ---------------------
@@ -51,7 +51,7 @@ The following are developer notes on how to build Bitcoin Core on your native pl
 
 Development
 ---------------------
-The QSTEESOVATE repo's [root README](/README.md) contains relevant information on the development process and automated testing.
+The QSTEES repo's [root README](/README.md) contains relevant information on the development process and automated testing.
 
 - [Developer Notes](developer-notes.md)
 - [Release Notes](release-notes.md)

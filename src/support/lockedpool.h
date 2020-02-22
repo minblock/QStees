@@ -205,7 +205,7 @@ private:
 };
 
 /**
- * Qsteesgleton class to keep track of locked (ie, non-swappable) memory, for use in
+ * QtipArraygleton class to keep track of locked (ie, non-swappable) memory, for use in
  * std::allocator templates.
  *
  * Some implementations of the STL allocate memory in some constructors (i.e., see

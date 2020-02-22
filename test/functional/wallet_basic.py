@@ -335,7 +335,7 @@ class WalletTest(BitcoinTestFramework):
         self.nodes[1].importaddress(address_to_import)
 
         # 3. Validate that the imported address is watch-only on node1
-        assert(self.nodes[1].getaddresqsteesfo(address_to_import)["iswatchonly"])
+        assert(self.nodes[1].getaddressinfo(address_to_import)["iswatchonly"])
 
         # 4. Check that the unspents after import are not spendable
         assert_array_result(self.nodes[1].listunspent(),
@@ -376,7 +376,7 @@ class WalletTest(BitcoinTestFramework):
             for label in [u'рыба', u'𝅘𝅥𝅯']:
                 addr = self.nodes[0].getnewaddress()
                 self.nodes[0].setlabel(addr, label)
-                assert_equal(self.nodes[0].getaddresqsteesfo(addr)['label'], label)
+                assert_equal(self.nodes[0].getaddressinfo(addr)['label'], label)
                 assert(label in self.nodes[0].listlabels())
         self.nodes[0].rpc.ensure_ascii = True  # restore to default
 
@@ -424,7 +424,7 @@ class WalletTest(BitcoinTestFramework):
 
         # Make a long chain of unconfirmed payments without hitting mempool limit
         # Each tx we make leaves only one output of change on a chain 1 longer
-        # Qsteesce the amount to send is always much less than the outputs, we only ever need one output
+        # QtipArrayce the amount to send is always much less than the outputs, we only ever need one output
         # So we should be able to generate exactly chainlimit txs for each original output
         sending_addr = self.nodes[1].getnewaddress()
         txid_list = []
@@ -460,9 +460,9 @@ class WalletTest(BitcoinTestFramework):
         # Verify nothing new in wallet
         assert_equal(total_txs, len(self.nodes[0].listtransactions("*", 99999)))
 
-        # Test getaddresqsteesfo. Note that these addresses are taken from disablewallet.py
-        assert_raises_rpc_error(-5, "Invalid address", self.nodes[0].getaddresqsteesfo, "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy")
-        address_info = self.nodes[0].getaddresqsteesfo("mneYUmWYsuk7kySiURxCi3AGxrAqZxLgPZ")
+        # Test getaddressinfo. Note that these addresses are taken from disablewallet.py
+        assert_raises_rpc_error(-5, "Invalid address", self.nodes[0].getaddressinfo, "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy")
+        address_info = self.nodes[0].getaddressinfo("mneYUmWYsuk7kySiURxCi3AGxrAqZxLgPZ")
         assert_equal(address_info['address'], "mneYUmWYsuk7kySiURxCi3AGxrAqZxLgPZ")
         assert_equal(address_info["scriptPubKey"], "76a9144e3854046c7bd1594ac904e4793b6a45b36dea0988ac")
         assert not address_info["ismine"]

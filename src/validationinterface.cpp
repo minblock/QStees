@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -55,7 +55,7 @@ struct MainSignalsInstance {
     // We are not allowed to assume the scheduler only runs in one thread,
     // but must ensure all callbacks happen in-order, so we end up creating
     // our own queue here :(
-    QsteesgleThreadedSchedulerClient m_schedulerClient;
+    QtipArraygleThreadedSchedulerClient m_schedulerClient;
 
     explicit MainSignalsInstance(CScheduler *pscheduler) : m_schedulerClient(pscheduler) {}
 };

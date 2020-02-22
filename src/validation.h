@@ -2,7 +2,7 @@
 // Copyright (c) 2009-2018 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
 // Copyright (c) 2018 FXTC developers
-// Copyright (c) 2018-2019 QSTEES developers
+// Copyright (c) 2018-2019 QTIPARRAY developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,7 +10,7 @@
 #define BITCOIN_VALIDATION_H
 
 #if defined(HAVE_CONFIG_H)
-#include <config/qstees-config.h>
+#include <config/sin-config.h>
 #endif
 
 #include <amount.h>
@@ -291,7 +291,7 @@ bool GetTransaction(const uint256& hash, CTransactionRef& tx, const Consensus::P
  */
 bool ActivateBestChain(CValidationState& state, const CChainParams& chainparams, std::shared_ptr<const CBlock> pblock = std::shared_ptr<const CBlock>());
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams);
-CAmount GetMasternodePayment(int nHeight, int qsteestype);
+CAmount GetMasternodePayment(int nHeight, int sintype);
 bool IsMasternodeMode();
 
 /** Guess verification progress (as a fraction between 0.0=genesis and 1.0=current tip). */
@@ -339,7 +339,7 @@ ThresholdState VersionBitsTipState(const Consensus::Params& params, Consensus::D
 BIP9Stats VersionBitsTipStatistics(const Consensus::Params& params, Consensus::DeploymentPos pos);
 
 /** Get the block height at which the BIP9 deployment switched into the state for the block building on the current tip. */
-int VersionBitsTipStateQsteesceHeight(const Consensus::Params& params, Consensus::DeploymentPos pos);
+int VersionBitsTipStateQtipArrayceHeight(const Consensus::Params& params, Consensus::DeploymentPos pos);
 
 
 /** Apply the effects of this transaction on the UTXO set represented by view */

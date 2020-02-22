@@ -130,7 +130,7 @@ def tree_sha512sum(commit='HEAD'):
     return overall.hexdigest()
 
 def print_merge_details(pull, title, branch, base_branch, head_branch):
-    print('%s#%s%s %s %qsteesto %s%s' % (ATTR_RESET+ATTR_PR,pull,ATTR_RESET,title,ATTR_RESET+ATTR_PR,branch,ATTR_RESET))
+    print('%s#%s%s %s %sinto %s%s' % (ATTR_RESET+ATTR_PR,pull,ATTR_RESET,title,ATTR_RESET+ATTR_PR,branch,ATTR_RESET))
     subprocess.check_call([GIT,'log','--graph','--topo-order','--pretty=format:'+COMMIT_FORMAT,base_branch+'..'+head_branch])
 
 def parse_arguments():

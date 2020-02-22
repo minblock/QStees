@@ -37,7 +37,7 @@ export LC_ALL=C
 # E702 multiple statements on one line (semicolon)
 # E703 statement ends with a semicolon
 # E714 test for object identity should be "is not"
-# E721 do not compare types, use "iqsteesstance()"
+# E721 do not compare types, use "isinstance()"
 # E741 do not use variables named "l", "O", or "I"
 # E742 do not define classes named "l", "O", or "I"
 # E743 do not define functions named "l", "O", or "I"

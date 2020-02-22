@@ -298,11 +298,11 @@ class MultiWalletTest(BitcoinTestFramework):
             self.nodes[0].unloadwallet(wallet_name)
             shutil.copyfile(empty_wallet, wallet_file(wallet_name))
             self.nodes[0].loadwallet(wallet_name)
-            assert_equal(rpc.getaddresqsteesfo(addr)['ismine'], False)
+            assert_equal(rpc.getaddressinfo(addr)['ismine'], False)
             self.nodes[0].unloadwallet(wallet_name)
             shutil.copyfile(backup, wallet_file(wallet_name))
             self.nodes[0].loadwallet(wallet_name)
-            assert_equal(rpc.getaddresqsteesfo(addr)['ismine'], True)
+            assert_equal(rpc.getaddressinfo(addr)['ismine'], True)
 
 
 if __name__ == '__main__':

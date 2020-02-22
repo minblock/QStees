@@ -67,7 +67,7 @@ from test_framework.script import (
     SIGHASH_ALL,
     SIGHASH_ANYONECANPAY,
     SIGHASH_NONE,
-    SIGHASH_QSTEESGLE,
+    SIGHASH_QTIPARRAYGLE,
     SegwitVersion1SignatureHash,
     SignatureHash,
     hash160,
@@ -453,7 +453,7 @@ class SegWitTest(BitcoinTestFramework):
             # and then check. We can avoid the sleep() by taking advantage of transaction getdata's
             # being processed after block getdata's, and announce a transaction as well,
             # and then check to see if that particular getdata has been received.
-            # Qsteesce 0.14, inv's will only be responded to with a getheaders, so send a header
+            # QtipArrayce 0.14, inv's will only be responded to with a getheaders, so send a header
             # to announce this block.
             msg = msg_headers()
             msg.headers = [CBlockHeader(block4)]
@@ -635,7 +635,7 @@ class SegWitTest(BitcoinTestFramework):
         self.old_node.announce_tx_and_wait_for_getdata(tx)
         assert(self.old_node.last_message["getdata"].inv[0].type == 1)
 
-        # Qsteesce we haven't delivered the tx yet, inv'ing the same tx from
+        # QtipArrayce we haven't delivered the tx yet, inv'ing the same tx from
         # a witness transaction ought not result in a getdata.
         self.test_node.announce_tx_and_wait_for_getdata(tx, timeout=2, success=False)
 
@@ -1640,7 +1640,7 @@ class SegWitTest(BitcoinTestFramework):
         # Test each hashtype
         prev_utxo = UTXO(tx.sha256, 0, tx.vout[0].nValue)
         for sigflag in [0, SIGHASH_ANYONECANPAY]:
-            for hashtype in [SIGHASH_ALL, SIGHASH_NONE, SIGHASH_QSTEESGLE]:
+            for hashtype in [SIGHASH_ALL, SIGHASH_NONE, SIGHASH_QTIPARRAYGLE]:
                 hashtype |= sigflag
                 block = self.build_next_block()
                 tx = CTransaction()
@@ -1670,7 +1670,7 @@ class SegWitTest(BitcoinTestFramework):
         # Split the utxo into a lot of outputs.
         # Randomly choose up to 10 to spend, sign with different hashtypes, and
         # output to a random number of outputs.  Repeat NUM_SIGHASH_TESTS times.
-        # Ensure that we've tested a situation where we use SIGHASH_QSTEESGLE with
+        # Ensure that we've tested a situation where we use SIGHASH_QTIPARRAYGLE with
         # an input index > number of outputs.
         NUM_SIGHASH_TESTS = 500
         temp_utxos = []
@@ -1716,7 +1716,7 @@ class SegWitTest(BitcoinTestFramework):
                     anyonecanpay = SIGHASH_ANYONECANPAY
                 hashtype = random.randint(1, 3) | anyonecanpay
                 sign_p2pk_witness_input(witness_program, tx, i, hashtype, temp_utxos[i].nValue, key)
-                if (hashtype == SIGHASH_QSTEESGLE and i >= num_outputs):
+                if (hashtype == SIGHASH_QTIPARRAYGLE and i >= num_outputs):
                     used_sighash_single_out_of_bounds = True
             tx.rehash()
             for i in range(num_outputs):
@@ -1732,7 +1732,7 @@ class SegWitTest(BitcoinTestFramework):
                 block = self.build_next_block()
 
         if (not used_sighash_single_out_of_bounds):
-            self.log.info("WARNING: this test run didn't attempt SIGHASH_QSTEESGLE with out-of-bounds index value")
+            self.log.info("WARNING: this test run didn't attempt SIGHASH_QTIPARRAYGLE with out-of-bounds index value")
         # Test the transactions we've added to the block
         if (len(block.vtx) > 1):
             self.update_witness_block_with_transactions(block, [])

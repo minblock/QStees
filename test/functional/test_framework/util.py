@@ -131,7 +131,7 @@ def assert_is_hex_string(string):
             "Couldn't interpret %r as hexadecimal; raised: %s" % (string, e))
 
 def assert_is_hash_string(string, length=64):
-    if not iqsteesstance(string, str):
+    if not isinstance(string, str):
         raise AssertionError("Expected a string, got type %r" % type(string))
     elif length and len(string) != length:
         raise AssertionError(
